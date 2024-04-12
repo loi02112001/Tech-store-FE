@@ -1,0 +1,51 @@
+/* Typography */
+@import "./assets/css/typography.css";
+
+/* Global Reset */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Font */
+@font-face {
+  font-family: Poppins;
+  src: url("assets/fonts/Poppins-Regular.ttf");
+  font-weight: 400;
+}
+
+/* Button Styles */
+.ant-btn-primary {
+  @apply bg-[#1E90FF];
+}
+
+/* Input Styles */
+
+/* Form Styles */
+.ant-form-horizontal .ant-form-item-row {
+  @apply w-full;
+
+  .ant-form-item-label {
+    @apply min-w-[150px] font-semibold text-left;
+  }
+
+  .ant-form-item-control {
+    @apply flex justify-center w-full min-w-full min-h-[40px];
+  }
+}
+
+.ant-form-vertical .ant-form-item-row {
+  .ant-form-item-label {
+    @apply w-full font-semibold text-left;
+  }
+
+  .ant-form-item-control {
+    @apply w-full;
+  }
+}

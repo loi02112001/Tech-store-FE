@@ -1,0 +1,11 @@
+.ant-layout-sider.ant-layout-sider-dark {
+  & img {
+    @apply aspect-[250/64];
+  }
+}
+
+.ant-layout-sider-dark.ant-layout-sider-collapsed {
+  & img {
+    @apply aspect-[80/64];
+  }
+}
