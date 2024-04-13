@@ -6,18 +6,22 @@ const baseURL = import.meta.env.VITE_API_BASE_URL
 
 const axiosClient = axios.create({
   baseURL,
-  headers: {
-    Accept: "application/json",
-  },
 })
-
 
 axiosClient.interceptors.request.use(
   (config) => {
     const token = getToken("token")
     if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`
+      config.headers["Authorization"] = `Bearer ${token}`
     }
+
+    if (config.data instanceof FormData) {
+      console.log("config",config);
+      config.headers["Content-Type"] = "multipart/form-data"
+    } else {
+      config.headers["Content-Type"] = "application/json"
+    }
+
     return config
   },
   (error) => {
@@ -25,22 +29,21 @@ axiosClient.interceptors.request.use(
   },
 )
 
-
 axios.interceptors.response.use(
-   (response)=> {
-    const { data } = response;
+  (response) => {
+    const { data } = response
     return {
       data,
     }
   },
-  (error) =>{
-    if(error.response.code === 401){
+  (error) => {
+    if (error.response.code === 401) {
       removeToken()
       window.location.href = "/login"
     }
-    return Promise.reject(error);
+    return Promise.reject(error)
   },
-);
+)
 
 // let isRefreshing = false
 

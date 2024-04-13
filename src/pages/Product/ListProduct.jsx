@@ -8,6 +8,7 @@ import SearchInput from "@/components/common/SearchInput"
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons"
 import { Button, Popconfirm, Table } from "antd"
 import { Image, Layout, Space, Tooltip, Switch } from "antd"
+import DefaultImages from "@/assets/icons/DefaultImage"
 import { render } from "react-dom"
 import { constants } from "@/constants"
 
@@ -27,14 +28,14 @@ const ListProduct = () => {
     return new Intl.NumberFormat("vi-VN").format(number)
   }
 
-  console.log(productList,"productList");
+  console.log(productList, "productList")
 
   const productsTable = [
     {
       title: "ID",
       dataIndex: "id",
       key: "id",
-      align:"center"
+      align: "center",
     },
     {
       title: "Hình ảnh",
@@ -43,12 +44,13 @@ const ListProduct = () => {
       align: "center",
       render: (_, record) => {
         return (
-          <img
-            src={record.productImage ? record.productImage : defaultImage}
-            width={50}
-            height={50}
-            className="object-cover rounded-md"
-          />
+          <>
+            {record.productImage ? (
+              <img src={record.productImage} width={50} height={50} className="object-cover rounded-md" />
+            ) : (
+              <DefaultImages width={50} height={50} />
+            )}
+          </>
         )
       },
     },
@@ -93,7 +95,13 @@ const ListProduct = () => {
       title: "Trạng thái",
       dataIndex: "hasDelete",
       key: "hasDelete",
-      render: (hasDelete, record) => <Switch value={!hasDelete}  onChange={()=>{dispatch(productActions.changeProductStatus(record.id, {status:!hasDelete}))}}></Switch>
+      render: (hasDelete, record) => (
+        <Switch
+          value={!hasDelete}
+          onChange={() => {
+            dispatch(productActions.changeProductStatus(record.id, { status: !hasDelete }))
+          }}></Switch>
+      ),
     },
   ]
 

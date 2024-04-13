@@ -1,7 +1,7 @@
 import { httpDelete, httpGet, httpPost, httpPut } from "../configs/api"
 
 const addProduct = (data) => {
-  return httpPost("/product", data)
+  return httpPost("/product/create", data)
 }
 
 const getProducts = () => {

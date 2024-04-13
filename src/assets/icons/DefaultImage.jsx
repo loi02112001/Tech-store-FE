@@ -1,6 +1,6 @@
-export default function DefaultImages() {
+export default function DefaultImage({width, height}) {
   return (
-    <svg width="200" height="133" viewBox="0 0 200 133" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width={width} height={height} viewBox="0 0 200 133" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect width="200" height="132.51" rx="8" fill="#D9D9D9" fillOpacity="0.5" />
       <path
         d="M100 71.3337C102.946 71.3337 105.333 68.9458 105.333 66.0003C105.333 63.0548 102.946 60.667 100 60.667C97.0546 60.667 94.6667 63.0548 94.6667 66.0003C94.6667 68.9458 97.0546 71.3337 100 71.3337Z"

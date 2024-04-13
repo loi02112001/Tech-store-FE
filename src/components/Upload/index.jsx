@@ -1,6 +1,6 @@
 import { useRef } from "react"
 
-import DefaultImages from "@/assets/icons/DefaultImages"
+import DefaultImages from "@/assets/icons/DefaultImage"
 
 export default function Upload(props) {
   const { image, setImage, setFile, onImageSelected } = props

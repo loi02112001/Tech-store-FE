@@ -3,19 +3,19 @@ import { toast } from "react-toastify"
 import { constants } from "@/constants"
 import { productService } from "@/services/products"
 
-const addProduct = (payload, onSuccess) => {
+const addProduct = (payload, onSuccess = () => {}) => {
   return async (dispatch) => {
-    dispatch({type: constants.ADD_PRODUCT_REQUEST})
+    dispatch({ type: constants.ADD_PRODUCT_REQUEST })
     try {
       const response = await productService.addProduct(payload)
       const { code } = response.data
       if (code === 200) {
-        dispatch({type: constants.ADD_PRODUCT_SUCCESS})
+        dispatch({ type: constants.ADD_PRODUCT_SUCCESS })
         toast.success("Thêm sản phẩm thành công")
         onSuccess()
       }
     } catch (error) {
-      dispatch({type: constants.ADD_PRODUCT_FAILURE})
+      dispatch({ type: constants.ADD_PRODUCT_FAILURE })
       toast.error("Có lỗi xảy ra")
     }
   }
@@ -27,7 +27,7 @@ const getProducts = () => {
     try {
       const response = await productService.getProducts()
       const { data, code } = response.data
-      if (code === 200) dispatch({ type: constants.GET_PRODUCTS_SUCCESS, data})
+      if (code === 200) dispatch({ type: constants.GET_PRODUCTS_SUCCESS, data })
     } catch (error) {
       console.error(error)
       dispatch({ type: constants.GET_PRODUCTS_FAILURE })
@@ -52,7 +52,7 @@ const getProductById = (id) => {
 }
 
 const updateProduct = (id, data, onSuccess) => {
-  return async () => {
+  return async (dispatch) => {
     dispatch({ type: constants.UPDATE_PRODUCT_REQUEST })
     try {
       const response = await productService.updateProduct(id, data)
@@ -70,13 +70,12 @@ const updateProduct = (id, data, onSuccess) => {
   }
 }
 
-
 const changeProductStatus = (id, status) => {
   return async (dispatch) => {
     dispatch({ type: constants.CHANGE_PRODUCT_STATUS_REQUEST })
     try {
       const response = await productService.changeProductStatus(id, status)
-      const {code} = response.data
+      const { code } = response.data
       if (code === 200) {
         dispatch({ type: constants.CHANGE_PRODUCT_STATUS_SUCCESS })
         dispatch(getProducts())
@@ -94,5 +93,5 @@ export const productActions = {
   getProducts,
   getProductById,
   updateProduct,
-  changeProductStatus
+  changeProductStatus,
 }

@@ -30,6 +30,7 @@ const AddProduct = () => {
     price: 0,
     quantity: 0,
     brandId: 0,
+    categoryIds:[]
   })
 
   useEffect(() => {
@@ -49,14 +50,11 @@ const AddProduct = () => {
 
   const handleInputChange = (e) => {
     const fieldName = e.target.name
-    const numberFields = ["priceBeforeDiscount", "discountPercent"]
+    const numberFields = ["importPrice", "price"]
     let value = e.target.type === "number" ? e.target.value.replace(/[^0-9]/g, "") : e.target.value
 
     if (numberFields.includes(fieldName)) {
       value = parseInt(value)
-      if (fieldName === "discountPercent") {
-        value = Math.min(value, 99)
-      }
     }
 
     setInfoProduct((infoProduct) => ({ ...infoProduct, [fieldName]: value }))
@@ -75,12 +73,21 @@ const AddProduct = () => {
   const handleAddProduct = () => {
     if (
       infoProduct.name.trim() == "" ||
-      infoProduct.priceBeforeDiscount == "" ||
-      infoProduct.discountPercent == "" ||
+      infoProduct.price == "" ||
+      infoProduct.importPrice == "" ||
       infoProduct.description.trim() == ""
     ) {
       return
     }
+    const formData = new FormData();
+    formData.append("name", infoProduct.name)
+    formData.append("brandId",infoProduct.brandId)
+    formData.append("categoryIds", JSON.stringify(infoProduct.categoryIds))
+    formData.append("description", infoProduct.description)
+    formData.append("discountPercent", infoProduct.discountPercent)
+    formData.append("importPrice",infoProduct.importPrice)
+    formData.append("price", infoProduct.price)
+    formData.append("quantity", infoProduct.quantity)
     if (id) {
       dispatch(
         productActions.updateProduct(id, infoProduct, () => {
@@ -89,7 +96,7 @@ const AddProduct = () => {
       )
     } else {
       dispatch(
-        productActions.addProduct(infoProduct, () => {
+        productActions.addProduct(formData, () => {
           navigate("/products")
         }),
       )
@@ -139,9 +146,9 @@ const AddProduct = () => {
                     allowClear
                     placeholder="Chọn danh mục sản phẩm"
                     onChange={(e) =>
-                      setInfoProduct((prevAttribute) => ({
-                        ...prevAttribute,
-                        category: e,
+                      setInfoProduct((infoProduct) => ({
+                        ...infoProduct,
+                        categoryIds: e,
                       }))
                     }
                     options={categoryOptions}
@@ -173,6 +180,7 @@ const AddProduct = () => {
                   rules={[{ required: true, message: rulesVietnamese.required }]}>
                   <Input
                     className="py-1 outline-0"
+                    type="number"
                     placeholder="Nhập giá bán"
                     name="price"
                     onChange={handleInputChange}
@@ -208,14 +216,15 @@ const AddProduct = () => {
                     allowClear
                     placeholder="Chọn thương hiệu"
                     onChange={(e) =>
-                      setInfoProduct((prevAttribute) => ({
-                        ...prevAttribute,
-                        category: e,
+                      setInfoProduct((infoProduct) => ({
+                        ...infoProduct,
+                        brandId: e,
                       }))
                     }
                     options={brandOptions}
                   />
                 </Form.Item>
+                {console.log(infoProduct.brandId)}
               </Col>
             </Row>
             <button
