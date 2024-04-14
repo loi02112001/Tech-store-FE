@@ -9,7 +9,7 @@ const getProducts = () => {
 }
 
 const updateProduct = (id, data) => {
-  return httpPut(`/product/${id}`, data)
+  return httpPut(`/product/update/${id}`, data)
 }
 
 const getProductByName = (name) => {

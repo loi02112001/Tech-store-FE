@@ -16,16 +16,6 @@ const AddProduct = () => {
   const productInfo = useSelector((state) => state.products.productInfo)
   const brands = useSelector((state) => state.brands.data)
   const [form] = Form.useForm()
-  const [infoProduct, setInfoProduct] = useState({
-    name: "",
-    description: "",
-    discountPercent: 0,
-    importPrice: 0,
-    price: 0,
-    quantity: 0,
-    brandId: 0,
-    categoryIds: [],
-  })
   const [previewImg, setPreviewImg] = useState()
   const [img, setImg] = useState(null)
 
@@ -38,24 +28,15 @@ const AddProduct = () => {
   }, [])
 
   useEffect(() => {
-    form.resetFields()
-    if (productInfo.id) {
-      setInfoProduct({ ...productInfo, brandId: productInfo.brand.id })
+    if (id) {
+      const categoryIds = productInfo?.listCategory?.map((item) => item.id)
+      form.setFieldsValue({
+        ...productInfo,
+        brandId: productInfo?.brand?.id,
+        category: categoryIds,
+      })
     }
   }, [productInfo])
-
-
-  const handleInputChange = (e) => {
-    const fieldName = e.target.name
-    const numberFields = ["importPrice", "price"]
-    let value = e.target.type === "number" ? e.target.value.replace(/[^0-9]/g, "") : e.target.value
-
-    if (numberFields.includes(fieldName)) {
-      value = parseInt(value)
-    }
-
-    setInfoProduct((infoProduct) => ({ ...infoProduct, [fieldName]: value }))
-  }
 
   const categoryOptions = categories?.map((category) => ({
     value: category.id,
@@ -67,39 +48,33 @@ const AddProduct = () => {
     label: brand.name,
   }))
 
-  const handleAddProduct = () => {
-    if (
-      infoProduct.name.trim() == "" ||
-      infoProduct.price == "" ||
-      infoProduct.importPrice == "" ||
-      infoProduct.description.trim() == ""
-    ) {
+  const handleAddProduct = (values) => {
+    console.log(values)
+    if (values.name.trim() == "" || values.price == "" || values.importPrice == "" || values.description.trim() == "") {
       return
     }
     const formData = new FormData()
-    img?.length > 0 && formData.append("productImage", img[0])
-    formData.append("name", infoProduct.name)
-    formData.append("brandId", infoProduct.brandId)
-    formData.append("categoryIds", JSON.stringify(infoProduct.categoryIds))
-    formData.append("description", infoProduct.description)
-    formData.append("importPrice", infoProduct.importPrice)
-    formData.append("price", infoProduct.price)
-    formData.append("quantity", infoProduct.quantity)
+    formData.append("productImage", img[0])
+    formData.append("name", values.name)
+    formData.append("brandId", values.brandId)
+    formData.append("categoryIds", JSON.stringify(values.category))
+    formData.append("description", values.description)
+    formData.append("importPrice", values.importPrice)
+    formData.append("price", values.price)
     if (id) {
       dispatch(
-        productActions.updateProduct(id, infoProduct, () => {
-          navigate("/productInfo")
+        productActions.updateProduct(id, formData, () => {
+          navigate("/product")
         }),
       )
     } else {
       dispatch(
         productActions.addProduct(formData, () => {
-          navigate("/productInfo")
+          navigate("/product")
         }),
       )
     }
   }
-  console.log("🚀 ~ handleAddProduct:", handleAddProduct)
 
   const ruleFormItem = {
     required: "Vui lòng nhập ${label}!",
@@ -135,7 +110,7 @@ const AddProduct = () => {
 
   return (
     <div className="h-full bg-[#f4f4f4]">
-      <Form className="flex flex-col gap-5 pb-5" onSubmit={handleAddProduct} form={form} initialValues={infoProduct}>
+      <Form className="flex flex-col gap-5 pb-5" onFinish={handleAddProduct} form={form}>
         <span className="text-xl font-semibold flex gap-3 items-center bg-[#f5f5f5]">
           {id ? "Cập nhật sản phẩm" : "Thêm sản phẩm"}
         </span>
@@ -163,8 +138,14 @@ const AddProduct = () => {
                 className="flex items-center w-full"
                 name="name"
                 label="Tên sản phẩm"
-                rules={[{ required: true, message: ruleFormItem.required }]}>
-                <Input placeholder="Nhập tên sản phẩm" name="name" onChange={handleInputChange} />
+                rules={[
+                  { required: true, message: ruleFormItem.required },
+                  {
+                    pattern: /^(?=.*S).+$/,
+                    message: "Tên sản phẩm không bao gồm khoảng trống",
+                  },
+                ]}>
+                <Input placeholder="Nhập tên sản phẩm" name="name" />
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -178,12 +159,6 @@ const AddProduct = () => {
                   mode="multiple"
                   allowClear
                   placeholder="Chọn danh mục sản phẩm"
-                  onChange={(e) =>
-                    setInfoProduct((infoProduct) => ({
-                      ...infoProduct,
-                      categoryIds: e,
-                    }))
-                  }
                   options={categoryOptions}
                 />
               </Form.Item>
@@ -196,13 +171,7 @@ const AddProduct = () => {
                 name="importPrice"
                 label="Giá nhập hàng"
                 rules={[{ required: true, message: ruleFormItem.required }]}>
-                <Input
-                  type="number"
-                  className="py-1 outline-0"
-                  placeholder="Nhập giá nhập hàng"
-                  name="importPrice"
-                  onChange={handleInputChange}
-                />
+                <Input type="number" className="py-1 outline-0" placeholder="Nhập giá nhập hàng" name="importPrice" />
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -211,13 +180,7 @@ const AddProduct = () => {
                 name="price"
                 label="Giá bán"
                 rules={[{ required: true, message: ruleFormItem.required }]}>
-                <Input
-                  className="py-1 outline-0"
-                  type="number"
-                  placeholder="Nhập giá bán"
-                  name="price"
-                  onChange={handleInputChange}
-                />
+                <Input className="py-1 outline-0" type="number" placeholder="Nhập giá bán" name="price" />
               </Form.Item>
             </Col>
           </Row>
@@ -228,12 +191,7 @@ const AddProduct = () => {
                 name="description"
                 label={"Mô tả sản phẩm"}
                 rules={[{ required: true, message: ruleFormItem.required }]}>
-                <TextArea
-                  className="py-1 outline-0"
-                  placeholder="Nhập mô tả sản phẩm"
-                  onChange={handleInputChange}
-                  name="description"
-                />
+                <TextArea className="py-1 outline-0" placeholder="Nhập mô tả sản phẩm" name="description" />
               </Form.Item>
             </Col>
           </Row>
@@ -244,23 +202,11 @@ const AddProduct = () => {
                 name="brandId"
                 label="Thương hiệu"
                 rules={[{ required: true, message: ruleFormItem.required }]}>
-                <Select
-                  className="w-full"
-                  allowClear
-                  placeholder="Chọn thương hiệu"
-                  onChange={(e) =>
-                    setInfoProduct((infoProduct) => ({
-                      ...infoProduct,
-                      brandId: e,
-                    }))
-                  }
-                  options={brandOptions}
-                  value={productInfo?.brandId}
-                />
+                <Select className="w-full" allowClear placeholder="Chọn thương hiệu" options={brandOptions} />
               </Form.Item>
             </Col>
           </Row>
-          <button type="submit" className="w-fit py-1 px-4 rounded bg-[#1677ff] text-white" onClick={handleAddProduct}>
+          <button type="submit" className="w-fit py-1 px-4 rounded bg-[#1677ff] text-white">
             {id ? "Cập nhật sản phẩm" : "Thêm sản phẩm"}
           </button>
         </div>
