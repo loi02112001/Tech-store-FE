@@ -16,7 +16,6 @@ axiosClient.interceptors.request.use(
     }
 
     if (config.data instanceof FormData) {
-      console.log("config",config);
       config.headers["Content-Type"] = "multipart/form-data"
     } else {
       config.headers["Content-Type"] = "application/json"

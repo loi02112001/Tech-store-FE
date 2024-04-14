@@ -1,26 +1,28 @@
-import { constants } from "@/constants"
+import { constants } from "../constants"
 
 const initialState = {
-  loading: false,
+  loading: true,
   data: [],
 }
-
-export const brandReducer = (state = initialState, action) => {
+export function brandReducer(state = initialState, action) {
   switch (action.type) {
     case constants.GET_BRAND_REQUEST:
+    case constants.ADD_BRAND_REQUEST:
+    case constants.UPDATE_BRAND_REQUEST:
       return {
-        ...state,
         loading: true,
       }
     case constants.GET_BRAND_SUCCESS:
+    case constants.ADD_BRAND_SUCCESS:
+    case constants.UPDATE_BRAND_SUCCESS:
       return {
-        ...state,
-        data: action.data,
         loading: false,
+        data: action.data,
       }
     case constants.GET_BRAND_FAILURE:
+    case constants.ADD_BRAND_FAILURE:
+    case constants.UPDATE_BRAND_FAILURE:
       return {
-        ...state,
         loading: false,
       }
     default:

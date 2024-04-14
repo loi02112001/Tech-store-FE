@@ -4,19 +4,14 @@ import { Link, useNavigate } from "react-router-dom"
 
 import { authAction } from "@/actions/authAction"
 
-import { LogoutOutlined, UserOutlined } from "@ant-design/icons"
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons"
-import { Avatar, Dropdown } from "antd"
 import { removeToken } from "@/utils"
+import { LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from "@ant-design/icons"
+import { Avatar, Dropdown } from "antd"
 
 const Header = ({ collapsed, changeCollapsed }) => {
   const profile = useSelector((state) => state.auth.data)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-
-  const onSuccess = () => {
-    navigate("/login")
-  }
 
   const handleLogout = () => {
     removeToken("token")

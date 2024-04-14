@@ -4,11 +4,12 @@ import { Route, Routes, useLocation, useNavigate } from "react-router-dom"
 import ScrollToTop from "./components/ScrollToTop/Index"
 import { routes } from "./configs/routes"
 import MainLayout from "./layouts/MainLayout"
+import ListCategory from "./pages/Category/ListCategory"
 import AddProduct from "./pages/Product/AddProduct"
 import UpdateShop from "./pages/Shop"
 import ProtectedRoute from "./routes/ProtectedRoute"
 import { getToken } from "./utils"
-
+import ListBrand from "./pages/Brand/ListBrand"
 
 const LoginPage = React.lazy(() => import("./pages/LoginPage/Index"))
 const HomePage = React.lazy(() => import("./pages/HomePage/Index"))
@@ -19,6 +20,7 @@ export default function App() {
   const token = getToken()
   const { pathname } = useLocation()
   const navigate = useNavigate()
+  const { auth, product, shop, category, brand } = routes
 
   useEffect(() => {
     if (token) {
@@ -33,18 +35,19 @@ export default function App() {
       <ScrollToTop />
       <Suspense fallback={<></>}>
         <Routes>
-          <Route path={routes.login} element={<LoginPage />}></Route>
-          <Route path={routes.register} element={<RegisterPage />}></Route>
+          <Route path={auth.login} element={<LoginPage />} />
+          <Route path={auth.register} element={<RegisterPage />} />
 
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<MainLayout />}>
-              <Route path={routes.home} element={<HomePage />}></Route>
-              <Route path={routes.shop} element={<UpdateShop />}></Route>
-              <Route path={routes.addProduct} element={<AddProduct />}></Route>
-              <Route path={routes.listProduct} element={<ListProduct />}></Route>
-              <Route path={routes.editProduct} element={<AddProduct />}></Route>
+              <Route path={auth.home} element={<HomePage />} />
+              <Route path={shop.shop} element={<UpdateShop />} />
+              <Route path={product.add} element={<AddProduct />} />
+              <Route path={product.list} element={<ListProduct />} />
+              <Route path={product.edit} element={<AddProduct />} />
+              <Route path={category.list} element={<ListCategory />} />
+              <Route path={brand.list} element={<ListBrand />} />
             </Route>
-            {/* Viết các router cần đăng nhập vào đây */}
           </Route>
         </Routes>
       </Suspense>

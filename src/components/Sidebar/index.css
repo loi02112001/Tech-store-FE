@@ -8,4 +8,10 @@
   & img {
     @apply aspect-[80/64];
   }
+
+  &.ant-layout-sider-collapsed {
+    & img {
+      @apply !h-auto;
+    }
+  }
 }

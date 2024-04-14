@@ -30,5 +30,5 @@ export const productService = {
   getProductByName,
   getProductById,
   updateProduct,
-  changeProductStatus
+  changeProductStatus,
 }

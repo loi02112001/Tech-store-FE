@@ -41,8 +41,8 @@ const getProductById = (id) => {
     dispatch({ type: constants.GET_PRODUCT_BY_ID_REQUEST })
     try {
       const response = await productService.getProductById(id)
-      const { code } = response.data
-      if (code === 200) dispatch({ type: constants.GET_PRODUCT_BY_ID_SUCCESS, data: response.data })
+      const { code, data } = response.data
+      if (code === 200) dispatch({ type: constants.GET_PRODUCT_BY_ID_SUCCESS, data })
     } catch (error) {
       console.error(error)
       dispatch({ type: constants.GET_PRODUCT_BY_ID_FAILURE })

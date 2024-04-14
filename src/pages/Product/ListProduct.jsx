@@ -1,21 +1,16 @@
-import { useCallback, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 import { productActions } from "@/actions/productAction"
 import SearchInput from "@/components/common/SearchInput"
 
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons"
-import { Button, Popconfirm, Table } from "antd"
-import { Image, Layout, Space, Tooltip, Switch } from "antd"
 import DefaultImages from "@/assets/icons/DefaultImage"
-import { render } from "react-dom"
-import { constants } from "@/constants"
+import { Button, Layout, Switch, Table } from "antd"
 
 const ListProduct = () => {
   const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const { loading, page, productList, totalPage, totalProduct } = useSelector((state) => state.products)
+  const { loading, productList, totalProduct } = useSelector((state) => state.products)
 
   const formatPrice = (price) => {
     return new Intl.NumberFormat("vi-VN", {
@@ -23,12 +18,6 @@ const ListProduct = () => {
       currency: "VND",
     }).format(price)
   }
-
-  const formatNumber = (number) => {
-    return new Intl.NumberFormat("vi-VN").format(number)
-  }
-
-  console.log(productList, "productList")
 
   const productsTable = [
     {
@@ -46,7 +35,13 @@ const ListProduct = () => {
         return (
           <>
             {record.productImage ? (
-              <img src={record.productImage} width={50} height={50} className="object-cover rounded-md" />
+              <img
+                src={record.productImage}
+                width={50}
+                height={50}
+                className="inline object-cover rounded-sm"
+                alt={`{${record.name ? record.name : "Product Image"}}`}
+              />
             ) : (
               <DefaultImages width={50} height={50} />
             )}
@@ -60,7 +55,7 @@ const ListProduct = () => {
       key: "name",
       render: (name, product) => (
         <p className="text-[#0e2482] font-medium cursor-pointer">
-          <Link to={`/products/edit/${product.id}`}>{name}</Link>
+          <Link to={`/product/edit/${product.id}`}>{name}</Link>
         </p>
       ),
     },
@@ -93,13 +88,13 @@ const ListProduct = () => {
     },
     {
       title: "Trạng thái",
-      dataIndex: "hasDelete",
-      key: "hasDelete",
-      render: (hasDelete, record) => (
+      dataIndex: "hasShow",
+      key: "hasShow",
+      render: (hasShow, record) => (
         <Switch
-          value={!hasDelete}
+          value={!hasShow}
           onChange={() => {
-            dispatch(productActions.changeProductStatus(record.id, { status: !hasDelete }))
+            dispatch(productActions.changeProductStatus(record.id, { status: !hasShow }))
           }}></Switch>
       ),
     },
@@ -128,7 +123,7 @@ const ListProduct = () => {
           />
           {!loading && <p className="text-[#CF5763] font-medium">{totalProduct} sản phẩm</p>}
         </div>
-        <Link to="/products/create">
+        <Link to="/product/create">
           <Button type="primary">Thêm sản phẩm</Button>
         </Link>
       </div>

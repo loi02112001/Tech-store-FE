@@ -1,5 +1,6 @@
 /* Typography */
 @import "./assets/css/typography.css";
+@import "./assets/css/button.css";
 
 /* Global Reset */
 @tailwind base;
@@ -20,23 +21,23 @@
   font-weight: 400;
 }
 
-/* Button Styles */
-.ant-btn-primary {
-  @apply bg-[#1E90FF];
-}
-
 /* Input Styles */
 
 /* Form Styles */
-.ant-form-horizontal .ant-form-item-row {
-  @apply w-full;
+.ant-form-horizontal {
+  & .ant-form-item {
+    @apply mb-4;
+    & .ant-form-item-row {
+      @apply w-full;
 
-  .ant-form-item-label {
-    @apply min-w-[150px] font-semibold text-left;
-  }
+      .ant-form-item-label {
+        @apply min-w-[150px] font-semibold text-left;
+      }
 
-  .ant-form-item-control {
-    @apply flex justify-center w-full min-w-full min-h-[40px];
+      .ant-form-item-control {
+        @apply flex justify-center w-full min-w-full min-h-[40px];
+      }
+    }
   }
 }
 

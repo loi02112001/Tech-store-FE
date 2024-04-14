@@ -16,7 +16,6 @@ const getInfoShop = () => {
   }
 }
 
-
 export const shopAction = {
-  getInfoShop
+  getInfoShop,
 }

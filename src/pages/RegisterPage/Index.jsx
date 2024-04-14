@@ -13,18 +13,18 @@ const Register = () => {
   const [form] = Form.useForm()
   const dispatch = useDispatch()
   const [registerInfo, setRegisterInfo] = useState({
-    name:"",
-    email:"",
-    password:"",
-    phoneNumber:"",
-    address:"",
+    name: "",
+    email: "",
+    password: "",
+    phoneNumber: "",
+    address: "",
     dob: 0,
-    gender:"",
+    gender: "",
   })
   const { loading } = useSelector((state) => state.auth)
 
   const onRegister = (values) => {
-    const registerData = {...values}
+    const registerData = { ...values }
     const onRegisterSuccess = () => {
       setStep(2)
     }
@@ -32,11 +32,11 @@ const Register = () => {
     dispatch(authAction.register(registerData, onRegisterSuccess))
   }
 
-  const onVerify = (values) =>{
+  const onVerify = (values) => {
     const onVerifySuccess = () => {
       navigate("/login")
     }
-    dispatch(authAction.verify({...registerInfo, ...values}, onVerifySuccess))
+    dispatch(authAction.verify({ ...registerInfo, ...values }, onVerifySuccess))
   }
 
   return (

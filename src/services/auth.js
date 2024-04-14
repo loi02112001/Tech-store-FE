@@ -16,8 +16,8 @@ const getProfile = () => {
   return httpGet("/user/getProfile")
 }
 
-const verify = (data)=>{
-  return httpPost("/verifyUserAccount",data)
+const verify = (data) => {
+  return httpPost("/verifyUserAccount", data)
 }
 
 export const authService = { register, login, refreshToken, getProfile, verify }

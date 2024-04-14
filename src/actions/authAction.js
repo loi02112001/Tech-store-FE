@@ -17,7 +17,6 @@ const register = (data, onSuccess = () => {}) => {
         onSuccess()
       }
     } catch (error) {
-      console.log(error)
       dispatch({ type: constants.REGISTER_FAILURE })
       toast.error(error?.data?.message)
     }
@@ -36,7 +35,6 @@ const verify = (data, onSuccess = () => {}) => {
         onSuccess()
       }
     } catch (error) {
-      console.log(error)
       dispatch({ type: constants.VERIFY_FAILURE })
       toast.error(error?.data?.message)
     }
@@ -73,7 +71,6 @@ const getProfile = () => {
         dispatch({ type: constants.GET_PROFILE_SUCCESS, data })
       }
     } catch (error) {
-      console.log(error)
       dispatch({ type: constants.GET_PROFILE_FAILURE })
       toast.error(error?.data?.message)
     }

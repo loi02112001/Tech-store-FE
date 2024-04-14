@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom"
-
-import logo from "../../assets/images/logo.jpg"
 import { DashboardOutlined, FileDoneOutlined, ReconciliationOutlined, SettingOutlined } from "@ant-design/icons"
 import { Menu } from "antd"
 import Sider from "antd/es/layout/Sider"
+import { Link } from "react-router-dom"
 
+import logo from "../../assets/images/logo.jpg"
 import "./index.css"
+
 const Sidebar = ({ collapsed }) => {
   const path = window.location.pathname
 
@@ -28,21 +28,32 @@ const Sidebar = ({ collapsed }) => {
         </Link>
       ),
     },
-    // {
-    //   key: "/discount",
-    //   icon: <ReconciliationOutlined style={{ color: "#4595ef" }} className="w-[16px]" />,
-    //   label: (
-    //     <Link className="flex justify-between" to="discount">
-    //       Giảm giá
-    //     </Link>
-    //   ),
-    // },
     {
-      key: "/products",
+      key: "/product",
+      key: "/product",
       icon: <FileDoneOutlined style={{ color: "#ff6900" }} className="w-[16px]" />,
       label: (
-        <Link className="flex justify-between" to="/products">
+        <Link className="flex justify-between" to="/product">
           Sản phẩm
+        </Link>
+      ),
+    },
+
+    {
+      key: "/category",
+      icon: <FileDoneOutlined style={{ color: "#ff6900" }} className="w-[16px]" />,
+      label: (
+        <Link className="flex justify-between" to="/category">
+          Danh mục
+        </Link>
+      ),
+    },
+    {
+      key: "/brand",
+      icon: <FileDoneOutlined style={{ color: "#ff6900" }} className="w-[16px]" />,
+      label: (
+        <Link className="flex justify-between" to="/brand">
+          Thương hiệu
         </Link>
       ),
     },
@@ -54,62 +65,12 @@ const Sidebar = ({ collapsed }) => {
           Cài đặt chung
         </Link>
       ),
-      // children: [
-      //   {
-      //     key: "/theme",
-      //     label: (
-      //       <Link className="flex justify-between" to="/theme">
-      //         Giao diện trang chủ
-      //       </Link>
-      //     ),
-      //   },
-      //   {
-      //     key: "/store-info",
-      //     label: (
-      //       <Link className="flex justify-between" to="/store-info">
-      //         Thông tin cửa hàng
-      //       </Link>
-      //     ),
-      //   },
-      //   {
-      //     key: "/shipments",
-      //     label: (
-      //       <Link className="flex justify-between" to="/shipments">
-      //         Hình thức vận chuyển
-      //       </Link>
-      //     ),
-      //   },
-      //   {
-      //     key: "/method-payments",
-      //     label: (
-      //       <Link className="flex justify-between" to="/method-payments">
-      //         Hình thức thanh toán
-      //       </Link>
-      //     ),
-      //   },
-      //   {
-      //     key: "/bonus_sharing",
-      //     label: (
-      //       <Link className="flex justify-between" to="/bonus_sharing">
-      //         Chính sách chia thưởng
-      //       </Link>
-      //     ),
-      //   },
-      //   {
-      //     key: "/transport",
-      //     label: (
-      //       <Link className="flex justify-between" to="/transport">
-      //         Cài đặt giao vận
-      //       </Link>
-      //     ),
-      //   },
-      // ],
     },
   ]
 
   return (
     <Sider trigger={null} collapsible collapsed={collapsed} width={300} style={{ backgroundColor: "#001f3f" }}>
-      <img src={logo} alt="logo" className="max-w-full h-[200px] object-cover"/>
+      <img src={logo} alt="logo" className="max-w-full h-[200px] object-cover" />
       <Menu
         items={menuSidebar}
         theme="light"
