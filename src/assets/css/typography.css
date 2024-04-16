@@ -27,23 +27,15 @@ body,
   @apply text-base;
 }
 
-.la .label {
+.label {
   @apply text-sm font-bold uppercase;
 }
 
-.link,
-.wysiwyg a {
-  @apply cursor-pointer capitalize underline transition-colors text-blue-500;
+.link {
+  @apply cursor-pointer capitalize underline transition-colors text-blue-600;
 
   &:hover {
     @apply text-blue-400;
   }
 }
 
-.link-small {
-  @apply cursor-pointer text-sm capitalize underline transition-colors text-blue-400;
-
-  &:hover {
-    @apply text-blue-400;
-  }
-}

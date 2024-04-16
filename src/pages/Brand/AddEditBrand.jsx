@@ -1,13 +1,12 @@
 import { brandAction } from "@/actions/brandAction"
 import { Form, Input, Modal, Row } from "antd"
 import TextArea from "antd/es/input/TextArea"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 
 function AddEditBrand({ brand = {}, classButton = "", textButton = "Sửa" }) {
   const [form] = Form.useForm()
   const dispatch = useDispatch()
-  const [brandInfo, setBrandInfo] = useState(brand)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const showModal = () => {
@@ -20,17 +19,16 @@ function AddEditBrand({ brand = {}, classButton = "", textButton = "Sửa" }) {
     required: "Vui lòng nhập ${label}!",
   }
 
-  const handleInputChange = (e) => {
-    const fieldName = e.target.name
-    const value = e.target.value
-    setBrandInfo((preBrand) => ({ ...preBrand, [fieldName]: value }))
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    brand?.id ? dispatch(brandAction.updateBrand(brand.id, brandInfo)) : dispatch(brandAction.createBrand(brandInfo))
+  const handleSubmit = (values) => {
+    brand?.id ? dispatch(brandAction.updateBrand(brand.id, values)) : dispatch(brandAction.createBrand(values))
     setIsModalOpen(false)
   }
+
+  const handleOk = () => form.submit()
+
+  useEffect(() => {
+    form.setFieldsValue(brand)
+  }, [brand])
 
   return (
     <>
@@ -40,16 +38,16 @@ function AddEditBrand({ brand = {}, classButton = "", textButton = "Sửa" }) {
       <Modal
         title={brand?.id ? "Cập nhật thương hiệu" : "Thêm thương hiệu"}
         open={isModalOpen}
-        onOk={handleSubmit}
+        onOk={handleOk}
         onCancel={handleCancel}>
-        <Form form={form} initialValues={brand}>
+        <Form form={form} onFinish={handleSubmit}>
           <Row>
             <Form.Item
               className="flex w-full"
               name="name"
               label="Tên thương hiệu"
               rules={[{ required: true, message: ruleFormItem.required }]}>
-              <Input placeholder="Nhập tên thương hiệu" name="name" onChange={handleInputChange} />
+              <Input placeholder="Nhập tên thương hiệu" name="name" />
             </Form.Item>
           </Row>
           <Row>
@@ -61,7 +59,6 @@ function AddEditBrand({ brand = {}, classButton = "", textButton = "Sửa" }) {
               <TextArea
                 placeholder="Nhập mô tả thương hiệu"
                 name="description"
-                onChange={handleInputChange}
                 autoSize={{
                   minRows: 2,
                   maxRows: 6,

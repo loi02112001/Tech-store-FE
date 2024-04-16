@@ -26,10 +26,10 @@ function ListCategory() {
       align: "center",
     },
     {
-      title: "Action",
+      title: "Hành động",
       dataIndex: "",
       key: "x",
-      render: (_, record) => <AddEditCategory category={record} />,
+      render: (_, record) => <AddEditCategory category={record} classButton="link no-underline"/>,
     },
   ]
 

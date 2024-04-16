@@ -1,4 +1,4 @@
-import { categoryAction } from "@/actions/categoryAction"
+import { brandAction } from "@/actions/brandAction"
 import { Skeleton, Table } from "antd"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
@@ -6,8 +6,8 @@ import AddEditBrand from "./AddEditBrand"
 
 function ListBrand() {
   const dispatch = useDispatch()
-  const { loading, data: categories } = useSelector((state) => state.categories)
-  const categoryTables = [
+  const { loading, data: brands } = useSelector((state) => state.brands)
+  const brandTables = [
     {
       title: "ID",
       dataIndex: "id",
@@ -26,15 +26,15 @@ function ListBrand() {
       align: "center",
     },
     {
-      title: "Action",
+      title: "Hành động",
       dataIndex: "",
       key: "x",
-      render: (_, record) => <AddEditBrand brand={record} />,
+      render: (_, record) => <AddEditBrand brand={record} classButton="link no-underline" />,
     },
   ]
 
   useEffect(() => {
-    dispatch(categoryAction.getCategories())
+    dispatch(brandAction.getBrands())
   }, [])
 
   return loading ? (
@@ -44,11 +44,11 @@ function ListBrand() {
       <AddEditBrand textButton="Thêm thương hiệu" classButton="mb-4 button-primary" />
       <Table
         rowClassName="editable-row"
-        columns={categoryTables}
+        columns={brandTables}
         size="middle"
-        dataSource={categories?.length > 0 ? categories : []}
+        dataSource={brands?.length > 0 ? brands : []}
         loading={loading}
-        rowKey={(category) => category.id}
+        rowKey={(brand) => brand.id}
       />
     </>
   )

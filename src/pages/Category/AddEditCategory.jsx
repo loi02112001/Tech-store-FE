@@ -1,13 +1,12 @@
 import { categoryAction } from "@/actions/categoryAction"
 import { Form, Input, Modal, Row } from "antd"
 import TextArea from "antd/es/input/TextArea"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 
 function AddEditCategory({ category = {}, classButton = "", textButton = "Sửa" }) {
   const [form] = Form.useForm()
   const dispatch = useDispatch()
-  const [categoryInfo, setCategoryInfo] = useState(category)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const showModal = () => {
@@ -20,19 +19,18 @@ function AddEditCategory({ category = {}, classButton = "", textButton = "Sửa"
     required: "Vui lòng nhập ${label}!",
   }
 
-  const handleInputChange = (e) => {
-    const fieldName = e.target.name
-    const value = e.target.value
-    setCategoryInfo((preCategory) => ({ ...preCategory, [fieldName]: value }))
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const handleSubmit = (values) => {
     category?.id
-      ? dispatch(categoryAction.updateCategory(category.id, categoryInfo))
-      : dispatch(categoryAction.createCategory(categoryInfo))
+      ? dispatch(categoryAction.updateCategory(category.id, values))
+      : dispatch(categoryAction.createCategory(values))
     setIsModalOpen(false)
   }
+
+  const handleOk = () => form.submit()
+
+  useEffect(() => {
+    form.setFieldsValue(category)
+  }, [category])
 
   return (
     <>
@@ -42,16 +40,16 @@ function AddEditCategory({ category = {}, classButton = "", textButton = "Sửa"
       <Modal
         title={category?.id ? "Cập nhật danh mục" : "Thêm danh mục"}
         open={isModalOpen}
-        onOk={handleSubmit}
+        onOk={handleOk}
         onCancel={handleCancel}>
-        <Form form={form} initialValues={category}>
+        <Form form={form} onFinish={handleSubmit}>
           <Row>
             <Form.Item
               className="flex w-full"
               name="name"
               label="Tên danh mục"
               rules={[{ required: true, message: ruleFormItem.required }]}>
-              <Input placeholder="Nhập tên danh mục" name="name" onChange={handleInputChange} />
+              <Input placeholder="Nhập tên danh mục" name="name" />
             </Form.Item>
           </Row>
           <Row>
@@ -63,7 +61,6 @@ function AddEditCategory({ category = {}, classButton = "", textButton = "Sửa"
               <TextArea
                 placeholder="Nhập tên sản phẩm"
                 name="description"
-                onChange={handleInputChange}
                 autoSize={{
                   minRows: 2,
                   maxRows: 6,

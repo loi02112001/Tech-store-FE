@@ -14,6 +14,7 @@ const AddProduct = () => {
   const dispatch = useDispatch()
   const categories = useSelector((state) => state.categories.data)
   const productInfo = useSelector((state) => state.products.productInfo)
+  console.log('🚀 ~ productInfo:', productInfo)
   const brands = useSelector((state) => state.brands.data)
   const [form] = Form.useForm()
   const [previewImg, setPreviewImg] = useState()
@@ -35,8 +36,10 @@ const AddProduct = () => {
         brandId: productInfo?.brand?.id,
         category: categoryIds,
       })
+      setPreviewImg(productInfo?.productImage)
     }
   }, [productInfo])
+
 
   const categoryOptions = categories?.map((category) => ({
     value: category.id,
@@ -54,7 +57,7 @@ const AddProduct = () => {
       return
     }
     const formData = new FormData()
-    formData.append("productImage", img[0])
+    img?.length > 0 && formData.append("productImage", img[0])
     formData.append("name", values.name)
     formData.append("brandId", values.brandId)
     formData.append("categoryIds", JSON.stringify(values.category))
@@ -140,10 +143,12 @@ const AddProduct = () => {
                 label="Tên sản phẩm"
                 rules={[
                   { required: true, message: ruleFormItem.required },
-                  {
-                    pattern: /^(?=.*S).+$/,
-                    message: "Tên sản phẩm không bao gồm khoảng trống",
-                  },
+                  () => ({
+                    validator(_, value) {
+                      if (!value?.includes("  ")) return Promise.resolve()
+                      return Promise.reject(new Error("Tên sản phẩm không được chứa quá nhiều khoảng trắng liên tiếp!"))
+                    },
+                  }),
                 ]}>
                 <Input placeholder="Nhập tên sản phẩm" name="name" />
               </Form.Item>

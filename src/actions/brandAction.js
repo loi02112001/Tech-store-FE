@@ -42,7 +42,7 @@ const updateBrand = (id, data, onSuccess = () => {}) => {
     dispatch({ type: constants.UPDATE_BRAND_REQUEST })
     try {
       const {
-        data: { code, data },
+        data: { code },
       } = await brandService.updateBrand(id, data)
       if (code === 200) {
         dispatch({ type: constants.UPDATE_BRAND_SUCCESS })
