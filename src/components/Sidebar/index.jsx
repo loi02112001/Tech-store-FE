@@ -58,6 +58,15 @@ const Sidebar = ({ collapsed }) => {
       ),
     },
     {
+      key: "/employee",
+      icon: <FileDoneOutlined style={{ color: "#ff6900" }} className="w-[16px]" />,
+      label: (
+        <Link className="flex justify-between" to="/employee">
+          Nhân viên
+        </Link>
+      ),
+    },
+    {
       key: "/settings",
       icon: <SettingOutlined style={{ color: "#3341da" }} className="w-[16px]" />,
       label: (

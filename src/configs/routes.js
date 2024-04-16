@@ -20,4 +20,7 @@ export const routes = {
     add: "/brand/create",
     edit: "/brand/edit/:id",
   },
+  employee: {
+    add: "/employee/create",
+  },
 }

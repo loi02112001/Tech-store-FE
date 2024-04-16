@@ -10,6 +10,7 @@ import UpdateShop from "./pages/Shop"
 import ProtectedRoute from "./routes/ProtectedRoute"
 import { getToken } from "./utils"
 import ListBrand from "./pages/Brand/ListBrand"
+import AddEmployee from "./pages/Employee/AddEmployee"
 
 const LoginPage = React.lazy(() => import("./pages/LoginPage/Index"))
 const HomePage = React.lazy(() => import("./pages/HomePage/Index"))
@@ -20,7 +21,7 @@ export default function App() {
   const token = getToken()
   const { pathname } = useLocation()
   const navigate = useNavigate()
-  const { auth, product, shop, category, brand } = routes
+  const { auth, product, shop, category, brand, employee } = routes
 
   useEffect(() => {
     if (token) {
@@ -47,6 +48,7 @@ export default function App() {
               <Route path={product.edit} element={<AddProduct />} />
               <Route path={category.list} element={<ListCategory />} />
               <Route path={brand.list} element={<ListBrand />} />
+              <Route path={employee.add} element={<AddEmployee />} />
             </Route>
           </Route>
         </Routes>
