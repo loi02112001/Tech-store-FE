@@ -57,7 +57,7 @@ const AddProduct = () => {
       return
     }
     const formData = new FormData()
-    img?.length > 0 && formData.append("productImage", img[0])
+    img?.length > 0 && formData.append("image", img[0])
     formData.append("name", values.name)
     formData.append("brandId", values.brandId)
     formData.append("categoryIds", JSON.stringify(values.category))

@@ -30,7 +30,6 @@ const Sidebar = ({ collapsed }) => {
     },
     {
       key: "/product",
-      key: "/product",
       icon: <FileDoneOutlined style={{ color: "#ff6900" }} className="w-[16px]" />,
       label: (
         <Link className="flex justify-between" to="/product">

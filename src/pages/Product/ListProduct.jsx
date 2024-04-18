@@ -34,13 +34,13 @@ const ListProduct = () => {
       render: (_, record) => {
         return (
           <>
+          {console.log(record.productImage)}
             {record.productImage ? (
               <img
                 src={record.productImage}
                 width={50}
                 height={50}
                 className="inline object-cover rounded-sm"
-                alt={`{${record.name ? record.name : "Product Image"}}`}
               />
             ) : (
               <DefaultImages width={50} height={50} />
