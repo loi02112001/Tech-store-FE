@@ -1,0 +1,14 @@
+.swiper-wrapper {
+
+  & ~ .swiper-button-next,
+  & ~ .swiper-button-prev {
+    @apply px-6 py-8 rounded-md bg-white-overlay opacity-20 transition-all duration-500 ease-in-out hover:opacity-100;
+  }
+
+  &:hover {
+    & ~ .swiper-button-prev,
+    & ~ .swiper-button-next {
+      @apply opacity-100;
+    }
+  }
+}
