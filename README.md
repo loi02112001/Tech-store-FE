@@ -23,3 +23,14 @@ You need to install the Node version > 18 to install dependencies and run comman
    ```sh
    npm run dev
    ```
+
+## Run with docker
+1. Build image:
+   ```sh
+   docker build -t react-app:latest .
+   ```
+
+2. Run container
+   ```sh
+   docker run -d -p 80:80 --name react-server react-app
+   ```
