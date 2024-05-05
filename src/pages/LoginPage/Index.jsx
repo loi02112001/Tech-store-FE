@@ -1,24 +1,28 @@
 import { useDispatch, useSelector } from "react-redux"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, Navigate } from "react-router-dom"
 
 import { authAction } from "@/actions/authAction"
 
-import LOGO from "../../assets/images/logo.jpg"
+import { getToken } from "@/utils"
 import { Button, Col, Form, Input, Row } from "antd"
+import LOGO from "../../assets/images/logo.jpg"
+import { useEffect } from "react"
 
 const LoginPage = () => {
-  const navigate = useNavigate()
+  const token = getToken()
   const dispatch = useDispatch()
   const [form] = Form.useForm()
   const { loading } = useSelector((state) => state.auth)
 
-  const onSuccess = () => {
-    navigate("/")
+  const handleLogin = (data) => {
+    dispatch(authAction.login(data))
   }
 
-  const handleLogin = (data) => {
-    dispatch(authAction.login(data, onSuccess))
-  }
+  useEffect(() => {
+    if (token) {
+      return <Navigate to="/" />
+    }
+  }, [token])
 
   return (
     <Row className="w-full max-w-[70%] mx-auto  p-5 rounded-[6px] mt-[20vh] flex shadow-2xl">
