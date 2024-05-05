@@ -13,9 +13,10 @@ import ProtectedRoute from "./routes/ProtectedRoute"
 import { isCustomer, isManage } from "./utils"
 
 const LoginPage = React.lazy(() => import("./pages/LoginPage/Index"))
-const HomePage = React.lazy(() => import("./pages/HomePage/Index"))
+const ManageHomePage = React.lazy(() => import("./pages/HomePage/ManageHomePage"))
 const RegisterPage = React.lazy(() => import("./pages/RegisterPage/Index"))
 const ListProduct = React.lazy(() => import("./pages/Product/ListProduct"))
+const CustomerHomePage = React.lazy(() => import("./pages/HomePage/CustomerHomePage"))
 
 export default function App() {
   return (
@@ -26,9 +27,9 @@ export default function App() {
           <Route path={routes.auth.login} element={<LoginPage />} />
           <Route path={routes.auth.register} element={<RegisterPage />} />
           <Route element={<ProtectedRoute />}>
-            <Route element={<MainLayout />}>
-              <Route path={routes.auth.home} element={<HomePage />} />
-              {isManage() && (
+            <Route path={routes.auth.home} element={isManage() ? <ManageHomePage /> : <CustomerHomePage />} />
+            {isManage() && (
+              <Route element={<MainLayout />}>
                 <>
                   <Route path={routes.shop.shop} element={<UpdateShop />} />
                   <Route path={routes.product.add} element={<AddProduct />} />
@@ -38,10 +39,10 @@ export default function App() {
                   <Route path={routes.brand.list} element={<ListBrand />} />
                   <Route path={routes.employee.add} element={<AddEmployee />} />
                 </>
-              )}
+              </Route>
+            )}
 
-              {isCustomer() && <></>}
-            </Route>
+            {isCustomer() && <></>}
             <Route path="*" element={<PageNotFound />} />
           </Route>
         </Routes>

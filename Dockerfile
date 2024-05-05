@@ -15,7 +15,7 @@ RUN npm run build
 FROM nginx:latest as deploy
 
 COPY --from=build /techStore/dist /techStoreApplication
- 
+
 COPY nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80/tcp
