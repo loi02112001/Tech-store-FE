@@ -41,7 +41,7 @@ const verify = (data, onSuccess = () => {}) => {
   }
 }
 
-const login = (payload, onSuccess = () => {}) => {
+const login = (payload) => {
   return async (dispatch) => {
     dispatch({ type: constants.LOGIN_REQUEST })
     try {
@@ -49,9 +49,7 @@ const login = (payload, onSuccess = () => {}) => {
       const { data, code } = response.data
       if (code === 200) {
         setToken(data.accessToken)
-        dispatch({ type: constants.LOGIN_SUCCESS })
-        toast.success("Đăng nhập thành công")
-        onSuccess()
+        window.location.href = "/"
       }
     } catch (error) {
       console.error(error)

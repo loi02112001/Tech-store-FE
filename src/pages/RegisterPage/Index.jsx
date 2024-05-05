@@ -1,11 +1,9 @@
-import { useDispatch, useSelector } from "react-redux"
-import { Link, useNavigate } from "react-router-dom"
-
 import { authAction } from "@/actions/authAction"
-
-import LOGO from "../../assets/images/logo.jpg"
 import { Button, Col, Form, Input, Radio, Row } from "antd"
 import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { Link, Navigate, useNavigate } from "react-router-dom"
+import LOGO from "../../assets/images/logo.jpg"
 
 const Register = () => {
   const navigate = useNavigate()
@@ -38,6 +36,12 @@ const Register = () => {
     }
     dispatch(authAction.verify({ ...registerInfo, ...values }, onVerifySuccess))
   }
+
+  useEffect(() => {
+    if (token) {
+      return <Navigate to="/" />
+    }
+  }, [token])
 
   return (
     <Row className="w-full max-w-[70%] mx-auto p-5 rounded-[6px] mt-[20vh] flex shadow-2xl">
