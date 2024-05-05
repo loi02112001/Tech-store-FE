@@ -1,10 +1,8 @@
+import Header from "@/components/Header/ManageHeader"
+import Sidebar from "@/components/Sidebar"
+import { Layout } from "antd"
 import { useState } from "react"
 import { Outlet } from "react-router-dom"
-
-import Header from "@/components/Header"
-import Sidebar from "@/components/Sidebar"
-
-import { Layout } from "antd"
 
 import "./index.css"
 
