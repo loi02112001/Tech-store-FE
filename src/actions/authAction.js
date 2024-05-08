@@ -29,7 +29,7 @@ const verify = (data, onSuccess = () => {}) => {
     try {
       const response = await authService.verify(data)
       const { code } = response.data
-      if (code === 200) {
+      if (code === 201) {
         dispatch({ type: constants.VERIFY_SUCCESS })
         toast.success("Xác thực thành công")
         onSuccess()

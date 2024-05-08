@@ -1,15 +1,17 @@
 import { authAction } from "@/actions/authAction"
 import { Button, Col, Form, Input, Radio, Row } from "antd"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, Navigate, useNavigate } from "react-router-dom"
 import LOGO from "../../assets/images/logo.jpg"
+import { getToken } from "@/utils"
 
 const Register = () => {
   const navigate = useNavigate()
   const [step, setStep] = useState(1)
   const [form] = Form.useForm()
   const dispatch = useDispatch()
+  const token = getToken();
   const [registerInfo, setRegisterInfo] = useState({
     name: "",
     email: "",

@@ -11,11 +11,10 @@ const UserDropdown = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const handleLogout = useCallback(() => {
+  const handleLogout = () => {
     removeToken("token")
-    dispatch(authAction.logout())
     navigate("/login")
-  }, [dispatch, navigate])
+  }
 
   const items = useMemo(
     () => [
