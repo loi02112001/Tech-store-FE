@@ -1,6 +1,7 @@
+import { toast } from "react-toastify"
+
 import { constants } from "@/constants"
 import { categoryService } from "@/services/categories"
-import { toast } from "react-toastify"
 
 const getCategories = () => {
   return async (dispatch) => {

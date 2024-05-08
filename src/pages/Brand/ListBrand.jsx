@@ -1,36 +1,38 @@
-import { brandAction } from "@/actions/brandAction"
-import { Skeleton, Table } from "antd"
-import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import AddEditBrand from "./AddEditBrand"
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { brandAction } from '@/actions/brandAction'
+
+import AddEditBrand from './AddEditBrand'
+import { Skeleton, Table } from 'antd'
 
 function ListBrand() {
   const dispatch = useDispatch()
   const { loading, data: brands } = useSelector((state) => state.brands)
   const brandTables = [
     {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-      align: "center",
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+      align: 'center'
     },
     {
-      title: "Tên",
-      dataIndex: "name",
-      key: "name",
+      title: 'Tên',
+      dataIndex: 'name',
+      key: 'name'
     },
     {
-      title: "Mô tả",
-      dataIndex: "description",
-      key: "description",
-      align: "center",
+      title: 'Mô tả',
+      dataIndex: 'description',
+      key: 'description',
+      align: 'center'
     },
     {
-      title: "Hành động",
-      dataIndex: "",
-      key: "x",
-      render: (_, record) => <AddEditBrand brand={record} classButton="link no-underline" />,
-    },
+      title: 'Hành động',
+      dataIndex: '',
+      key: 'x',
+      render: (_, record) => <AddEditBrand brand={record} classButton="link no-underline" />
+    }
   ]
 
   useEffect(() => {

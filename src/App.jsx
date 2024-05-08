@@ -1,21 +1,22 @@
-import React, { Suspense } from "react"
-import { Route, Routes } from "react-router-dom"
-import ScrollToTop from "./components/ScrollToTop/Index"
-import { routes } from "./configs/routes"
-import MainLayout from "./layouts/MainLayout"
-import ListBrand from "./pages/Brand/ListBrand"
-import ListCategory from "./pages/Category/ListCategory"
-import AddEmployee from "./pages/Employee/AddEmployee"
-import PageNotFound from "./pages/PageNotFound/PageNotFound"
-import AddProduct from "./pages/Product/AddProduct"
-import ProtectedRoute from "./routes/ProtectedRoute"
-import { isCustomer, isManage } from "./utils"
+import React, { Suspense } from 'react'
+import { Route, Routes } from 'react-router-dom'
 
-const LoginPage = React.lazy(() => import("./pages/LoginPage/Index"))
-const ManageHomePage = React.lazy(() => import("./pages/HomePage/ManageHomePage"))
-const RegisterPage = React.lazy(() => import("./pages/RegisterPage/Index"))
-const ListProduct = React.lazy(() => import("./pages/Product/ListProduct"))
-const CustomerHomePage = React.lazy(() => import("./pages/HomePage/CustomerHomePage"))
+import ScrollToTop from './components/ScrollToTop/Index'
+import { routes } from './configs/routes'
+import MainLayout from './layouts/MainLayout'
+import ListBrand from './pages/Brand/ListBrand'
+import ListCategory from './pages/Category/ListCategory'
+import AddEmployee from './pages/Employee/AddEmployee'
+import PageNotFound from './pages/PageNotFound/PageNotFound'
+import AddProduct from './pages/Product/AddProduct'
+import ProtectedRoute from './routes/ProtectedRoute'
+import { isCustomer, isManage } from './utils'
+
+const LoginPage = React.lazy(() => import('./pages/LoginPage/Index'))
+const ManageHomePage = React.lazy(() => import('./pages/HomePage/ManageHomePage'))
+const RegisterPage = React.lazy(() => import('./pages/RegisterPage/Index'))
+const ListProduct = React.lazy(() => import('./pages/Product/ListProduct'))
+const CustomerHomePage = React.lazy(() => import('./pages/HomePage/CustomerHomePage'))
 
 export default function App() {
   return (
@@ -52,9 +53,7 @@ export default function App() {
               </Route>
             )}
 
-            {isCustomer() && (
-              <Route path={routes.auth.home} element={<CustomerHomePage />} />
-            )}
+            {isCustomer() && <Route path={routes.auth.home} element={<CustomerHomePage />} />}
             <Route path="*" element={<PageNotFound />} />
           </Route>
         </Routes>

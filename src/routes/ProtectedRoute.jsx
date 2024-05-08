@@ -1,5 +1,6 @@
-import { getToken } from "@/utils"
-import { Navigate, Outlet } from "react-router-dom"
+import { Navigate, Outlet } from 'react-router-dom'
+
+import { getToken } from '@/utils'
 
 const ProtectedRoute = () => {
   const token = getToken()

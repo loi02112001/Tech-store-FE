@@ -1,10 +1,12 @@
-import { authAction } from "@/actions/authAction"
-import { removeToken } from "@/utils"
-import { LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from "@ant-design/icons"
-import { Avatar, Dropdown } from "antd"
-import { createElement, useCallback, useEffect, useMemo } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { Link, useNavigate } from "react-router-dom"
+import { createElement, useEffect, useMemo } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
+
+import { authAction } from '@/actions/authAction'
+import { removeToken } from '@/utils'
+
+import { LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons'
+import { Avatar, Dropdown } from 'antd'
 
 const UserDropdown = () => {
   const profile = useSelector((state) => state.auth.data)
@@ -12,32 +14,32 @@ const UserDropdown = () => {
   const dispatch = useDispatch()
 
   const handleLogout = () => {
-    removeToken("token")
-    navigate("/login")
+    removeToken('token')
+    navigate('/login')
   }
 
   const items = useMemo(
     () => [
       {
-        key: "link-to-profile",
+        key: 'link-to-profile',
         label: (
           <Link to="/store-info" className="flex gap-2">
             <UserOutlined />
             Tài khoản
           </Link>
-        ),
+        )
       },
       {
-        key: "Đăng xuất",
+        key: 'Đăng xuất',
         label: (
           <div onClick={handleLogout} className="flex gap-2 cursor-pointer">
             <LogoutOutlined />
             Đăng xuất
           </div>
-        ),
-      },
+        )
+      }
     ],
-    [handleLogout],
+    [handleLogout]
   )
 
   useEffect(() => {
@@ -60,7 +62,7 @@ const ManageHeader = ({ collapsed, changeCollapsed }) => {
   return (
     <div className="flex justify-between p-3 bg-white rounded">
       {createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-        onClick: () => changeCollapsed(),
+        onClick: () => changeCollapsed()
       })}
       <div className="w-fit">
         <UserDropdown />

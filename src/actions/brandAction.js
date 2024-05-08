@@ -1,6 +1,7 @@
+import { toast } from "react-toastify"
+
 import { constants } from "@/constants"
 import { brandService } from "@/services/brand"
-import { toast } from "react-toastify"
 
 const getBrands = () => {
   return async (dispatch) => {

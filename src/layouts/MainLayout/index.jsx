@@ -1,10 +1,12 @@
-import Header from "@/components/Header/ManageHeader"
-import Sidebar from "@/components/Sidebar"
-import { Layout } from "antd"
-import { useState } from "react"
-import { Outlet } from "react-router-dom"
+import { useState } from 'react'
+import { Outlet } from 'react-router-dom'
 
-import "./index.css"
+import Header from '@/components/Header/ManageHeader'
+import Sidebar from '@/components/Sidebar'
+
+import { Layout } from 'antd'
+
+import './index.css'
 
 const { Content } = Layout
 
@@ -16,15 +18,16 @@ const HomePage = () => {
   }
 
   return (
-    <Layout style={{ minHeight: "100vh", overflowX: "hidden" }}>
-      <Sidebar collapsed={collapsed} style={{ background: "#FFF" }} />
+    <Layout style={{ minHeight: '100vh', overflowX: 'hidden' }}>
+      <Sidebar collapsed={collapsed} style={{ background: '#FFF' }} />
       <Layout className="site-layout" style={{ marginLeft: 40 }}>
         <Header
           className="site-layout-background"
-          style={{ padding: 0, background: "#001f3f" }}
+          style={{ padding: 0, background: '#001f3f' }}
           collapsed={collapsed}
-          changeCollapsed={toggleSidebar}></Header>
-        <Content style={{ marginTop: "20px", marginRight: "20px" }}>
+          changeCollapsed={toggleSidebar}
+        ></Header>
+        <Content style={{ marginTop: '20px', marginRight: '20px' }}>
           <Outlet />
         </Content>
       </Layout>

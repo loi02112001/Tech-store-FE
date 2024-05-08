@@ -1,15 +1,11 @@
-import { useState } from "react"
-import cartSvg from "../../assets/images/cart.svg"
-import userSvg from "../../assets/images/user.svg"
-import SearchInputHeader from "../common/SearchInputHeader"
+import cartSvg from '../../assets/images/cart.svg'
+import userSvg from '../../assets/images/user.svg'
+import SearchInputHeader from '../common/SearchInputHeader'
 
 function CustomerHeader() {
-  const [searchValue, setSearchValue] = useState("")
-  const [loading, setLoading] = useState(false)
-
   return (
     <nav className="sticky top-0 z-[1] py-5 bg-[#E30019]">
-      <div className="container flex justify-between mx-auto">
+      <div className="container flex justify-between">
         <a className="text-3xl font-semibold text-white" href="/">
           TechStore<span className="opacity-40">.</span>
         </a>

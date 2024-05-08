@@ -1,5 +1,0 @@
-.ant-form-item-control {
-  & div + div {
-    @apply hidden;
-  }
-}

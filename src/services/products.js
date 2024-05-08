@@ -1,11 +1,11 @@
-import { httpDelete, httpGet, httpPost, httpPut } from "../configs/api"
+import { httpGet, httpPost, httpPut } from "../configs/api"
 
 const addProduct = (data) => {
   return httpPost("/product/create", data)
 }
 
 const getProducts = () => {
-  return httpGet("/product/get")
+  return httpGet("/product/getAllProduct")
 }
 
 const updateProduct = (id, data) => {
@@ -17,7 +17,7 @@ const getProductByName = (name) => {
 }
 
 const getProductById = (id) => {
-  return httpGet(`/product/${id}`)
+  return httpGet(`/product/detail/${id}`)
 }
 
 const changeProductStatus = (id, data) => {

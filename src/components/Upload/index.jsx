@@ -1,6 +1,6 @@
-import { useRef } from "react"
+import { useRef } from 'react'
 
-import DefaultImages from "@/assets/icons/DefaultImage"
+import DefaultImages from '@/assets/icons/DefaultImage'
 
 export default function Upload(props) {
   const { image, setImage, setFile, onImageSelected } = props
@@ -15,7 +15,7 @@ export default function Upload(props) {
     setImage(URL.createObjectURL(file))
     setFile(file)
     onImageSelected()
-    inputRef.current.value = ""
+    inputRef.current.value = ''
   }
 
   return (
@@ -25,7 +25,7 @@ export default function Upload(props) {
         accept="image/jpeg, image/png, image/jpg"
         ref={inputRef}
         onChange={handleImageChange}
-        style={{ display: "none" }}
+        style={{ display: 'none' }}
       />
       {image ? <img src={image} className="w-[200px] h-[133px]" /> : <DefaultImages />}
     </div>

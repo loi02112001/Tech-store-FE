@@ -1,9 +1,9 @@
 import { toast } from "react-toastify"
 
+import { constants } from "@/constants"
 import { setToken } from "@/utils"
 
 import { authService } from "../services/auth"
-import { constants } from "@/constants"
 
 const register = (data, onSuccess = () => {}) => {
   return async (dispatch) => {

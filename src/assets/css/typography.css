@@ -39,3 +39,7 @@ body,
   }
 }
 
+.container {
+  @apply !max-w-none;
+}
+

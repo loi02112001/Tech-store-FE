@@ -31,6 +31,6 @@ export const authReducer = (state = initialState, action) => {
         loading: false,
       }
     default:
-      return {...state}
+      return { ...state }
   }
 }

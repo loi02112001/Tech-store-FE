@@ -1,25 +1,27 @@
-import { authAction } from "@/actions/authAction"
-import { Button, Col, Form, Input, Radio, Row } from "antd"
-import { useState, useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { Link, Navigate, useNavigate } from "react-router-dom"
-import LOGO from "../../assets/images/logo.jpg"
-import { getToken } from "@/utils"
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
+
+import { authAction } from '@/actions/authAction'
+import { getToken } from '@/utils'
+
+import LOGO from '../../assets/images/logo.jpg'
+import { Button, Col, Form, Input, Radio, Row } from 'antd'
 
 const Register = () => {
   const navigate = useNavigate()
   const [step, setStep] = useState(1)
   const [form] = Form.useForm()
   const dispatch = useDispatch()
-  const token = getToken();
+  const token = getToken()
   const [registerInfo, setRegisterInfo] = useState({
-    name: "",
-    email: "",
-    password: "",
-    phoneNumber: "",
-    address: "",
+    name: '',
+    email: '',
+    password: '',
+    phoneNumber: '',
+    address: '',
     dob: 0,
-    gender: "",
+    gender: ''
   })
   const { loading } = useSelector((state) => state.auth)
 
@@ -34,7 +36,7 @@ const Register = () => {
 
   const onVerify = (values) => {
     const onVerifySuccess = () => {
-      navigate("/login")
+      navigate('/login')
     }
     dispatch(authAction.verify({ ...registerInfo, ...values }, onVerifySuccess))
   }
@@ -61,19 +63,21 @@ const Register = () => {
             className="w-full"
             name="basic"
             labelCol={{
-              span: 6,
+              span: 6
             }}
             wrapperCol={{
-              span: 20,
+              span: 20
             }}
             onFinish={onVerify}
-            autoComplete="off">
+            autoComplete="off"
+          >
             <Form.Item
               label="Mã xác thực"
               name="otp"
               labelAlign="left"
-              rules={[{ required: true, message: "Vui lòng nhập mã otp!" }]}
-              sx={{ justifyContent: "space-between", alignItems: "center", marginTop: 4 }}>
+              rules={[{ required: true, message: 'Vui lòng nhập mã otp!' }]}
+              sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}
+            >
               <Input style={{ height: 40 }} placeholder="Nhập mã otp" type="text" />
             </Form.Item>
 
@@ -96,20 +100,22 @@ const Register = () => {
             className="w-full"
             name="basic"
             labelCol={{
-              span: 6,
+              span: 6
             }}
             wrapperCol={{
-              span: 20,
+              span: 20
             }}
             onFinish={onRegister}
-            autoComplete="off">
+            autoComplete="off"
+          >
             {/* Các trường thông tin mới */}
             <Form.Item
               label="Họ và tên"
               name="name"
               labelAlign="left"
-              rules={[{ required: true, message: "Vui lòng nhập họ và tên!" }]}
-              sx={{ justifyContent: "space-between", alignItems: "center", marginTop: 4 }}>
+              rules={[{ required: true, message: 'Vui lòng nhập họ và tên!' }]}
+              sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}
+            >
               <Input style={{ height: 40 }} placeholder="Họ và tên" type="text" />
             </Form.Item>
 
@@ -118,10 +124,11 @@ const Register = () => {
               name="email"
               labelAlign="left"
               rules={[
-                { required: true, message: "Vui lòng nhập địa chỉ email!" },
-                { type: "email", message: "Địa chỉ email không hợp lệ!" },
+                { required: true, message: 'Vui lòng nhập địa chỉ email!' },
+                { type: 'email', message: 'Địa chỉ email không hợp lệ!' }
               ]}
-              sx={{ justifyContent: "space-between", alignItems: "center", marginTop: 4 }}>
+              sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}
+            >
               <Input style={{ height: 40 }} placeholder="Email" type="email" />
             </Form.Item>
 
@@ -132,14 +139,15 @@ const Register = () => {
               rules={[
                 {
                   required: true,
-                  message: "Vui lòng nhập mật khẩu!",
+                  message: 'Vui lòng nhập mật khẩu!'
                 },
                 {
                   min: 6,
-                  message: "Mật khẩu phải có ít nhất 6 ký tự!",
-                },
+                  message: 'Mật khẩu phải có ít nhất 6 ký tự!'
+                }
               ]}
-              sx={{ justifyContent: "space-between", alignItems: "center", marginTop: 4 }}>
+              sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}
+            >
               <Input.Password style={{ height: 40 }} placeholder="Mật khẩu" type="password" />
             </Form.Item>
 
@@ -148,13 +156,14 @@ const Register = () => {
               name="phoneNumber"
               labelAlign="left"
               rules={[
-                { required: true, message: "Vui lòng nhập số điện thoại!" },
+                { required: true, message: 'Vui lòng nhập số điện thoại!' },
                 {
                   pattern: /^[0-9]{10}$/,
-                  message: "Số điện thoại không đúng định dạng",
-                },
+                  message: 'Số điện thoại không đúng định dạng'
+                }
               ]}
-              sx={{ justifyContent: "space-between", alignItems: "center", marginTop: 4 }}>
+              sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}
+            >
               <Input style={{ height: 40 }} placeholder="Số điện thoại" type="text" />
             </Form.Item>
 
@@ -162,8 +171,9 @@ const Register = () => {
               label="Địa chỉ"
               name="address"
               labelAlign="left"
-              rules={[{ required: true, message: "Vui lòng nhập địa chỉ!" }]}
-              sx={{ justifyContent: "space-between", alignItems: "center", marginTop: 4 }}>
+              rules={[{ required: true, message: 'Vui lòng nhập địa chỉ!' }]}
+              sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}
+            >
               <Input style={{ height: 40 }} placeholder="Địa chỉ" type="text" />
             </Form.Item>
 
@@ -173,8 +183,9 @@ const Register = () => {
                   label="Ngày sinh"
                   name="dob"
                   labelAlign="left"
-                  rules={[{ required: true, message: "Vui lòng nhập ngày sinh!" }]}
-                  sx={{ justifyContent: "space-between", alignItems: "center", marginTop: 4 }}>
+                  rules={[{ required: true, message: 'Vui lòng nhập ngày sinh!' }]}
+                  sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}
+                >
                   <Input style={{ height: 40 }} placeholder="Ngày sinh" type="date" />
                 </Form.Item>
               </Col>
@@ -183,8 +194,9 @@ const Register = () => {
                   label="Giới tính"
                   name="gender"
                   labelAlign="left"
-                  rules={[{ required: true, message: "Vui lòng chọn giới tính!" }]}
-                  sx={{ justifyContent: "space-between", alignItems: "center", marginTop: 4 }}>
+                  rules={[{ required: true, message: 'Vui lòng chọn giới tính!' }]}
+                  sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}
+                >
                   <Radio.Group className="flex gap-10">
                     <Radio value={1}>Nam</Radio>
                     <Radio value={0}>Nữ</Radio>
@@ -193,7 +205,13 @@ const Register = () => {
               </Col>
             </Row>
 
-            <Button className="mt-4 mb-5 h-[40px]" block type="primary" htmlType="submit" loading={loading}>
+            <Button
+              className="button-primary mt-4 mb-5 h-[40px]"
+              block
+              type="primary"
+              htmlType="submit"
+              loading={loading}
+            >
               Đăng ký
             </Button>
           </Form>

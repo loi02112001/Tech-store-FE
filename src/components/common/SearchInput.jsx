@@ -1,9 +1,9 @@
-import { useEffect } from "react"
+import { useEffect } from 'react'
 
-import { useDebounced } from "@/hooks/useDebounces"
+import { useDebounced } from '@/hooks/useDebounces'
 
-import { Space } from "antd"
-import Search from "antd/es/input/Search"
+import { Space } from 'antd'
+import Search from 'antd/es/input/Search'
 
 export default function SearchInput({ keyword, onChange, onSearch, placeholder, loading }) {
   let keywordSearch = useDebounced(keyword, 300)
@@ -18,7 +18,7 @@ export default function SearchInput({ keyword, onChange, onSearch, placeholder, 
         <Search
           enterButton
           loading={loading}
-          placeholder={placeholder ? placeholder : "Tìm kiếm..."}
+          placeholder={placeholder ? placeholder : 'Tìm kiếm...'}
           name="search"
           onChange={(e) => onChange(e.target.value)}
         />

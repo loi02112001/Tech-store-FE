@@ -1,12 +1,11 @@
-import { useDispatch, useSelector } from "react-redux"
-import { Link, Navigate } from "react-router-dom"
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, Navigate } from 'react-router-dom'
 
-import { authAction } from "@/actions/authAction"
+import { authAction } from '@/actions/authAction'
+import { getToken } from '@/utils'
 
-import { getToken } from "@/utils"
-import { Button, Col, Form, Input, Row } from "antd"
-import LOGO from "../../assets/images/logo.jpg"
-import { useEffect } from "react"
+import LOGO from '../../assets/images/logo.jpg'
+import { Button, Col, Form, Input, Row } from 'antd'
 
 const LoginPage = () => {
   const token = getToken()
@@ -32,13 +31,14 @@ const LoginPage = () => {
           form={form}
           className="w-full"
           labelCol={{
-            span: 6,
+            span: 6
           }}
           wrapperCol={{
-            span: 20,
+            span: 20
           }}
           onFinish={handleLogin}
-          autoComplete="off">
+          autoComplete="off"
+        >
           <div className="flex items-center justify-center mt-5">
             <h1 className="h4 text-center">Đăng nhập</h1>
           </div>
@@ -48,10 +48,11 @@ const LoginPage = () => {
             labelAlign="left"
             name="email"
             rules={[
-              { required: true, message: "Vui lòng nhập địa chỉ email!" },
-              { type: "email", message: "Địa chỉ email không hợp lệ!" },
+              { required: true, message: 'Vui lòng nhập địa chỉ email!' },
+              { type: 'email', message: 'Địa chỉ email không hợp lệ!' }
             ]}
-            sx={{ justifyContent: "space-between", alignItems: "center", marginTop: 4 }}>
+            sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}
+          >
             <Input style={{ height: 40 }} placeholder="Email" type="email" />
           </Form.Item>
 
@@ -62,14 +63,15 @@ const LoginPage = () => {
             rules={[
               {
                 required: true,
-                message: "Vui lòng nhập mật khẩu!",
+                message: 'Vui lòng nhập mật khẩu!'
               },
               {
                 min: 6,
-                message: "Mật khẩu phải có ít nhất 6 ký tự!",
-              },
+                message: 'Mật khẩu phải có ít nhất 6 ký tự!'
+              }
             ]}
-            sx={{ justifyContent: "space-between", alignItems: "center", marginTop: 4 }}>
+            sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}
+          >
             <Input.Password style={{ height: 40 }} placeholder="Mật khẩu" type="password" />
           </Form.Item>
 
@@ -79,13 +81,13 @@ const LoginPage = () => {
             </Link>
           </div>
 
-          <Button className="mb-5 h-[40px]" block type="primary" htmlType="submit" loading={loading}>
+          <Button className="mb-5 h-[40px] button-primary" block type="primary" htmlType="submit" loading={loading}>
             Đăng nhập
           </Button>
         </Form>
 
         <div className="text-center">
-          Bạn chưa có tài khoản?{" "}
+          Bạn chưa có tài khoản?{' '}
           <Link className="link no-underline" to="/register">
             Đăng ký
           </Link>

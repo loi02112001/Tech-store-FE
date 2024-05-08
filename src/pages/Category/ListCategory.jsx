@@ -1,36 +1,38 @@
-import { categoryAction } from "@/actions/categoryAction"
-import { Skeleton, Table } from "antd"
-import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import AddEditCategory from "./AddEditCategory"
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { categoryAction } from '@/actions/categoryAction'
+
+import AddEditCategory from './AddEditCategory'
+import { Skeleton, Table } from 'antd'
 
 function ListCategory() {
   const dispatch = useDispatch()
   const { loading, data: categories } = useSelector((state) => state.categories)
   const categoryTables = [
     {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-      align: "center",
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+      align: 'center'
     },
     {
-      title: "Tên",
-      dataIndex: "name",
-      key: "name",
+      title: 'Tên',
+      dataIndex: 'name',
+      key: 'name'
     },
     {
-      title: "Mô tả",
-      dataIndex: "description",
-      key: "description",
-      align: "center",
+      title: 'Mô tả',
+      dataIndex: 'description',
+      key: 'description',
+      align: 'center'
     },
     {
-      title: "Hành động",
-      dataIndex: "",
-      key: "x",
-      render: (_, record) => <AddEditCategory category={record} classButton="link no-underline"/>,
-    },
+      title: 'Hành động',
+      dataIndex: '',
+      key: 'x',
+      render: (_, record) => <AddEditCategory category={record} classButton="link no-underline" />
+    }
   ]
 
   useEffect(() => {

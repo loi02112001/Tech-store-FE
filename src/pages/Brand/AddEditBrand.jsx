@@ -1,10 +1,12 @@
-import { brandAction } from "@/actions/brandAction"
-import { Form, Input, Modal, Row } from "antd"
-import TextArea from "antd/es/input/TextArea"
-import { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
+import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 
-function AddEditBrand({ brand = {}, classButton = "", textButton = "Sửa" }) {
+import { brandAction } from '@/actions/brandAction'
+
+import { Form, Input, Modal, Row } from 'antd'
+import TextArea from 'antd/es/input/TextArea'
+
+function AddEditBrand({ brand = {}, classButton = '', textButton = 'Sửa' }) {
   const [form] = Form.useForm()
   const dispatch = useDispatch()
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -16,7 +18,7 @@ function AddEditBrand({ brand = {}, classButton = "", textButton = "Sửa" }) {
     setIsModalOpen(false)
   }
   const ruleFormItem = {
-    required: "Vui lòng nhập ${label}!",
+    required: 'Vui lòng nhập ${label}!'
   }
 
   const handleSubmit = (values) => {
@@ -36,17 +38,19 @@ function AddEditBrand({ brand = {}, classButton = "", textButton = "Sửa" }) {
         {textButton}
       </button>
       <Modal
-        title={brand?.id ? "Cập nhật thương hiệu" : "Thêm thương hiệu"}
+        title={brand?.id ? 'Cập nhật thương hiệu' : 'Thêm thương hiệu'}
         open={isModalOpen}
         onOk={handleOk}
-        onCancel={handleCancel}>
+        onCancel={handleCancel}
+      >
         <Form form={form} onFinish={handleSubmit}>
           <Row>
             <Form.Item
               className="flex w-full"
               name="name"
               label="Tên thương hiệu"
-              rules={[{ required: true, message: ruleFormItem.required }]}>
+              rules={[{ required: true, message: ruleFormItem.required }]}
+            >
               <Input placeholder="Nhập tên thương hiệu" name="name" />
             </Form.Item>
           </Row>
@@ -55,13 +59,14 @@ function AddEditBrand({ brand = {}, classButton = "", textButton = "Sửa" }) {
               className="flex w-full"
               name="description"
               label="Mô tả"
-              rules={[{ required: true, message: ruleFormItem.required }]}>
+              rules={[{ required: true, message: ruleFormItem.required }]}
+            >
               <TextArea
                 placeholder="Nhập mô tả thương hiệu"
                 name="description"
                 autoSize={{
                   minRows: 2,
-                  maxRows: 6,
+                  maxRows: 6
                 }}
               />
             </Form.Item>

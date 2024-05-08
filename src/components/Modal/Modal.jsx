@@ -1,5 +1,6 @@
-import { Modal } from "antd"
-import { useState } from "react"
+import { useState } from 'react'
+
+import { Modal } from 'antd'
 
 function CustomModal({ customButton, title, handleClick, content }) {
   const [isModalOpen, setIsModalOpen] = useState(false)
