@@ -8,7 +8,6 @@ import ListCategory from "./pages/Category/ListCategory"
 import AddEmployee from "./pages/Employee/AddEmployee"
 import PageNotFound from "./pages/PageNotFound/PageNotFound"
 import AddProduct from "./pages/Product/AddProduct"
-import UpdateShop from "./pages/Shop"
 import ProtectedRoute from "./routes/ProtectedRoute"
 import { isCustomer, isManage } from "./utils"
 
@@ -27,7 +26,7 @@ export default function App() {
           <Route path={routes.auth.login} element={<LoginPage />} />
           <Route path={routes.auth.register} element={<RegisterPage />} />
           <Route element={<ProtectedRoute />}>
-            <Route
+            {/* <Route
               path={routes.auth.home}
               element={
                 isManage() ? (
@@ -38,10 +37,11 @@ export default function App() {
                   <CustomerHomePage />
                 )
               }
-            />
+            /> */}
             {isManage() && (
               <Route element={<MainLayout />}>
                 <>
+                  <Route path={routes.auth.home} element={<ManageHomePage />} />
                   <Route path={routes.product.add} element={<AddProduct />} />
                   <Route path={routes.product.list} element={<ListProduct />} />
                   <Route path={routes.product.edit} element={<AddProduct />} />
@@ -52,7 +52,9 @@ export default function App() {
               </Route>
             )}
 
-            {isCustomer() && <></>}
+            {isCustomer() && (
+              <Route path={routes.auth.home} element={<CustomerHomePage />} />
+            )}
             <Route path="*" element={<PageNotFound />} />
           </Route>
         </Routes>

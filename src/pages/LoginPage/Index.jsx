@@ -13,16 +13,14 @@ const LoginPage = () => {
   const dispatch = useDispatch()
   const [form] = Form.useForm()
   const { loading } = useSelector((state) => state.auth)
-
+  console.log(loading)
   const handleLogin = (data) => {
     dispatch(authAction.login(data))
   }
 
-  useEffect(() => {
-    if (token) {
-      return <Navigate to="/" />
-    }
-  }, [token])
+  if (token) {
+    return <Navigate to="/" />
+  }
 
   return (
     <Row className="w-full max-w-[70%] mx-auto  p-5 rounded-[6px] mt-[20vh] flex shadow-2xl">

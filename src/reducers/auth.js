@@ -21,6 +21,7 @@ export const authReducer = (state = initialState, action) => {
     case constants.GET_PROFILE_SUCCESS:
       return {
         ...state,
+        loading: false,
         data: action.data,
       }
     case constants.LOGIN_FAILURE:
@@ -30,6 +31,6 @@ export const authReducer = (state = initialState, action) => {
         loading: false,
       }
     default:
-      return state
+      return {...state}
   }
 }

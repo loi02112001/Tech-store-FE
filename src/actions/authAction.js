@@ -49,6 +49,7 @@ const login = (payload) => {
       const { data, code } = response.data
       if (code === 200) {
         setToken(data.accessToken)
+        dispatch({ type: constants.LOGIN_SUCCESS })
         window.location.href = "/"
       }
     } catch (error) {
