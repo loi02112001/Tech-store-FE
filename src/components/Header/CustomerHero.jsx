@@ -1,7 +1,5 @@
 import Slider from 'react-slick'
 
-import './CustomerHero.css'
-
 const CustomerHero = () => {
   const settings = {
     dots: false,

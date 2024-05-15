@@ -12,7 +12,7 @@ const LoginPage = () => {
   const dispatch = useDispatch()
   const [form] = Form.useForm()
   const { loading } = useSelector((state) => state.auth)
-  console.log(loading)
+
   const handleLogin = (data) => {
     dispatch(authAction.login(data))
   }
