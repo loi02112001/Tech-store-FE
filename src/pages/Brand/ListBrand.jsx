@@ -1,14 +1,13 @@
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
-import { brandAction } from '@/actions/brandAction'
+import useBrandStore from '@/store/brandStore'
 
 import AddEditBrand from './AddEditBrand'
 import { Skeleton, Table } from 'antd'
 
 function ListBrand() {
-  const dispatch = useDispatch()
-  const { loading, data: brands } = useSelector((state) => state.brands)
+  const { loading, brands, getBrands } = useBrandStore()
+
   const brandTables = [
     {
       title: 'ID',
@@ -36,7 +35,7 @@ function ListBrand() {
   ]
 
   useEffect(() => {
-    dispatch(brandAction.getBrands())
+    getBrands()
   }, [])
 
   return loading ? (

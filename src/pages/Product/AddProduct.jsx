@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import { brandAction } from '@/actions/brandAction'
-import { categoryAction } from '@/actions/categoryAction'
-import { productActions } from '@/actions/productAction'
 import DefaultImage from '@/assets/icons/DefaultImage'
+import useBrandStore from '@/store/brandStore'
+import useCategoryStore from '@/store/categoryStore'
+import useProductStore from '@/store/productStore'
 
 import { Col, Form, Input, Row, Select } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
@@ -14,19 +13,18 @@ import TextArea from 'antd/es/input/TextArea'
 const AddProduct = () => {
   const { id } = useParams()
   const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const categories = useSelector((state) => state.categories.data)
-  const productInfo = useSelector((state) => state.products.productInfo)
-  const brands = useSelector((state) => state.brands.data)
+  const { product: productInfo, addProduct, getProductById, updateProduct } = useProductStore()
+  const { categories, getCategories } = useCategoryStore()
+  const { brands, getBrands } = useBrandStore()
   const [form] = Form.useForm()
   const [previewImg, setPreviewImg] = useState()
   const [img, setImg] = useState(null)
 
   useEffect(() => {
-    dispatch(categoryAction.getCategories())
-    dispatch(brandAction.getBrands())
+    getCategories()
+    getBrands()
     if (id) {
-      dispatch(productActions.getProductById(id))
+      getProductById(id)
     }
   }, [])
 
@@ -53,7 +51,6 @@ const AddProduct = () => {
   }))
 
   const handleAddProduct = (values) => {
-    console.log(values)
     if (values.name.trim() == '' || values.price == '' || values.importPrice == '' || values.description.trim() == '') {
       return
     }
@@ -66,17 +63,13 @@ const AddProduct = () => {
     formData.append('importPrice', values.importPrice)
     formData.append('price', values.price)
     if (id) {
-      dispatch(
-        productActions.updateProduct(id, formData, () => {
-          navigate('/product')
-        })
-      )
+      updateProduct(id, formData, () => {
+        navigate('/product')
+      })
     } else {
-      dispatch(
-        productActions.addProduct(formData, () => {
-          navigate('/product')
-        })
-      )
+      addProduct(formData, () => {
+        navigate('/product')
+      })
     }
   }
 
@@ -150,8 +143,7 @@ const AddProduct = () => {
                       return Promise.reject(new Error('Tên sản phẩm không được chứa quá nhiều khoảng trắng liên tiếp!'))
                     }
                   })
-                ]}
-              >
+                ]}>
                 <Input placeholder="Nhập tên sản phẩm" name="name" />
               </Form.Item>
             </Col>
@@ -160,8 +152,7 @@ const AddProduct = () => {
                 className="flex items-center w-full"
                 name="category"
                 label="Danh mục sản phẩm"
-                rules={[{ required: true, message: ruleFormItem.required }]}
-              >
+                rules={[{ required: true, message: ruleFormItem.required }]}>
                 <Select
                   className="w-full"
                   mode="multiple"
@@ -178,8 +169,7 @@ const AddProduct = () => {
                 className="flex items-center w-full"
                 name="importPrice"
                 label="Giá nhập hàng"
-                rules={[{ required: true, message: ruleFormItem.required }]}
-              >
+                rules={[{ required: true, message: ruleFormItem.required }]}>
                 <Input type="number" className="py-1 outline-0" placeholder="Nhập giá nhập hàng" name="importPrice" />
               </Form.Item>
             </Col>
@@ -188,8 +178,7 @@ const AddProduct = () => {
                 className="flex items-center w-full"
                 name="price"
                 label="Giá bán"
-                rules={[{ required: true, message: ruleFormItem.required }]}
-              >
+                rules={[{ required: true, message: ruleFormItem.required }]}>
                 <Input className="py-1 outline-0" type="number" placeholder="Nhập giá bán" name="price" />
               </Form.Item>
             </Col>
@@ -200,8 +189,7 @@ const AddProduct = () => {
                 className="flex items-center w-full"
                 name="description"
                 label={'Mô tả sản phẩm'}
-                rules={[{ required: true, message: ruleFormItem.required }]}
-              >
+                rules={[{ required: true, message: ruleFormItem.required }]}>
                 <TextArea className="py-1 outline-0" placeholder="Nhập mô tả sản phẩm" name="description" />
               </Form.Item>
             </Col>
@@ -212,8 +200,7 @@ const AddProduct = () => {
                 className="flex items-center w-full"
                 name="brandId"
                 label="Thương hiệu"
-                rules={[{ required: true, message: ruleFormItem.required }]}
-              >
+                rules={[{ required: true, message: ruleFormItem.required }]}>
                 <Select className="w-full" allowClear placeholder="Chọn thương hiệu" options={brandOptions} />
               </Form.Item>
             </Col>

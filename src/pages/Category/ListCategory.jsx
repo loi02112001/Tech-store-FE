@@ -1,14 +1,12 @@
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
-import { categoryAction } from '@/actions/categoryAction'
+import useCategoryStore from '@/store/categoryStore'
 
 import AddEditCategory from './AddEditCategory'
 import { Skeleton, Table } from 'antd'
 
 function ListCategory() {
-  const dispatch = useDispatch()
-  const { loading, data: categories } = useSelector((state) => state.categories)
+  const { loading, categories, getCategories } = useCategoryStore()
   const categoryTables = [
     {
       title: 'ID',
@@ -36,7 +34,7 @@ function ListCategory() {
   ]
 
   useEffect(() => {
-    dispatch(categoryAction.getCategories())
+    getCategories()
   }, [])
 
   return loading ? (

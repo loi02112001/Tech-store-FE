@@ -27,18 +27,6 @@ export default function App() {
           <Route path={routes.auth.login} element={<LoginPage />} />
           <Route path={routes.auth.register} element={<RegisterPage />} />
           <Route element={<ProtectedRoute />}>
-            {/* <Route
-              path={routes.auth.home}
-              element={
-                isManage() ? (
-                  <MainLayout>
-                    <ManageHomePage />
-                  </MainLayout>
-                ) : (
-                  <CustomerHomePage />
-                )
-              }
-            /> */}
             {isManage() && (
               <Route element={<MainLayout />}>
                 <>

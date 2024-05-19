@@ -25,8 +25,7 @@ const HomePage = () => {
           className="site-layout-background"
           style={{ padding: 0, background: '#001f3f' }}
           collapsed={collapsed}
-          changeCollapsed={toggleSidebar}
-        ></Header>
+          changeCollapsed={toggleSidebar}></Header>
         <Content style={{ marginTop: '20px', marginRight: '20px' }}>
           <Outlet />
         </Content>

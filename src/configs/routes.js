@@ -1,26 +1,26 @@
 export const routes = {
   auth: {
-    home: "/",
-    login: "/login",
-    register: "/register",
+    home: '/',
+    login: '/login',
+    register: '/register'
   },
   product: {
-    list: "/product",
-    add: "/product/create",
-    edit: "/product/edit/:id",
+    list: '/product',
+    add: '/product/create',
+    edit: '/product/edit/:id'
   },
-  shop: "/shop",
+  shop: '/shop',
   category: {
-    list: "/category",
-    add: "/category/create",
-    edit: "/category/edit/:id",
+    list: '/category',
+    add: '/category/create',
+    edit: '/category/edit/:id'
   },
   brand: {
-    list: "/brand",
-    add: "/brand/create",
-    edit: "/brand/edit/:id",
+    list: '/brand',
+    add: '/brand/create',
+    edit: '/brand/edit/:id'
   },
   employee: {
-    add: "/employee/create",
-  },
+    add: '/employee/create'
+  }
 }

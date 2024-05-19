@@ -1,11 +1,11 @@
-import { httpGet, httpPost, httpPut } from "../configs/api"
+import { httpGet, httpPost, httpPut } from '../configs/api'
 
 const getBrands = () => {
-  return httpGet("/brand/get")
+  return httpGet('/brand/get')
 }
 
 const createBrand = (data) => {
-  return httpPost("/brand/create", data)
+  return httpPost('/brand/create', data)
 }
 
 const updateBrand = (id, data) => {

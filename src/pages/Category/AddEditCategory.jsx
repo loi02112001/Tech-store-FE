@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
 
-import { categoryAction } from '@/actions/categoryAction'
+import useCategoryStore from '@/store/categoryStore'
 
 import { Form, Input, Modal, Row } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
 
 function AddEditCategory({ category = {}, classButton = '', textButton = 'Sửa' }) {
+  const { createCategory, updateCategory } = useCategoryStore()
   const [form] = Form.useForm()
-  const dispatch = useDispatch()
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const showModal = () => {
@@ -22,9 +21,7 @@ function AddEditCategory({ category = {}, classButton = '', textButton = 'Sửa'
   }
 
   const handleSubmit = (values) => {
-    category?.id
-      ? dispatch(categoryAction.updateCategory(category.id, values))
-      : dispatch(categoryAction.createCategory(values))
+    category?.id ? updateCategory(category.id, values) : createCategory(values)
     setIsModalOpen(false)
   }
 
@@ -43,16 +40,14 @@ function AddEditCategory({ category = {}, classButton = '', textButton = 'Sửa'
         title={category?.id ? 'Cập nhật danh mục' : 'Thêm danh mục'}
         open={isModalOpen}
         onOk={handleOk}
-        onCancel={handleCancel}
-      >
+        onCancel={handleCancel}>
         <Form form={form} onFinish={handleSubmit}>
           <Row>
             <Form.Item
               className="flex w-full"
               name="name"
               label="Tên danh mục"
-              rules={[{ required: true, message: ruleFormItem.required }]}
-            >
+              rules={[{ required: true, message: ruleFormItem.required }]}>
               <Input placeholder="Nhập tên danh mục" name="name" />
             </Form.Item>
           </Row>
@@ -61,8 +56,7 @@ function AddEditCategory({ category = {}, classButton = '', textButton = 'Sửa'
               className="flex w-full"
               name="description"
               label="Mô tả"
-              rules={[{ required: true, message: ruleFormItem.required }]}
-            >
+              rules={[{ required: true, message: ruleFormItem.required }]}>
               <TextArea
                 placeholder="Nhập tên sản phẩm"
                 name="description"

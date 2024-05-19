@@ -1,11 +1,11 @@
-import { httpGet, httpPost, httpPut } from "../configs/api"
+import { httpGet, httpPost, httpPut } from '../configs/api'
 
 const addProduct = (data) => {
-  return httpPost("/product/create", data)
+  return httpPost('/product/create', data)
 }
 
 const getProducts = () => {
-  return httpGet("/product/getAllProduct")
+  return httpGet('/product/getAllProduct')
 }
 
 const updateProduct = (id, data) => {
@@ -40,5 +40,5 @@ export const productService = {
   updateProduct,
   changeProductStatus,
   getProductTopViewed,
-  getProductTopSellers,
+  getProductTopSellers
 }

@@ -3,7 +3,9 @@ import { Outlet } from 'react-router-dom'
 
 import CustomerHeader from '@/components/Header/CustomerHeader'
 import CustomerHero from '@/components/Header/CustomerHero'
+import { constants } from '@/constants'
 import { productService } from '@/services/products'
+import { handleNotification } from '@/utils'
 
 import ProductSlider from './components/ProductSlider'
 
@@ -12,13 +14,10 @@ function CustomerHomePage() {
 
   const getProductTopViewed = async () => {
     try {
-      const response = await productService.getProductTopViewed()
-      const { code, data } = response
-      if (code === 200) {
-        setProductTopViewed(data?.content)
-      }
+      const res = await productService.getProductTopViewed()
+      setProductTopViewed(res.data?.content)
     } catch (error) {
-      console.error(error)
+      handleNotification(constants.NOTIFICATION_ERROR, error)
     }
   }
 

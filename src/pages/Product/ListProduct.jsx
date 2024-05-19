@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { productActions } from '@/actions/productAction'
 import DefaultImages from '@/assets/icons/DefaultImage'
 import SearchInput from '@/components/common/SearchInput'
+import useProductStore from '@/store/productStore'
 
 import { Button, Layout, Switch, Table } from 'antd'
 
 const ListProduct = () => {
-  const dispatch = useDispatch()
-  const { loading, productList, totalProduct } = useSelector((state) => state.products)
+  const { loading, products: productList, totalProducts, getProducts, changeProductStatus } = useProductStore()
 
   const formatPrice = (price) => {
     return new Intl.NumberFormat('vi-VN', {
@@ -35,7 +33,13 @@ const ListProduct = () => {
         return (
           <>
             {record.productImage ? (
-              <img src={record.productImage} width={50} height={50} className="inline object-cover rounded-sm" />
+              <img
+                alt={record.name}
+                src={record.productImage}
+                width={50}
+                height={50}
+                className="inline object-cover rounded-sm"
+              />
             ) : (
               <DefaultImages width={50} height={50} />
             )}
@@ -88,9 +92,8 @@ const ListProduct = () => {
         <Switch
           value={!hasShow}
           onChange={() => {
-            dispatch(productActions.changeProductStatus(record.id, { status: !hasShow }))
-          }}
-        ></Switch>
+            changeProductStatus(record.id, { status: !hasShow })
+          }}></Switch>
       )
     }
   ]
@@ -98,11 +101,11 @@ const ListProduct = () => {
   const [searchValue, setSearchValue] = useState('')
 
   useEffect(() => {
-    dispatch(productActions.getProducts())
+    getProducts()
   }, [])
 
   const fetchDataTable = (value) => {
-    dispatch(productActions.getProductByName(value))
+    console.log('🚀 ~ value:', value)
   }
 
   return (
@@ -116,7 +119,7 @@ const ListProduct = () => {
             onChange={setSearchValue}
             onSearch={fetchDataTable}
           />
-          {!loading && <p className="text-[#CF5763] font-medium">{totalProduct} sản phẩm</p>}
+          {!loading && <p className="text-[#CF5763] font-medium">{totalProducts} sản phẩm</p>}
         </div>
         <Link to="/product/create">
           <Button type="primary">Thêm sản phẩm</Button>
@@ -127,7 +130,7 @@ const ListProduct = () => {
         columns={productsTable}
         scroll={{ x: true }}
         size="middle"
-        dataSource={totalProduct > 0 ? productList : []}
+        dataSource={totalProducts > 0 ? productList : []}
         loading={loading}
         rowKey={(product) => product.id}
       />

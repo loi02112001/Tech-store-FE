@@ -1,4 +1,4 @@
-import axiosClient from "./axios"
+import axiosClient from './axios'
 
 export function httpGet(path) {
   return axiosClient.get(path)

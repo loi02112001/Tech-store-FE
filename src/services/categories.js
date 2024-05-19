@@ -1,7 +1,7 @@
-import { httpGet, httpPost, httpPut } from "../configs/api"
+import { httpGet, httpPost, httpPut } from '../configs/api'
 
 const getCategories = () => {
-  return httpGet("/category/get")
+  return httpGet('/category/get')
 }
 
 const getCategoryById = (id) => {
@@ -9,7 +9,7 @@ const getCategoryById = (id) => {
 }
 
 const createCategory = (data) => {
-  return httpPost("/category/create", data)
+  return httpPost('/category/create', data)
 }
 
 const updateCategory = (id, data) => {

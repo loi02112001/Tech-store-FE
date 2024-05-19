@@ -1,18 +1,16 @@
-import { useDispatch } from 'react-redux'
-
-import { employeeAction } from '@/actions/employeeAction'
+import useEmployeeStore from '@/store/employeeStore'
 
 import { Col, Form, Input, Radio, Row } from 'antd'
 
 function AddEmployee() {
+  const { createEmployee } = useEmployeeStore()
   const [form] = Form.useForm()
-  const dispatch = useDispatch()
   const ruleFormItem = {
     required: 'Vui lòng nhập ${label}!'
   }
 
   const handleSubmit = (values) => {
-    dispatch(employeeAction.createEmployee(values))
+    createEmployee(values)
   }
 
   return (
@@ -24,8 +22,7 @@ function AddEmployee() {
             name="email"
             labelAlign="left"
             rules={[{ required: true, message: ruleFormItem.required }]}
-            sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}
-          >
+            sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
             <Input style={{ height: 40 }} placeholder="Email" type="text" />
           </Form.Item>
         </Col>
@@ -35,8 +32,7 @@ function AddEmployee() {
             name="name"
             labelAlign="left"
             rules={[{ required: true, message: ruleFormItem.required }]}
-            sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}
-          >
+            sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
             <Input style={{ height: 40 }} placeholder="Họ và tên" type="text" />
           </Form.Item>
         </Col>
@@ -48,8 +44,7 @@ function AddEmployee() {
             name="password"
             labelAlign="left"
             rules={[{ required: true, message: ruleFormItem.required }]}
-            sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}
-          >
+            sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
             <Input.Password style={{ height: 40 }} placeholder="Mật khẩu" type="password" />
           </Form.Item>
         </Col>
@@ -59,8 +54,7 @@ function AddEmployee() {
             name="phone"
             labelAlign="left"
             rules={[{ required: true, message: ruleFormItem.required }]}
-            sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}
-          >
+            sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
             <Input style={{ height: 40 }} placeholder="Số điện thoại" type="text" />
           </Form.Item>
         </Col>{' '}
@@ -70,8 +64,7 @@ function AddEmployee() {
         name="address"
         labelAlign="left"
         rules={[{ required: true, message: ruleFormItem.required }]}
-        sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}
-      >
+        sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
         <Input style={{ height: 40 }} placeholder="Địa chỉ" type="text" />
       </Form.Item>
       <Row gutter={{ md: 24, lg: 32 }}>
@@ -81,8 +74,7 @@ function AddEmployee() {
             name="dob"
             labelAlign="left"
             rules={[{ required: true, message: ruleFormItem.required }]}
-            sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}
-          >
+            sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
             <Input style={{ height: 40 }} placeholder="Ngày sinh" type="date" />
           </Form.Item>
         </Col>
@@ -92,8 +84,7 @@ function AddEmployee() {
             name="gender"
             labelAlign="left"
             rules={[{ required: true, message: ruleFormItem.required }]}
-            sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}
-          >
+            sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
             <Radio.Group className="flex gap-10">
               <Radio value={1}>Nam</Radio>
               <Radio value={0}>Nữ</Radio>
