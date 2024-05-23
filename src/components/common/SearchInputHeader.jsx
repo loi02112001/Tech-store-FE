@@ -1,10 +1,14 @@
 function SearchInputHeader() {
   return (
     <div className="relative w-1/3 m-auto">
-      <input type="text" placeholder="Bạn cần tìm gì?" className="w-full py-2 px-4 rounded focus:outline-none" />
+      <input
+        type="text"
+        placeholder="Bạn cần tìm gì?"
+        className="w-full py-2 px-4 border rounded-xl focus:outline-none"
+      />
       <button
         type="submit"
-        className="absolute w-9 rounded-tr rounded-br shadow-none p-0 border-0 right-0 inset-y-0"
+        className="absolute w-9 rounded-tr rounded-br shadow-none p-0 border-0 right-2 inset-y-0"
         id="btn-search">
         <svg
           viewBox="0 0 24 24"

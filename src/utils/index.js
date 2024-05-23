@@ -32,3 +32,19 @@ export const isCustomer = () => {
 export const handleNotification = (type, res) => {
   toast[type](res.message)
 }
+
+export const formatMoneyVND = (amount) => {
+  let amountStr = amount.toString().replace(/[^0-9.-]+/g, '')
+  let [whole, decimal] = amountStr.split('.')
+  whole = whole.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+
+  if (!decimal) {
+    decimal = '00'
+  } else if (decimal.length === 1) {
+    decimal = decimal + '0'
+  } else if (decimal.length > 2) {
+    decimal = decimal.slice(0, 2)
+  }
+
+  return `${whole}.${decimal} đ`
+}

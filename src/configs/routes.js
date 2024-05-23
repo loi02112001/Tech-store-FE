@@ -22,5 +22,6 @@ export const routes = {
   },
   employee: {
     add: '/employee/create'
-  }
+  },
+  cart: '/cart'
 }

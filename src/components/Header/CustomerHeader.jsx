@@ -1,26 +1,50 @@
-import cartSvg from '../../assets/images/cart.svg'
+import { useEffect } from 'react'
+
+import useCartStore from '@/store/cartStore'
+
 import userSvg from '../../assets/images/user.svg'
 import SearchInputHeader from '../common/SearchInputHeader'
 
 function CustomerHeader() {
+  const { carts, getCarts } = useCartStore()
+  useEffect(() => {
+    getCarts()
+  }, [])
   return (
-    <nav className="sticky top-0 z-[1] py-5 bg-[#E30019]">
+    <nav className="sticky top-0 z-[1] py-4 bg-[#f6f7fa]">
       <div className="container flex justify-between">
-        <a className="text-3xl font-semibold text-white" href="/">
+        <a className="text-3xl font-semibold text-[#737a90]" href="/">
           TechStore<span className="opacity-40">.</span>
         </a>
         <SearchInputHeader />
         <ul className="flex items-center gap-6">
           <li>
-            <a className="flex items-center gap-2" href="/cart">
-              <img src={cartSvg} alt="" />
-              <span className="text-sm text-white font-semibold">Giỏ hàng</span>
+            <a
+              className="relative after:content-[''] after:absolute after:-top-2 after:-right-1 after:w-4 after:h-4 after:bg-[#3874ff] after:rounded-full"
+              href="/cart">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#737a90"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="feather feather-shopping-cart ">
+                <g>
+                  <circle cx="9" cy="21" r="1"></circle>
+                  <circle cx="20" cy="21" r="1"></circle>
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </g>
+              </svg>
+              <span className="absolute -top-2 -right-0 z-[1] text-xs text-white">{carts?.length}</span>
             </a>
           </li>
           <li>
             <a className="flex items-center gap-3" href="/account">
               <img src={userSvg} alt="" />
-              <span className="text-sm text-white font-semibold">Đăng nhập</span>
+              <span className="text-sm text-[#737a90] font-semibold">Đăng nhập</span>
             </a>
           </li>
         </ul>

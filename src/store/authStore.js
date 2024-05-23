@@ -39,9 +39,8 @@ const useAuthStore = create((set) => ({
   login: async (payload) => {
     set({ isLoading: true })
     try {
-      const response = await authService.login(payload)
-      const { data } = response.data
-      setToken(data.accessToken)
+      const res = await authService.login(payload)
+      setToken(res.data.accessToken)
       window.location.href = '/'
     } catch (error) {
       handleNotification(constants.NOTIFICATION_ERROR, error)

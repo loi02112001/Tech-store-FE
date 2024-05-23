@@ -17,6 +17,7 @@ const ManageHomePage = React.lazy(() => import('./pages/HomePage/ManageHomePage'
 const RegisterPage = React.lazy(() => import('./pages/RegisterPage/Index'))
 const ListProduct = React.lazy(() => import('./pages/Product/ListProduct'))
 const CustomerHomePage = React.lazy(() => import('./pages/HomePage/CustomerHomePage'))
+const CartPage = React.lazy(() => import('./pages/Cart/Index'))
 
 export default function App() {
   return (
@@ -41,7 +42,12 @@ export default function App() {
               </Route>
             )}
 
-            {isCustomer() && <Route path={routes.auth.home} element={<CustomerHomePage />} />}
+            {isCustomer() && (
+              <>
+                <Route path={routes.auth.home} element={<CustomerHomePage />} />
+                <Route path={routes.cart} element={<CartPage />} />
+              </>
+            )}
             <Route path="*" element={<PageNotFound />} />
           </Route>
         </Routes>
