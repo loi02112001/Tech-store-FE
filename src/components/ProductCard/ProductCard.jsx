@@ -14,7 +14,7 @@ function ProductCard({ product }) {
   return (
     <div className="bg-white border shadow-md rounded-lg overflow-hidden">
       <img
-        src={`${product.imageUrl ? product.imageUrl : 'https://via.placeholder.com/144'} `}
+        src={`${product.productImage ? product.productImage : 'https://via.placeholder.com/144'} `}
         alt="product"
         className="w-full object-cover aspect-square"
       />

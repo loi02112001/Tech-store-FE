@@ -1,25 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 
 import CustomerHeader from '@/components/Header/CustomerHeader'
 import CustomerHero from '@/components/Header/CustomerHero'
-import { constants } from '@/constants'
-import { productService } from '@/services/products'
-import { handleNotification } from '@/utils'
+import useProductStore from '@/store/productStore'
 
 import ProductSlider from './components/ProductSlider'
 
 function CustomerHomePage() {
-  const [productTopViewed, setProductTopViewed] = useState([])
-
-  const getProductTopViewed = async () => {
-    try {
-      const res = await productService.getProductTopViewed()
-      setProductTopViewed(res.data?.content)
-    } catch (error) {
-      handleNotification(constants.NOTIFICATION_ERROR, error)
-    }
-  }
+  const { productsTopViewed, getProductTopViewed } = useProductStore()
 
   useEffect(() => {
     getProductTopViewed()
@@ -30,7 +19,7 @@ function CustomerHomePage() {
       <CustomerHeader />
       <Outlet />
       <CustomerHero />
-      <ProductSlider products={productTopViewed} />
+      <ProductSlider products={productsTopViewed} />
     </>
   )
 }

@@ -6,6 +6,8 @@ import { create } from 'zustand'
 
 const useProductStore = create((set, get) => ({
   products: [],
+  productsTopViewed: [],
+  productTopSold: [],
   product: null,
   page: 1,
   totalPages: 0,
@@ -43,6 +45,30 @@ const useProductStore = create((set, get) => ({
     try {
       const res = await productService.getProductById(id)
       set({ product: res.data })
+    } catch (error) {
+      handleNotification(constants.NOTIFICATION_ERROR, error)
+    } finally {
+      set({ isLoading: false })
+    }
+  },
+
+  getProductTopViewed: async () => {
+    set({ isLoading: true })
+    try {
+      const res = await productService.getProductTopViewed()
+      set({ productsTopViewed: res.data.list })
+    } catch (error) {
+      handleNotification(constants.NOTIFICATION_ERROR, error)
+    } finally {
+      set({ isLoading: false })
+    }
+  },
+
+  getProductTopSold: async () => {
+    set({ isLoading: true })
+    try {
+      const res = await productService.getProductTopSold()
+      set({ getProductTopSold: res.data.list })
     } catch (error) {
       handleNotification(constants.NOTIFICATION_ERROR, error)
     } finally {
