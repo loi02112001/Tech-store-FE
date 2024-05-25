@@ -4,12 +4,18 @@ import useCartStore from '@/store/cartStore'
 
 import userSvg from '../../assets/images/user.svg'
 import SearchInputHeader from '../common/SearchInputHeader'
+import useAuthStore from '@/store/authStore'
+import { UserDropdown } from '../UserDropDown/Index'
 
 function CustomerHeader() {
+  const { profile, getProfile } = useAuthStore()
   const { carts, getCarts } = useCartStore()
+
   useEffect(() => {
+    Promise.all([getProfile(), getCarts()])
     getCarts()
   }, [])
+
   return (
     <nav className="sticky top-0 z-[1] py-4 bg-[#f6f7fa]">
       <div className="container flex justify-between">
@@ -42,10 +48,14 @@ function CustomerHeader() {
             </a>
           </li>
           <li>
-            <a className="flex items-center gap-3" href="/account">
-              <img src={userSvg} alt="" />
-              <span className="text-sm text-[#737a90] font-semibold">Đăng nhập</span>
-            </a>
+            {profile == null ? (
+              <a className="flex items-center gap-3" href="/login">
+                <img src={userSvg} alt="" />
+                <span className="text-sm text-[#737a90] font-semibold">Đăng nhập</span>
+              </a>
+            ) : (
+              <UserDropdown />
+            )}
           </li>
         </ul>
       </div>

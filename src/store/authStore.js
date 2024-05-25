@@ -52,9 +52,8 @@ const useAuthStore = create((set) => ({
   getProfile: async () => {
     set({ isLoading: true })
     try {
-      const response = await authService.getProfile()
-      const { data } = response.data
-      set({ profile: data })
+      const res = await authService.getProfile()
+      set({ profile: res.data })
     } catch (error) {
       handleNotification(constants.NOTIFICATION_ERROR, error)
     } finally {

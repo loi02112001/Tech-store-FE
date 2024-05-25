@@ -6,7 +6,7 @@ import { create } from 'zustand'
 
 const useProductStore = create((set, get) => ({
   products: [],
-  productsTopViewed: [],
+  productsTopView: [],
   productTopSold: [],
   product: null,
   page: 1,
@@ -52,11 +52,11 @@ const useProductStore = create((set, get) => ({
     }
   },
 
-  getProductTopViewed: async () => {
+  getProductTopView: async () => {
     set({ isLoading: true })
     try {
-      const res = await productService.getProductTopViewed()
-      set({ productsTopViewed: res.data.list })
+      const res = await productService.getProductTopView()
+      set({ productsTopView: res.data.list })
     } catch (error) {
       handleNotification(constants.NOTIFICATION_ERROR, error)
     } finally {
@@ -68,7 +68,7 @@ const useProductStore = create((set, get) => ({
     set({ isLoading: true })
     try {
       const res = await productService.getProductTopSold()
-      set({ getProductTopSold: res.data.list })
+      set({ productTopSold: res.data.list })
     } catch (error) {
       handleNotification(constants.NOTIFICATION_ERROR, error)
     } finally {

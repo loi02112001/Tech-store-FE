@@ -24,12 +24,12 @@ const changeProductStatus = (id, data) => {
   return httpPut(`/product/status/${id}`, data)
 }
 
-const getProductTopViewed = () => {
-  return httpGet(`/product/top-viewed`)
+const getProductTopView = () => {
+  return httpGet(`/product/top-view`)
 }
 
-const getProductTopSellers = () => {
-  return httpGet(`/product/top-sellers`)
+const getProductTopSold = () => {
+  return httpGet(`/product/top-sold`)
 }
 
 export const productService = {
@@ -39,6 +39,6 @@ export const productService = {
   getProductById,
   updateProduct,
   changeProductStatus,
-  getProductTopViewed,
-  getProductTopSellers
+  getProductTopView,
+  getProductTopSold
 }

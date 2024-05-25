@@ -21,7 +21,7 @@ function CartPage() {
   }, [])
 
   return (
-    <div className="container w-full h-screen py-20 bg-gray-100">
+    <div className="container w-full min-h-screen py-20">
       <h1 className="mb-7 text-2xl font-semibold capitalize">Giỏ hàng</h1>
       {carts.length > 0 ? (
         <div className="flex gap-8">
@@ -32,15 +32,11 @@ function CartPage() {
           </div>
           <div className="flex flex-col gap-6 w-2/5">
             <div className="w-full p-8 bg-white border rounded-lg">
-              <h2 className="mb-5 text-xl font-semibold capitalize">Tóm tắt giỏ hàng</h2>
+              <h2 className="mb-5 text-xl font-semibold capitalize">Thông tin giỏ hàng</h2>
               <div className="flex flex-col gap-1 mb-5">
                 <div className="flex justify-between">
                   <span className="text-gray-700 font-medium">Giá trị đơn hàng: </span>
                   <span className="text-gray-500 font-semibold">{formatMoneyVND(total)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-700 font-medium">Giao hàng:</span>
-                  <span className="text-gray-500 font-semibold">Free</span>
                 </div>
               </div>
               <div className="flex justify-between pt-5 font-bold border-t">

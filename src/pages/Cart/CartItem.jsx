@@ -22,6 +22,10 @@ function CartItem({ cart }) {
     updateQuantity(quantity - 1)
   }
 
+  const handleDeleteCart = () => {
+    updateQuantity(0)
+  }
+
   const handleInputChange = (event) => {
     const value = parseInt(event.target.value)
     if (!isNaN(value)) {
@@ -66,7 +70,7 @@ function CartItem({ cart }) {
               +
             </button>
           </div>
-          <button className="flex items-center gap-2 text-gray-700 link">
+          <button className="flex items-center gap-2 text-gray-700 link" onClick={handleDeleteCart}>
             <DeleteOutlined />
           </button>
         </div>

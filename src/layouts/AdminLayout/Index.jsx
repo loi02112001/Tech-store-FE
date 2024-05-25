@@ -10,7 +10,7 @@ import './index.css'
 
 const { Content } = Layout
 
-const HomePage = () => {
+const AdminLayout = () => {
   const [collapsed, setCollapsed] = useState(false)
 
   const toggleSidebar = () => {
@@ -34,4 +34,4 @@ const HomePage = () => {
   )
 }
 
-export default HomePage
+export default AdminLayout
