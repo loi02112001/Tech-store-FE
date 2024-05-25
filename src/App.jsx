@@ -4,14 +4,15 @@ import { Route, Routes } from 'react-router-dom'
 import ScrollToTop from './components/ScrollToTop/Index'
 import { routes } from './configs/routes'
 import MainLayout from './layouts/AdminLayout/Index'
+import CustomerLayout from './layouts/CustomerLayout/Index'
+import AllProductsPage from './pages/AllProductsPage/AllProductsPage'
 import ListBrand from './pages/Brand/ListBrand'
 import ListCategory from './pages/Category/ListCategory'
 import AddEmployee from './pages/Employee/AddEmployee'
-import PageNotFound from './pages/PageNotFound/PageNotFound'
+// import PageNotFound from './pages/PageNotFound/PageNotFound'
 import AddProduct from './pages/Product/AddProduct'
 import ProtectedRoute from './routes/ProtectedRoute'
 import { isCustomer, isManage } from './utils'
-import CustomerLayout from './layouts/CustomerLayout/Index'
 
 const LoginPage = React.lazy(() => import('./pages/LoginPage/Index'))
 const ManageHomePage = React.lazy(() => import('./pages/HomePage/ManageHomePage'))
@@ -44,12 +45,11 @@ export default function App() {
             )}
 
             {isCustomer() && (
-              <>
-                <Route element={<CustomerLayout />}>
-                  <Route path={routes.auth.home} element={<CustomerHomePage />} />
-                  <Route path={routes.cart} element={<CartPage />} />
-                </Route>
-              </>
+              <Route element={<CustomerLayout />}>
+                <Route path={routes.auth.home} element={<CustomerHomePage />} />
+                <Route path={routes.cart} element={<CartPage />} />
+                <Route path={routes.allProducts} element={<AllProductsPage />} />
+              </Route>
             )}
             {/* <Route path="*" element={<PageNotFound />} /> */}
           </Route>

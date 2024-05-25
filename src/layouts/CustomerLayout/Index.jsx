@@ -1,14 +1,15 @@
-import CustomerFooter from '@/components/Footer'
-import CustomerHeader from '@/components/Header/CustomerHeader'
 import React from 'react'
 import { Outlet } from 'react-router-dom'
+
+import CustomerFooter from '@/components/Footer'
+import CustomerHeader from '@/components/Header/CustomerHeader'
 
 const CustomerLayout = () => {
   return (
     <React.Fragment>
       <CustomerHeader />
       <Outlet />
-      <CustomerFooter/>
+      <CustomerFooter />
     </React.Fragment>
   )
 }

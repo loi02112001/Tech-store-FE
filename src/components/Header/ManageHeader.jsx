@@ -1,19 +1,16 @@
-import { createElement, memo, useCallback, useEffect, useMemo } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { createElement, memo, useEffect } from 'react'
 
 import useAuthStore from '@/store/authStore'
-import { removeToken } from '@/utils'
 
-import { LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons'
-import { Avatar, Dropdown } from 'antd'
 import { UserDropdown } from '../UserDropDown/Index'
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 
 const ManageHeaderComponent = memo(({ collapsed, changeCollapsed }) => {
-  const {getProfile} = useAuthStore()
+  const { getProfile } = useAuthStore()
 
-  useEffect(()=>{
+  useEffect(() => {
     getProfile()
-  },[])
+  }, [])
 
   return (
     <div className="flex justify-between p-3 bg-white rounded">

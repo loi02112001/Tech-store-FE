@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 
 import CustomerHero from '@/components/Header/CustomerHero'
 import useProductStore from '@/store/productStore'
+
 import ProductSlider from './components/ProductSlider'
 
 function CustomerHomePage() {

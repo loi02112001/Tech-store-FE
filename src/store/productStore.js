@@ -10,7 +10,7 @@ const useProductStore = create((set, get) => ({
   productTopSold: [],
   product: null,
   page: 1,
-  totalPages: 0,
+  pages: 0,
   totalProducts: 0,
   isLoading: false,
 
@@ -31,8 +31,21 @@ const useProductStore = create((set, get) => ({
     set({ isLoading: true, error: null })
     try {
       const res = await productService.getProducts(params)
-      const { content, totalPages, totalElements } = res.data
-      set({ products: content, totalPages, totalProducts: totalElements })
+      const { list, pages, totalElements } = res.data
+      set({ products: list, pages, total: totalElements })
+    } catch (error) {
+      handleNotification(constants.NOTIFICATION_ERROR, error)
+    } finally {
+      set({ isLoading: false })
+    }
+  },
+
+  getListProducts: async (params = {}) => {
+    set({ isLoading: true, error: null })
+    try {
+      const res = await productService.getListProducts(params)
+      const { list, pages, totalElements } = res.data
+      set({ products: list, pages, total: totalElements })
     } catch (error) {
       handleNotification(constants.NOTIFICATION_ERROR, error)
     } finally {

@@ -20,7 +20,7 @@ function ProductCard({ product }) {
       />
       <div className="p-4">
         <h3 className="text-base text-[#141824] font-semibold leading-4">{product.name}</h3>
-        <span className="flex items-center mt-2">
+        <span className="flex items-center justify-between mt-2">
           <Rate disabled defaultValue={4} style={{ color: '#ffcc85', fontSize: '15px' }} />{' '}
           <span className="ml-2 text-xs">(50 đánh giá)</span>
         </span>

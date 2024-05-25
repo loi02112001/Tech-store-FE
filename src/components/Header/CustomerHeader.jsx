@@ -1,10 +1,11 @@
 import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
+import useAuthStore from '@/store/authStore'
 import useCartStore from '@/store/cartStore'
 
 import userSvg from '../../assets/images/user.svg'
 import SearchInputHeader from '../common/SearchInputHeader'
-import useAuthStore from '@/store/authStore'
 import { UserDropdown } from '../UserDropDown/Index'
 
 function CustomerHeader() {
@@ -13,21 +14,20 @@ function CustomerHeader() {
 
   useEffect(() => {
     Promise.all([getProfile(), getCarts()])
-    getCarts()
   }, [])
 
   return (
     <nav className="sticky top-0 z-[1] py-4 bg-[#f6f7fa]">
       <div className="container flex justify-between">
-        <a className="text-3xl font-semibold text-[#737a90]" href="/">
+        <Link className="text-3xl font-semibold text-[#737a90]" to="/">
           TechStore<span className="opacity-40">.</span>
-        </a>
+        </Link>
         <SearchInputHeader />
         <ul className="flex items-center gap-6">
           <li>
-            <a
+            <Link
               className="relative after:content-[''] after:absolute after:-top-2 after:-right-1 after:w-4 after:h-4 after:bg-[#3874ff] after:rounded-full"
-              href="/cart">
+              to="/cart">
               <svg
                 width="20"
                 height="20"
@@ -45,7 +45,7 @@ function CustomerHeader() {
                 </g>
               </svg>
               <span className="absolute -top-2 -right-0 z-[1] text-xs text-white">{carts?.length}</span>
-            </a>
+            </Link>
           </li>
           <li>
             {profile == null ? (

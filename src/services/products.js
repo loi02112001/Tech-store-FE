@@ -8,6 +8,10 @@ const getProducts = () => {
   return httpGet('/product/getAllProduct')
 }
 
+const getListProducts = () => {
+  return httpGet('/product/getListProduct')
+}
+
 const updateProduct = (id, data) => {
   return httpPut(`/product/update/${id}`, data)
 }
@@ -35,6 +39,7 @@ const getProductTopSold = () => {
 export const productService = {
   addProduct,
   getProducts,
+  getListProducts,
   getProductByName,
   getProductById,
   updateProduct,
