@@ -32,5 +32,5 @@ You need to install the Node version > 18 to install dependencies and run comman
 
 2. Run container
    ```sh
-   docker run -d -p 80:80 --name react-server react-app
+   docker run -d -p 81:80 --name react-server react-app
    ```
