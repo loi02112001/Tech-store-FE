@@ -5,7 +5,7 @@ import useAuthStore from '@/store/authStore'
 import { removeToken } from '@/utils'
 
 import { LogoutOutlined, UserOutlined } from '@ant-design/icons'
-import { Avatar, Dropdown } from 'antd'
+import { Dropdown } from 'antd'
 
 export const UserDropdown = () => {
   const navigate = useNavigate()
@@ -39,15 +39,11 @@ export const UserDropdown = () => {
     [handleLogout]
   )
 
-  const avatarElement = useMemo(() => <Avatar icon={<UserOutlined />} />, [])
-
   return (
-    <Dropdown menu={{ items }} placement="bottomRight" arrow>
-      <div className="flex h-[40px] items-center justify-between gap-3 cursor-pointer">
-        <div className="flex flex-col items-center justify-center">
-          <p className="uppercase h-[18px] font-semibold leading-[18px]">{name}</p>
-        </div>
-        {avatarElement}
+    <Dropdown menu={{ items }} placement="bottom" arrow>
+      <div className="flex items-center justify-between gap-3 cursor-pointer">
+        <i className="fas fa-user text-blue-500"></i>
+        <span className="text-gray-800 text-xs font-medium px-2.5 py-0.5 capitalize">{name}</span>
       </div>
     </Dropdown>
   )

@@ -1,6 +1,6 @@
 const CustomerFooter = () => {
   return (
-    <footer className="bg-white dark:bg-gray-900">
+    <footer className="bg-[#EDF1FF] dark:bg-gray-900">
       <div className="mx-auto w-full">
         <div className="grid grid-cols-2 container gap-8 py-6 lg:py-8 md:grid-cols-4">
           <div className="flex justify-center">
@@ -107,9 +107,12 @@ const CustomerFooter = () => {
             </div>
           </div>
         </div>
-        <div className="container py-6 bg-gray-100 dark:bg-gray-700 md:flex md:items-center md:justify-between">
+        <div className="container py-6 bg-[#EDF1FF] border-t-[2px] border-white dark:bg-gray-700 md:flex md:items-center md:justify-between">
           <span className="text-sm text-gray-500 dark:text-gray-300 sm:text-center">
-            © 2023 <a href="https://flowbite.com/">Flowbite™</a>. All Rights Reserved.
+            <a href="https://flowbite.com/" className="text-black font-semibold">
+              TechStore
+            </a>
+            . All Rights Reserved.
           </span>
           <div className="flex mt-4 sm:justify-center md:mt-0 space-x-5 rtl:space-x-reverse">
             <a href="#" className="text-gray-400 hover:text-gray-900 dark:hover:text-white">

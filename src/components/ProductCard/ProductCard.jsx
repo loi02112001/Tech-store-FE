@@ -1,9 +1,6 @@
 import useCartStore from '@/store/cartStore'
 import { formatMoneyVND } from '@/utils'
 
-import { EyeOutlined, ShoppingCartOutlined } from '@ant-design/icons'
-import { Rate } from 'antd'
-
 function ProductCard({ product }) {
   const { addToCart } = useCartStore()
 
@@ -12,30 +9,27 @@ function ProductCard({ product }) {
   }
 
   return (
-    <div className="bg-white border shadow-md rounded-lg overflow-hidden">
-      <img
-        src={`${product.productImage ? product.productImage : 'https://via.placeholder.com/144'} `}
-        alt="product"
-        className="w-full object-cover aspect-square"
-      />
-      <div className="p-4">
-        <h3 className="text-base text-[#141824] font-semibold leading-4">{product.name}</h3>
-        <span className="flex items-center justify-between mt-2">
-          <Rate disabled defaultValue={4} style={{ color: '#ffcc85', fontSize: '15px' }} />{' '}
-          <span className="ml-2 text-xs">(50 đánh giá)</span>
-        </span>
-        <div className="mt-5 flex items-center justify-between">
-          <span className="text-2xl font-semibold">{formatMoneyVND(product.price)}</span>
-          <button className="flex items-center justify-center p-1 rounded-full" onClick={handleAddToCart}>
-            <ShoppingCartOutlined style={{ fontSize: '20px', color: '#000' }} />
-          </button>
+    <div className="card product-item border-0 mb-4">
+      <div className="card-header product-img relative overflow-hidden bg-transparent border p-0">
+        <img
+          alt={product.name}
+          className="img-fluid w-full hover:scale-105 transition duration-500 ease-in-out"
+          src={`${product.productImage ? product.productImage : 'https://via.placeholder.com/144'} `}
+        />
+      </div>
+      <div className="card-body border-l border-r text-center p-0 pt-4 pb-3">
+        <h6 className="font-medium  truncate mb-3">{product.name}</h6>
+        <div className="flex justify-center">
+          <h6>{formatMoneyVND(product.price)}</h6>
         </div>
-        <div className="flex items-center justify-between mt-2 text-xs text-grey-700">
-          <span>Đã bán {product.sold}</span>
-          <span>
-            <EyeOutlined /> {product.view}
-          </span>
-        </div>
+      </div>
+      <div className="flex justify-between bg-light border px-5 py-3">
+        <a href={`/product/detail/${product.id}`} className="text-sm">
+          <i className="fas fa-eye text-[#D19C97] mr-1"></i>View Detail
+        </a>
+        <button className="text-sm" onClick={handleAddToCart}>
+          <i className="fas fa-shopping-cart text-[#D19C97] mr-1"></i>Add To Cart
+        </button>
       </div>
     </div>
   )
