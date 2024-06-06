@@ -7,7 +7,8 @@ export const routes = {
   product: {
     list: '/product',
     add: '/product/create',
-    edit: '/product/edit/:id'
+    edit: '/product/edit/:id',
+    detail: '/product/detail/:id'
   },
   shop: '/shop',
   category: {

@@ -11,6 +11,7 @@ import ListCategory from './pages/Category/ListCategory'
 import AddEmployee from './pages/Employee/AddEmployee'
 // import PageNotFound from './pages/PageNotFound/PageNotFound'
 import AddProduct from './pages/Product/AddProduct'
+import ProductDetail from './pages/Product/ProductDetail'
 import ProtectedRoute from './routes/ProtectedRoute'
 import { isCustomer, isManage } from './utils'
 
@@ -49,6 +50,7 @@ export default function App() {
                 <Route path={routes.auth.home} element={<CustomerHomePage />} />
                 <Route path={routes.cart} element={<CartPage />} />
                 <Route path={routes.allProducts} element={<AllProductsPage />} />
+                <Route path={routes.product.detail} element={<ProductDetail />} />
               </Route>
             )}
             {/* <Route path="*" element={<PageNotFound />} /> */}
