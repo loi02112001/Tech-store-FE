@@ -1,4 +1,4 @@
-export default function DefaultImage({ width, height }) {
+export default function DefaultImage({ width = 12, height = 12 }) {
   return (
     <svg
       width={width}

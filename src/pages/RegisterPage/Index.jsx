@@ -155,7 +155,7 @@ const RegisterForm = ({ onSubmit, loading }) => {
         </Col>
       </Row>
 
-      <Button className="button-primary mt-4 mb-5 h-[40px]" block type="primary" htmlType="submit" loading={loading}>
+      <Button className="btn btn-primary mt-4 mb-5 h-[40px]" block type="primary" htmlType="submit" loading={loading}>
         Đăng ký
       </Button>
     </Form>

@@ -1,7 +1,11 @@
-.button-primary {
-  @apply px-4 py-1 text-white !bg-[#1677ff] rounded-md transition duration-300 ease-in-out;
+.btn {
+  @apply text-center font-medium border text-sm px-6 py-2.5 rounded border-transparent transition-all duration-150 ease-in-out;
 
   &:hover {
-    @apply !bg-[#4096ff];
+    @apply bg-blue-hover;
   }
+}
+
+.btn-primary {
+  @apply text-white bg-blue;
 }

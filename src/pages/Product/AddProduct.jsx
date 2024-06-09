@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { toast } from 'react-toastify'
 
 import DefaultImage from '@/assets/icons/DefaultImage'
+import { constants } from '@/constants'
 import useBrandStore from '@/store/brandStore'
 import useCategoryStore from '@/store/categoryStore'
 import useProductStore from '@/store/productStore'
+import { handleNotification } from '@/utils'
 
 import { Col, Form, Input, Row, Select } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
@@ -51,16 +52,15 @@ const AddProduct = () => {
   }))
 
   const handleAddProduct = (values) => {
-    if (values.name.trim() == '' || values.price == '' || values.importPrice == '' || values.description.trim() == '') {
+    if (values.name.trim() == '' || values.price == '' || values.description.trim() == '') {
       return
     }
     const formData = new FormData()
     img?.length > 0 && formData.append('image', img[0])
     formData.append('name', values.name)
     formData.append('brandId', values.brandId)
-    formData.append('categoryIds', JSON.stringify(values.category))
+    formData.append('categoryIds', values.category.join(','))
     formData.append('description', values.description)
-    formData.append('importPrice', values.importPrice)
     formData.append('price', values.price)
     if (id) {
       updateProduct(id, formData, () => {
@@ -86,23 +86,13 @@ const AddProduct = () => {
 
   const handlePreview = (img) => {
     if (!img?.[0]?.type?.includes('image')) {
-      toast.error({
-        title: 'Lỗi',
-        message: 'File không đúng định dạng'
-      })
+      handleNotification(constants.NOTIFICATION_ERROR, { message: 'File không đúng định dạng' })
       return
     }
-    const imgSize = img[0].size
-    if (imgSize > 10e3) {
-      toast.error({
-        title: 'Lỗi',
-        message: 'Dung lượng của ảnh phải nhỏ hơn 10MB'
-      })
-    } else {
-      setImg(img)
-      const url = URL.createObjectURL(img[0])
-      setPreviewImg(url)
-    }
+
+    setImg(img)
+    const url = URL.createObjectURL(img[0])
+    setPreviewImg(url)
   }
 
   return (
@@ -123,7 +113,12 @@ const AddProduct = () => {
                 accept="image/*"
               />
               {previewImg ? (
-                <img src={previewImg} alt="User avatar" className="w-full h-full object-cover" loading="lazy" />
+                <img
+                  src={previewImg}
+                  alt="img preview"
+                  className="w-full h-full aspect-video object-cover border rounded"
+                  loading="lazy"
+                />
               ) : (
                 <DefaultImage />
               )}
@@ -164,15 +159,6 @@ const AddProduct = () => {
             </Col>
           </Row>
           <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-            <Col span={12}>
-              <Form.Item
-                className="flex items-center w-full"
-                name="importPrice"
-                label="Giá nhập hàng"
-                rules={[{ required: true, message: ruleFormItem.required }]}>
-                <Input type="number" className="py-1 outline-0" placeholder="Nhập giá nhập hàng" name="importPrice" />
-              </Form.Item>
-            </Col>
             <Col span={12}>
               <Form.Item
                 className="flex items-center w-full"

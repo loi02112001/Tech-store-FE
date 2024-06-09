@@ -7,7 +7,7 @@ function PageNotFound() {
       title="404"
       subTitle="Sorry, the page you visited does not exist."
       extra={
-        <a className="button-primary" href="/">
+        <a className="btn btn-primary" href="/">
           Back To Home
         </a>
       }

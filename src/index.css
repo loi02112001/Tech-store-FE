@@ -1,6 +1,6 @@
 /* Typography */
-@import "./assets/css/typography.css";
-@import "./assets/css/button.css";
+@import './assets/css/typography.css';
+@import './assets/css/button.css';
 
 /* Global Reset */
 @tailwind base;
@@ -17,7 +17,7 @@
 /* Font */
 @font-face {
   font-family: Poppins;
-  src: url("assets/fonts/Poppins-Regular.ttf");
+  src: url('assets/fonts/Poppins-Regular.ttf');
   font-weight: 400;
 }
 
@@ -49,4 +49,11 @@
   .ant-form-item-control {
     @apply w-full;
   }
+}
+
+.form-control {
+  @apply block w-full h-[calc(1.5em_+_0.75rem_+_2px)] text-base font-normal leading-normal text-[#495057] bg-white bg-clip-padding border px-3 py-1.5 rounded-none border-solid border-[#EDF1FF];
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
 }

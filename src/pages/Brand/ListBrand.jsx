@@ -42,7 +42,7 @@ function ListBrand() {
     <Skeleton />
   ) : (
     <>
-      <AddEditBrand textButton="Thêm thương hiệu" classButton="mb-4 button-primary" />
+      <AddEditBrand textButton="Thêm thương hiệu" classButton="mb-4 btn btn-primary" />
       <Table
         rowClassName="editable-row"
         columns={brandTables}

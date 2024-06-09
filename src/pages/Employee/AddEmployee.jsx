@@ -92,7 +92,7 @@ function AddEmployee() {
           </Form.Item>
         </Col>
       </Row>
-      <button type="submit" className="mt-4 button-primary">
+      <button type="submit" className="mt-4 btn btn-primary">
         Thêm nhân viên
       </button>
     </Form>

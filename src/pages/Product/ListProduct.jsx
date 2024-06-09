@@ -5,10 +5,10 @@ import DefaultImages from '@/assets/icons/DefaultImage'
 import SearchInput from '@/components/common/SearchInput'
 import useProductStore from '@/store/productStore'
 
-import { Button, Layout, Switch, Table } from 'antd'
+import { Button, Layout, Table } from 'antd'
 
 const ListProduct = () => {
-  const { loading, products: productList, totalProducts, getProducts, changeProductStatus } = useProductStore()
+  const { loading, products: productList, totalProducts, getListProducts } = useProductStore()
 
   const formatPrice = (price) => {
     return new Intl.NumberFormat('vi-VN', {
@@ -33,15 +33,9 @@ const ListProduct = () => {
         return (
           <>
             {record.productImage ? (
-              <img
-                alt={record.name}
-                src={record.productImage}
-                width={50}
-                height={50}
-                className="inline object-cover rounded-sm"
-              />
+              <img alt={record.name} src={record.productImage} className="w-12 object-cover rounded-sm aspect-square" />
             ) : (
-              <DefaultImages width={50} height={50} />
+              <DefaultImages width={48} height={48} />
             )}
           </>
         )
@@ -52,16 +46,10 @@ const ListProduct = () => {
       dataIndex: 'name',
       key: 'name',
       render: (name, product) => (
-        <p className="text-[#0e2482] font-medium cursor-pointer">
+        <p className="link no-underline">
           <Link to={`/product/edit/${product.id}`}>{name}</Link>
         </p>
       )
-    },
-    {
-      title: 'Giá nhập',
-      dataIndex: 'importPrice',
-      key: 'importPrice',
-      render: (importPrice) => formatPrice(importPrice)
     },
     {
       title: 'Giá bán',
@@ -85,23 +73,18 @@ const ListProduct = () => {
       key: 'view'
     },
     {
-      title: 'Trạng thái',
+      title: 'Hành động',
       dataIndex: 'hasShow',
       key: 'hasShow',
-      render: (hasShow, record) => (
-        <Switch
-          value={!hasShow}
-          onChange={() => {
-            changeProductStatus(record.id, { status: !hasShow })
-          }}></Switch>
-      )
+      align: 'center',
+      render: (_, record) => <i className="fa-regular fa-trash-can text-blue" onClick={() => console.log(record)}></i>
     }
   ]
 
   const [searchValue, setSearchValue] = useState('')
 
   useEffect(() => {
-    getProducts()
+    getListProducts()
   }, [])
 
   const fetchDataTable = (value) => {

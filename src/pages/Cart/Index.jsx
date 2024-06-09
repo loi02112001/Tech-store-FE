@@ -60,7 +60,7 @@ function CartPage() {
         <div className="flex flex-col gap-4 h-full items-center justify-center">
           <ShoppingCartOutlined style={{ fontSize: '50px' }} />
           <h3 className="w-fit text-center text-xl">Không có sản phẩm nào trong giỏ hàng</h3>
-          <a href="/" className="button-primary w-fit">
+          <a href="/" className="btn btn-primary w-fit">
             Mua ngay
           </a>
         </div>

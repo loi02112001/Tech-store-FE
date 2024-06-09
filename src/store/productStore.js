@@ -27,25 +27,12 @@ const useProductStore = create((set, get) => ({
     }
   },
 
-  getProducts: async (params = {}) => {
-    set({ isLoading: true, error: null })
-    try {
-      const res = await productService.getProducts(params)
-      const { list, pages, totalElements } = res.data
-      set({ products: list, pages, total: totalElements })
-    } catch (error) {
-      handleNotification(constants.NOTIFICATION_ERROR, error)
-    } finally {
-      set({ isLoading: false })
-    }
-  },
-
   getListProducts: async (params = {}) => {
     set({ isLoading: true, error: null })
     try {
       const res = await productService.getListProducts(params)
-      const { list, pages, totalElements } = res.data
-      set({ products: list, pages, total: totalElements })
+      const { list, pages, total } = res.data
+      set({ products: list, pages, totalProducts: total })
     } catch (error) {
       handleNotification(constants.NOTIFICATION_ERROR, error)
     } finally {
@@ -106,7 +93,7 @@ const useProductStore = create((set, get) => ({
     set({ isLoading: true })
     try {
       await productService.changeProductStatus(id, status)
-      get().getProducts()
+      get().getListProducts()
     } catch (error) {
       handleNotification(constants.NOTIFICATION_ERROR, error)
     } finally {

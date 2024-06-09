@@ -13,7 +13,7 @@ const ManageHeaderComponent = memo(({ collapsed, changeCollapsed }) => {
   }, [])
 
   return (
-    <div className="flex justify-between p-3 bg-white rounded">
+    <div className="flex justify-between py-3 px-10 bg-white rounded">
       {createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
         onClick: () => changeCollapsed()
       })}

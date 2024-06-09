@@ -42,8 +42,8 @@ export const UserDropdown = () => {
   return (
     <Dropdown menu={{ items }} placement="bottom" arrow>
       <div className="flex items-center justify-between gap-3 cursor-pointer">
-        <i className="fas fa-user text-blue-500"></i>
-        <span className="text-gray-800 text-xs font-medium px-2.5 py-0.5 capitalize">{name}</span>
+        <span className="text-gray-800 text-base font-medium px-2.5 py-0.5 capitalize">{name}</span>
+        <i className="fas fa-user text-primary"></i>
       </div>
     </Dropdown>
   )

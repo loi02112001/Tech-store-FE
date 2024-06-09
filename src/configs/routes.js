@@ -21,6 +21,15 @@ export const routes = {
     add: '/brand/create',
     edit: '/brand/edit/:id'
   },
+  supplier: {
+    list: '/supplier',
+    add: '/supplier/create',
+    edit: '/supplier/edit/:id'
+  },
+  productBatch: {
+    list: '/product-batch',
+    add: '/product-batch/create'
+  },
   employee: {
     add: '/employee/create'
   },

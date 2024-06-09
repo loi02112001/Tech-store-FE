@@ -33,7 +33,7 @@ export const handleNotification = (type, res) => {
   toast[type](res.message)
 }
 
-export const formatMoneyVND = (amount) => {
+export const formatMoneyVND = (amount = 0) => {
   let amountStr = amount.toString().replace(/[^0-9.-]+/g, '')
   let [whole, decimal] = amountStr.split('.')
   whole = whole.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
@@ -48,3 +48,5 @@ export const formatMoneyVND = (amount) => {
 
   return `${whole}.${decimal} đ`
 }
+
+export const isEmptyUsingKeys = (obj) => Object.keys(obj).length === 0

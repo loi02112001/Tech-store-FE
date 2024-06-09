@@ -76,7 +76,7 @@ const LoginPage = () => {
             </Link>
           </div>
 
-          <Button className="mb-5 h-[40px] button-primary" block type="primary" htmlType="submit" loading={loading}>
+          <Button className="mb-5 h-[40px] btn btn-primary" block type="primary" htmlType="submit" loading={loading}>
             Đăng nhập
           </Button>
         </Form>

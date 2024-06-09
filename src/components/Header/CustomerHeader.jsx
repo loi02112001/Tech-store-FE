@@ -38,7 +38,7 @@ function CustomerHeader() {
       </div>
       <div className="w-1/2 lg:w-1/4 flex gap-2 justify-end">
         <a href="/cart" className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded hover:bg-gray-100">
-          <i className="fas fa-shopping-cart text-blue-500"></i>
+          <i className="fas fa-shopping-cart text-primary"></i>
           <span className=" bg-gray-200 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
             {carts?.length}
           </span>

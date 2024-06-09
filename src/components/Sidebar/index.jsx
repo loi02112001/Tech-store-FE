@@ -49,6 +49,24 @@ const Sidebar = ({ collapsed }) => {
       )
     },
     {
+      key: '/supplier',
+      icon: <FileDoneOutlined style={{ color: '#ff6900' }} className="w-[16px]" />,
+      label: (
+        <Link className="flex justify-between" to="/supplier">
+          Nhà cung cấp
+        </Link>
+      )
+    },
+    {
+      key: '/product-batch',
+      icon: <FileDoneOutlined style={{ color: '#ff6900' }} className="w-[16px]" />,
+      label: (
+        <Link className="flex justify-between" to="/product-batch">
+          Lô hàng
+        </Link>
+      )
+    },
+    {
       key: '/employee',
       icon: <FileDoneOutlined style={{ color: '#ff6900' }} className="w-[16px]" />,
       label: (

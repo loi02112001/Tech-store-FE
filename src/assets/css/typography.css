@@ -32,7 +32,7 @@ body,
 }
 
 .link {
-  @apply cursor-pointer capitalize underline transition-colors text-blue-600;
+  @apply cursor-pointer capitalize underline underline-offset-4 transition-colors text-blue-600;
 
   &:hover {
     @apply text-blue-400;
