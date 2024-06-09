@@ -18,10 +18,10 @@ const ListProduct = React.lazy(() => import('./pages/Product/ListProduct'))
 const AddProduct = React.lazy(() => import('./pages/Product/AddProduct'))
 const ListBrand = React.lazy(() => import('./pages/Brand/ListBrand'))
 const ListCategory = React.lazy(() => import('./pages/Category/ListCategory'))
-const ListSupplier = React.lazy(() => import('./pages/ProductBatch/ListProductBatch'))
+const ListSupplier = React.lazy(() => import('./pages/Supplier/ListSupplier'))
 const ListProductBatch = React.lazy(() => import('./pages/ProductBatch/ListProductBatch'))
-const AddEditSupplier = React.lazy(() => import('./pages/ProductBatch/ListProductBatch'))
-const AddEditProductInventory = React.lazy(() => import('./pages/ProductBatch/AddProductBatch'))
+const ListPromotion = React.lazy(() => import('./pages/Promotion/ListPromotion'))
+
 // customer
 const AllProductsPage = React.lazy(() => import('./pages/AllProductsPage/AllProductsPage'))
 const CustomerHomePage = React.lazy(() => import('./pages/HomePage/CustomerHomePage'))
@@ -48,10 +48,8 @@ export default function App() {
                   <Route path={routes.brand.list} element={<ListBrand />} />
                   <Route path={routes.employee.add} element={<AddEmployee />} />
                   <Route path={routes.supplier.list} element={<ListSupplier />} />
-                  <Route path={routes.supplier.add} element={<AddEditSupplier />} />
-                  <Route path={routes.supplier.edit} element={<AddEditSupplier />} />
                   <Route path={routes.productBatch.list} element={<ListProductBatch />} />
-                  <Route path={routes.productBatch.add} element={<AddEditProductInventory />} />
+                  <Route path={routes.promotion.list} element={<ListPromotion />} />
                 </>
               </Route>
             )}

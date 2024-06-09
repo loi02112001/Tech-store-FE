@@ -116,11 +116,11 @@ const AddProduct = () => {
                 <img
                   src={previewImg}
                   alt="img preview"
-                  className="w-full h-full aspect-video object-cover border rounded"
+                  className="w-full h-full aspect-video object-cover border rounded w-1/4"
                   loading="lazy"
                 />
               ) : (
-                <DefaultImage />
+                <DefaultImage width={200} height={200} />
               )}
             </Form.Item>
           </Col>

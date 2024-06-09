@@ -22,9 +22,7 @@ export const routes = {
     edit: '/brand/edit/:id'
   },
   supplier: {
-    list: '/supplier',
-    add: '/supplier/create',
-    edit: '/supplier/edit/:id'
+    list: '/supplier'
   },
   productBatch: {
     list: '/product-batch',
@@ -34,5 +32,8 @@ export const routes = {
     add: '/employee/create'
   },
   cart: '/cart',
-  allProducts: '/all-products'
+  allProducts: '/all-products',
+  promotion: {
+    list: '/promotion'
+  }
 }

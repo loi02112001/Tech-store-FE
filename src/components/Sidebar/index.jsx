@@ -1,94 +1,36 @@
 import { Link } from 'react-router-dom'
 
-import logo from '../../assets/images/logo.jpg'
-import { DashboardOutlined, FileDoneOutlined, SettingOutlined } from '@ant-design/icons'
 import { Menu } from 'antd'
 import Sider from 'antd/es/layout/Sider'
 
-import './index.css'
+const menuData = [
+  { key: '/', label: 'Tổng quan', path: '' },
+  { key: '/product', label: 'Sản phẩm', path: '/product' },
+  { key: '/category', label: 'Danh mục', path: '/category' },
+  { key: '/brand', label: 'Thương hiệu', path: '/brand' },
+  { key: '/supplier', label: 'Nhà cung cấp', path: '/supplier' },
+  { key: '/product-batch', label: 'Lô hàng', path: '/product-batch' },
+  { key: '/employee', label: 'Nhân viên', path: '/employee' },
+  { key: '/promotion', label: 'Khuyến mãi', path: '/promotion' },
+  { key: '/settings', label: 'Cài đặt chung', path: '/settings' }
+]
+
+const createMenuItem = ({ key, label, path }) => ({
+  key,
+  label: (
+    <Link className="flex justify-between" to={path}>
+      {label}
+    </Link>
+  )
+})
+
+const menuSidebar = menuData.map(createMenuItem)
 
 const Sidebar = ({ collapsed }) => {
   const path = window.location.pathname
 
-  const menuSidebar = [
-    {
-      key: '/',
-      icon: <DashboardOutlined style={{ color: '#4595ef' }} />,
-      label: (
-        <Link className="flex justify-between" to="">
-          Tổng quan
-        </Link>
-      )
-    },
-    {
-      key: '/product',
-      icon: <FileDoneOutlined style={{ color: '#ff6900' }} className="w-[16px]" />,
-      label: (
-        <Link className="flex justify-between" to="/product">
-          Sản phẩm
-        </Link>
-      )
-    },
-
-    {
-      key: '/category',
-      icon: <FileDoneOutlined style={{ color: '#ff6900' }} className="w-[16px]" />,
-      label: (
-        <Link className="flex justify-between" to="/category">
-          Danh mục
-        </Link>
-      )
-    },
-    {
-      key: '/brand',
-      icon: <FileDoneOutlined style={{ color: '#ff6900' }} className="w-[16px]" />,
-      label: (
-        <Link className="flex justify-between" to="/brand">
-          Thương hiệu
-        </Link>
-      )
-    },
-    {
-      key: '/supplier',
-      icon: <FileDoneOutlined style={{ color: '#ff6900' }} className="w-[16px]" />,
-      label: (
-        <Link className="flex justify-between" to="/supplier">
-          Nhà cung cấp
-        </Link>
-      )
-    },
-    {
-      key: '/product-batch',
-      icon: <FileDoneOutlined style={{ color: '#ff6900' }} className="w-[16px]" />,
-      label: (
-        <Link className="flex justify-between" to="/product-batch">
-          Lô hàng
-        </Link>
-      )
-    },
-    {
-      key: '/employee',
-      icon: <FileDoneOutlined style={{ color: '#ff6900' }} className="w-[16px]" />,
-      label: (
-        <Link className="flex justify-between" to="/employee">
-          Nhân viên
-        </Link>
-      )
-    },
-    {
-      key: '/settings',
-      icon: <SettingOutlined style={{ color: '#3341da' }} className="w-[16px]" />,
-      label: (
-        <Link className="flex justify-between" to={path}>
-          Cài đặt chung
-        </Link>
-      )
-    }
-  ]
-
   return (
     <Sider trigger={null} collapsible collapsed={collapsed} width={300} style={{ backgroundColor: '#001f3f' }}>
-      <img src={logo} alt="logo" className="max-w-full h-[200px] object-cover" />
       <Menu
         items={menuSidebar}
         theme="light"
