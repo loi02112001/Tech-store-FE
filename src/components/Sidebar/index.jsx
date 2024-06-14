@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Menu } from 'antd'
@@ -27,7 +28,7 @@ const createMenuItem = ({ key, label, path }) => ({
 const menuSidebar = menuData.map(createMenuItem)
 
 const Sidebar = ({ collapsed }) => {
-  const path = window.location.pathname
+  const [activePath, setActivePath] = useState(window.location.pathname)
 
   return (
     <Sider trigger={null} collapsible collapsed={collapsed} width={300} style={{ backgroundColor: '#001f3f' }}>
@@ -35,8 +36,9 @@ const Sidebar = ({ collapsed }) => {
         items={menuSidebar}
         theme="light"
         mode="inline"
-        defaultSelectedKeys={[path]}
-        selectedKeys={[path]}
+        defaultSelectedKeys={[activePath]}
+        selectedKeys={[activePath]}
+        onClick={({ key }) => setActivePath(key)}
         style={{
           margin: '16px 0'
         }}

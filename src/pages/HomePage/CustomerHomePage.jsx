@@ -6,11 +6,12 @@ import useProductStore from '@/store/productStore'
 import ProductSlider from './components/ProductSlider'
 
 function CustomerHomePage() {
-  const { productsTopView, productTopSold, getProductTopSold, getProductTopView } = useProductStore()
+  const { products, productsTopView, productTopSold, getProductTopSold, getProductTopView, getListProducts } =
+    useProductStore()
   const { categories, getCategories } = useCategoryStore()
 
   useEffect(() => {
-    Promise.all([getProductTopView(), getProductTopSold(), getCategories()])
+    Promise.all([getProductTopView(), getProductTopSold(), getCategories(), getListProducts()])
   }, [])
 
   return (
@@ -44,6 +45,7 @@ function CustomerHomePage() {
 
       <ProductSlider title="Sản phẩm bán chạy" products={productTopSold} />
       <ProductSlider title="Sản phẩm được xem nhiều nhất" products={productsTopView} />
+      <ProductSlider title="Sản phẩm mới nhất" products={products} />
     </>
   )
 }

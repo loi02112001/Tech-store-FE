@@ -79,10 +79,18 @@ function ProductDetail() {
                 {value ? <span>{desc[value - 1]}</span> : null}
               </Flex>
             </Modal>
-            <h3 className="text-2xl font-semibold mb-4">{formatMoneyVND(product?.price)}</h3>
+            <span
+              className={`text-2xl font-semibold mb-4 ${product?.priceAfterDiscount < product?.price ? 'line-through' : ''}`}>
+              {formatMoneyVND(product?.price)}
+            </span>
+            {product?.priceAfterDiscount < product?.price && (
+              <span className="pl-5 text-2xl font-semibold text-[#D19C97]">
+                {formatMoneyVND(product?.priceAfterDiscount)}
+              </span>
+            )}
             <p className="text-indigo-500 mb-4">{product?.description}</p>
-            <div className="flex items-center mb-4 pt-2">
-              <div className="flex items-center mr-3 w-32">
+            <div className="flex items-center gap-5 mb-4 pt-2">
+              <div className="flex items-center w-48">
                 <div className="input-group-prepend">
                   <button className="btn btn-primary btn-minus" onClick={handleDecrement} disabled={quantity === 1}>
                     <i className="fa fa-minus"></i>

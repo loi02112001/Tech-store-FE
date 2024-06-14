@@ -8,7 +8,7 @@ function ProductSlider({ title, products }) {
           <span className="relative z-[1] px-2 bg-white">{title}</span>
         </h2>
       </div>
-      <div className="grid grid-cols-4 gap-5 mt-6 px-5 xl:px-20 pb-3">
+      <div className="grid grid-cols-4 gap-5 mt-6 px-5 xl:px-20 pb-3 2xl:grid-cols-5">
         {products.map((product) => (
           <ProductCard product={product} key={product.id} />
         ))}

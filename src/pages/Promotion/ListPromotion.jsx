@@ -1,16 +1,15 @@
 import { useEffect } from 'react'
 
+import DefaultImage from '@/assets/icons/DefaultImage'
 import usePromotionStore from '@/store/promotionStore'
+import { formatMoneyVND } from '@/utils'
 
 import AddEditPromotion from './AddEditPromotion'
 import { Skeleton, Switch, Table } from 'antd'
-import DefaultImage from '@/assets/icons/DefaultImage'
-import { render } from 'react-dom'
-import { formatMoneyVND } from '@/utils'
+import dayjs from 'dayjs'
 
 function ListPromotion() {
   const { loading, promotions, getPromotions, updatePromotion } = usePromotionStore()
-  console.log('🚀 ~ ListPromotion ~ promotions:', promotions)
 
   const promotionTables = [
     {
@@ -49,12 +48,18 @@ function ListPromotion() {
     {
       title: 'Thời gian bắt đầu',
       dataIndex: 'startTime',
-      key: 'startTime'
+      key: 'startTime',
+      render: (date) => {
+        return dayjs(date).format('DD/MM/YYYY')
+      }
     },
     {
       title: 'Thời gian kết thúc',
       dataIndex: 'endTime',
-      key: 'endTime'
+      key: 'endTime',
+      render: (date) => {
+        return dayjs(date).format('DD/MM/YYYY')
+      }
     },
     {
       title: 'Áp dụng',

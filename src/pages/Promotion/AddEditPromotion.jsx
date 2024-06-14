@@ -95,11 +95,11 @@ const AddEditPromotion = ({ promotion = {}, classButton = '', textButton = 'Sử
           className="w-full mb-5"
           name="time"
           format="YYYY-MM-DD"
-          onChange={(value) => {
-            setTime(value)
+          onChange={(value, dateString) => {
+            setTime(dateString)
           }}
-          value={
-            promotion?.startTime && promotion?.endTime ? [dayjs(promotion?.startTime), dayjs(promotion?.endTime)] : null
+          defaultValue={
+            promotion?.startTime && promotion?.endTime ? [dayjs(promotion?.startTime), dayjs(promotion?.endTime)] : time
           }
           onOk={onOk}
         />
