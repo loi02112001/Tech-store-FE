@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 import useCartStore from '@/store/cartStore'
 import { formatMoneyVND } from '@/utils'
 
@@ -11,14 +13,18 @@ function ProductCard({ product }) {
   return (
     <div className="flex flex-col border rounded">
       <div className="relative overflow-hidden bg-transparent border-b">
-        <img
-          alt={product.name}
-          className="w-full aspect-square hover:scale-105 transition duration-500 ease-in-out"
-          src={`${product.productImage ? product.productImage : 'https://via.placeholder.com/144'} `}
-        />
+        <Link to={`/product/detail/${product.id}`}>
+          <img
+            alt={product.name}
+            className="w-full aspect-square hover:scale-105 transition duration-500 ease-in-out"
+            src={`${product.productImage ? product.productImage : 'https://via.placeholder.com/144'} `}
+          />
+        </Link>
       </div>
       <div className="flex flex-col justify-between flex-1 p-4 font-medium">
-        <h6 className="mb-3">{product.name}</h6>
+        <Link className="mb-3" to={`/product/detail/${product.id}`}>
+          <h6>{product.name}</h6>
+        </Link>
         <div className="flex items-center gap-4">
           <span className={` ${product.priceAfterDiscount < product.price ? 'line-through' : ''}`}>
             {formatMoneyVND(product.price)}

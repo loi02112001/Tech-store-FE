@@ -1,4 +1,4 @@
-import { httpGet, httpPost, httpPut } from '../configs/api'
+import { httpDelete, httpGet, httpPost, httpPut } from '../configs/api'
 
 const addProduct = (data) => {
   return httpPost('/product/create', data)
@@ -32,6 +32,14 @@ const getProductTopSold = () => {
   return httpGet(`/product/top-sold`)
 }
 
+const deleteProduct = (id) => {
+  return httpDelete(`/product/delete/${id}`)
+}
+
+const ratingProduct = (data) => {
+  return httpPost('/product/rating', data)
+}
+
 export const productService = {
   addProduct,
   getListProducts,
@@ -40,5 +48,7 @@ export const productService = {
   updateProduct,
   changeProductStatus,
   getProductTopView,
-  getProductTopSold
+  getProductTopSold,
+  deleteProduct,
+  ratingProduct
 }

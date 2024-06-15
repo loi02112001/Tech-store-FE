@@ -12,4 +12,13 @@ const updatePromotion = (id, data) => {
   return httpPut(`/promotion/update/${id}`, data)
 }
 
-export const promotionService = { getPromotions, createPromotion, updatePromotion }
+const updatePromotionStatus = (id, data) => {
+  return httpPut(`/promotion/update/status/${id}`, data)
+}
+
+export const promotionService = {
+  getPromotions,
+  createPromotion,
+  updatePromotion,
+  updatePromotionStatus
+}

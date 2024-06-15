@@ -9,7 +9,7 @@ import { Skeleton, Switch, Table } from 'antd'
 import dayjs from 'dayjs'
 
 function ListPromotion() {
-  const { loading, promotions, getPromotions, updatePromotion } = usePromotionStore()
+  const { loading, promotions, getPromotions, updatePromotionStatus } = usePromotionStore()
 
   const promotionTables = [
     {
@@ -69,7 +69,7 @@ function ListPromotion() {
         <Switch
           value={isActive}
           onChange={() => {
-            updatePromotion(record.id, { ...record, isActive: !isActive })
+            updatePromotionStatus(record.id, { isActive: !isActive })
           }}></Switch>
       )
     },

@@ -8,6 +8,7 @@ import { UserDropdown } from '../UserDropDown/Index'
 function CustomerHeader() {
   const { getProfile } = useAuthStore()
   const { carts, getCarts } = useCartStore()
+  const isCartPage = window.location.href.includes('/cart')
 
   useEffect(() => {
     Promise.all([getProfile(), getCarts()])
@@ -16,7 +17,7 @@ function CustomerHeader() {
   return (
     <div className="flex items-center py-3 px-6 xl:px-20 sticky top-0 z-[2] bg-white border-b">
       <div className="hidden lg:block lg:w-1/4">
-        <a href="###" className="no-underline">
+        <a href="/" className="no-underline">
           <h1 className="m-0 text-5xl font-semibold">TechStore</h1>
         </a>
       </div>
@@ -37,7 +38,9 @@ function CustomerHeader() {
         </form>
       </div>
       <div className="w-1/2 lg:w-1/4 flex gap-2 justify-end">
-        <a href="/cart" className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded hover:bg-gray-100">
+        <a
+          href="/cart"
+          className={`flex items-center gap-2 px-4 py-2 border border-gray-300 rounded hover:bg-gray-100 ${isCartPage && 'pointer-events-none'}`}>
           <i className="fas fa-shopping-cart text-primary"></i>
           <span className=" bg-gray-200 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
             {carts?.length}

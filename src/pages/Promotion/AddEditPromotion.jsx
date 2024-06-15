@@ -17,7 +17,11 @@ const AddEditPromotion = ({ promotion = {}, classButton = '', textButton = 'Sử
   const [selectedProduct, setSelectedProduct] = useState(promotion)
   const [time, setTime] = useState([])
 
-  const openModal = () => setIsModalOpen(true)
+  const openModal = () => {
+    form.setFieldsValue(promotion)
+    setIsModalOpen(true)
+  }
+
   const closeModal = () => {
     setIsModalOpen(false)
     form.resetFields()
@@ -47,10 +51,6 @@ const AddEditPromotion = ({ promotion = {}, classButton = '', textButton = 'Sử
         })
     closeModal()
   }
-
-  useEffect(() => {
-    form.setFieldsValue(promotion)
-  }, [promotion])
 
   return (
     <>

@@ -10,11 +10,11 @@ const desc = ['Tệ hại', 'Tồi tệ', 'Bình thường', 'Tốt', 'Tuyệt v
 
 function ProductDetail() {
   const { id } = useParams()
-  const { isLoading, product, getProductById } = useProductStore()
+  const { isLoading, product, getProductById, ratingProduct } = useProductStore()
   const { addToCart } = useCartStore()
   const [quantity, setQuantity] = useState(1)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [value, setValue] = useState(3)
+  const [value, setValue] = useState(product?.userRating)
 
   const handleAddToCart = () => {
     console.log('add')
@@ -44,6 +44,7 @@ function ProductDetail() {
   }
 
   const handleOk = () => {
+    ratingProduct({ productId: product.id, rating: value })
     setIsModalOpen(false)
   }
   useEffect(() => {
@@ -63,19 +64,15 @@ function ProductDetail() {
 
           <div className="w-full lg:flex-1 pb-5">
             <h3 className="font-semibold mb-2 text-3xl">{product?.name}</h3>
-            <div className="flex mb-3">
+            <div className="flex gap-4 mb-3">
               <div className="text-primary mr-2 cursor-pointer" onClick={showModal}>
-                <small className="fas fa-star"></small>
-                <small className="fas fa-star"></small>
-                <small className="fas fa-star"></small>
-                <small className="fas fa-star-half-alt"></small>
-                <small className="far fa-star"></small>
+                <Rate disabled allowHalf value={product?.productRating} />
               </div>
-              <small className="pt-1">{product?.view} reviews</small>
+              <small className="text-sm">{product?.totalUserRating} đánh giá</small>
             </div>
-            <Modal title="Đánh giá sản phẩm" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+            <Modal title="Đánh giá của bạn" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
               <Flex gap="middle" vertical className="mt-5">
-                <Rate tooltips={desc} onChange={setValue} value={value} />
+                <Rate tooltips={desc} onChange={setValue} value={value || product?.userRating} />
                 {value ? <span>{desc[value - 1]}</span> : null}
               </Flex>
             </Modal>

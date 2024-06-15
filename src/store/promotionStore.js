@@ -47,6 +47,18 @@ const usePromotionStore = create((set, get) => ({
     } finally {
       set({ isLoading: false })
     }
+  },
+
+  updatePromotionStatus: async (id, data) => {
+    set({ isLoading: true })
+    try {
+      await promotionService.updatePromotionStatus(id, data)
+      await get().getPromotions()
+    } catch (error) {
+      handleNotification(constants.NOTIFICATION_ERROR, error)
+    } finally {
+      set({ isLoading: false })
+    }
   }
 }))
 

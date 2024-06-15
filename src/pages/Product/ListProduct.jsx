@@ -8,7 +8,7 @@ import useProductStore from '@/store/productStore'
 import { Button, Layout, Table } from 'antd'
 
 const ListProduct = () => {
-  const { loading, products: productList, totalProducts, getListProducts } = useProductStore()
+  const { loading, products: productList, totalProducts, getListProducts, deleteProduct } = useProductStore()
 
   const formatPrice = (price) => {
     return new Intl.NumberFormat('vi-VN', {
@@ -77,7 +77,9 @@ const ListProduct = () => {
       dataIndex: 'hasShow',
       key: 'hasShow',
       align: 'center',
-      render: (_, record) => <i className="fa-regular fa-trash-can text-blue" onClick={() => console.log(record)}></i>
+      render: (_, record) => (
+        <i className="fa-regular fa-trash-can text-blue" onClick={() => deleteProduct(record.id)}></i>
+      )
     }
   ]
 

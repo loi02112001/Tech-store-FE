@@ -99,6 +99,30 @@ const useProductStore = create((set, get) => ({
     } finally {
       set({ isLoading: false })
     }
+  },
+
+  deleteProduct: async (id) => {
+    set({ isLoading: true })
+    try {
+      await productService.deleteProduct(id)
+      get().getListProducts()
+    } catch (error) {
+      handleNotification(constants.NOTIFICATION_ERROR, error)
+    } finally {
+      set({ isLoading: false })
+    }
+  },
+
+  ratingProduct: async (data) => {
+    set({ isLoading: true })
+    try {
+      await productService.ratingProduct(data)
+      get().getProductById(data.productId)
+    } catch (error) {
+      handleNotification(constants.NOTIFICATION_ERROR, error)
+    } finally {
+      set({ isLoading: false })
+    }
   }
 }))
 

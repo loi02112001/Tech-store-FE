@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 
 import ScrollToTop from './components/ScrollToTop/Index'
 import { routes } from './configs/routes'
-import MainLayout from './layouts/AdminLayout/Index'
+import AdminLayout from './layouts/AdminLayout/Index'
 import CustomerLayout from './layouts/CustomerLayout/Index'
 import AddEmployee from './pages/Employee/AddEmployee'
 // import PageNotFound from './pages/PageNotFound/PageNotFound'
@@ -38,7 +38,7 @@ export default function App() {
           <Route path={routes.auth.register} element={<RegisterPage />} />
           <Route element={<ProtectedRoute />}>
             {isManage() && (
-              <Route element={<MainLayout />}>
+              <Route element={<AdminLayout />}>
                 <>
                   <Route path={routes.auth.home} element={<ManageHomePage />} />
                   <Route path={routes.product.add} element={<AddProduct />} />

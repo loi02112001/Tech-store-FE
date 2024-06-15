@@ -12,8 +12,7 @@ const menuData = [
   { key: '/supplier', label: 'Nhà cung cấp', path: '/supplier' },
   { key: '/product-batch', label: 'Lô hàng', path: '/product-batch' },
   { key: '/employee', label: 'Nhân viên', path: '/employee' },
-  { key: '/promotion', label: 'Khuyến mãi', path: '/promotion' },
-  { key: '/settings', label: 'Cài đặt chung', path: '/settings' }
+  { key: '/promotion', label: 'Khuyến mãi', path: '/promotion' }
 ]
 
 const createMenuItem = ({ key, label, path }) => ({
@@ -32,6 +31,9 @@ const Sidebar = ({ collapsed }) => {
 
   return (
     <Sider trigger={null} collapsible collapsed={collapsed} width={300} style={{ backgroundColor: '#001f3f' }}>
+      <a href="/" className="no-underline">
+        <h1 className="my-4 text-center text-5xl font-semibold">TechStore</h1>
+      </a>
       <Menu
         items={menuSidebar}
         theme="light"

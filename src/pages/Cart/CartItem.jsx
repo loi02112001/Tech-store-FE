@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import useCartStore from '@/store/cartStore'
 import { formatMoneyVND } from '@/utils'
@@ -35,14 +36,18 @@ function CartItem({ cart }) {
 
   return (
     <div key={cart.id} className="flex gap-10 py-8 border-t first:border-t-0 first:pt-0 last:pb-0">
-      <img
-        src={`${cart.productImage ? cart.productImage : 'https://via.placeholder.com/100'}`}
-        alt="product"
-        className="w-[100px] object-cover aspect-square"
-      />
+      <Link to={`/product/detail/${cart.productId}`}>
+        <img
+          src={`${cart.productImage ? cart.productImage : 'https://via.placeholder.com/100'}`}
+          alt="product"
+          className="w-[100px] object-cover aspect-square"
+        />
+      </Link>
       <div className="flex flex-col justify-between w-full">
         <div className="flex justify-between w-full">
-          <h3 className="text-lg font-medium capitalize">{cart.productName}</h3>
+          <Link to={`/product/detail/${cart.productId}`}>
+            <h3 className="text-lg font-medium capitalize">{cart.productName}</h3>
+          </Link>
           <span className="font-bold text-gray-900">{formatMoneyVND(cart?.productPrice)}</span>
         </div>
         <div className="flex items-center justify-between gap-5">
