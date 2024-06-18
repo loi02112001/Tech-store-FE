@@ -42,8 +42,6 @@ export const formatMoneyVND = (amount = 0) => {
     decimal = '00'
   } else if (decimal.length === 1) {
     decimal = decimal + '0'
-  } else if (decimal.length > 2) {
-    decimal = decimal.slice(0, 2)
   }
 
   return `${whole}.${decimal} đ`

@@ -39,6 +39,8 @@ function AddEditCategory({ category = {}, classButton = '', textButton = 'Sửa'
       <Modal
         title={category?.id ? 'Cập nhật danh mục' : 'Thêm danh mục'}
         open={isModalOpen}
+        okText={category?.id ? 'Cập nhật danh mục' : 'Thêm danh mục'}
+        cancelText="Hủy"
         onOk={handleOk}
         onCancel={handleCancel}>
         <Form form={form} onFinish={handleSubmit}>

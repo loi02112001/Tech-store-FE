@@ -19,10 +19,12 @@ const ListProduct = () => {
 
   const productsTable = [
     {
-      title: 'ID',
       dataIndex: 'id',
       key: 'id',
-      align: 'center'
+      align: 'center',
+      render: (_, record, index) => {
+        return index + 1
+      }
     },
     {
       title: 'Hình ảnh',
@@ -78,7 +80,12 @@ const ListProduct = () => {
       key: 'hasShow',
       align: 'center',
       render: (_, record) => (
-        <i className="fa-regular fa-trash-can text-blue" onClick={() => deleteProduct(record.id)}></i>
+        <div className="flex items-center justify-center gap-10">
+          <Link to={`/product/edit/${record.id}`}>
+            <i className="fa-regular fa-pen-to-square text-blue"></i>
+          </Link>
+          <i className="fa-regular fa-trash-can text-blue cursor-pointer" onClick={() => deleteProduct(record.id)}></i>
+        </div>
       )
     }
   ]

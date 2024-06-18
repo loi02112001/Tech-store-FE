@@ -29,7 +29,14 @@ function ListCategory() {
       title: 'Hành động',
       dataIndex: '',
       key: 'x',
-      render: (_, record) => <AddEditCategory category={record} classButton="link no-underline" />
+      align: 'center',
+      render: (_, record) => (
+        <AddEditCategory
+          category={record}
+          classButton="link no-underline"
+          textButton={<i className="fa-regular fa-pen-to-square text-blue cursor-pointer"></i>}
+        />
+      )
     }
   ]
 

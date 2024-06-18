@@ -29,11 +29,16 @@ export const routes = {
     add: '/product-batch/create'
   },
   employee: {
-    add: '/employee/create'
+    add: '/employee/create',
+    edit: '/employee/edit/:id',
+    list: '/employee'
   },
   cart: '/cart',
   allProducts: '/all-products',
   promotion: {
     list: '/promotion'
+  },
+  voucher: {
+    list: '/voucher'
   }
 }

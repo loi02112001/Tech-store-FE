@@ -5,7 +5,7 @@ import ScrollToTop from './components/ScrollToTop/Index'
 import { routes } from './configs/routes'
 import AdminLayout from './layouts/AdminLayout/Index'
 import CustomerLayout from './layouts/CustomerLayout/Index'
-import AddEmployee from './pages/Employee/AddEmployee'
+import AddEmployee from './pages/Employee/AddEditEmployee'
 // import PageNotFound from './pages/PageNotFound/PageNotFound'
 import ProtectedRoute from './routes/ProtectedRoute'
 import { isCustomer, isManage } from './utils'
@@ -21,6 +21,9 @@ const ListCategory = React.lazy(() => import('./pages/Category/ListCategory'))
 const ListSupplier = React.lazy(() => import('./pages/Supplier/ListSupplier'))
 const ListProductBatch = React.lazy(() => import('./pages/ProductBatch/ListProductBatch'))
 const ListPromotion = React.lazy(() => import('./pages/Promotion/ListPromotion'))
+const ListVoucher = React.lazy(() => import('./pages/Voucher/ListVoucher'))
+const AddEditEmployee = React.lazy(() => import('./pages/Employee/AddEditEmployee'))
+const ListEmployee = React.lazy(() => import('./pages/Employee/ListEmployee'))
 
 // customer
 const AllProductsPage = React.lazy(() => import('./pages/AllProductsPage/AllProductsPage'))
@@ -46,10 +49,13 @@ export default function App() {
                   <Route path={routes.product.edit} element={<AddProduct />} />
                   <Route path={routes.category.list} element={<ListCategory />} />
                   <Route path={routes.brand.list} element={<ListBrand />} />
-                  <Route path={routes.employee.add} element={<AddEmployee />} />
                   <Route path={routes.supplier.list} element={<ListSupplier />} />
                   <Route path={routes.productBatch.list} element={<ListProductBatch />} />
                   <Route path={routes.promotion.list} element={<ListPromotion />} />
+                  <Route path={routes.voucher.list} element={<ListVoucher />} />
+                  <Route path={routes.employee.list} element={<ListEmployee />} />
+                  <Route path={routes.employee.add} element={<AddEditEmployee />} />
+                  <Route path={routes.employee.edit} element={<AddEditEmployee />} />
                 </>
               </Route>
             )}

@@ -12,7 +12,8 @@ const menuData = [
   { key: '/supplier', label: 'Nhà cung cấp', path: '/supplier' },
   { key: '/product-batch', label: 'Lô hàng', path: '/product-batch' },
   { key: '/employee', label: 'Nhân viên', path: '/employee' },
-  { key: '/promotion', label: 'Khuyến mãi', path: '/promotion' }
+  { key: '/promotion', label: 'Khuyến mãi', path: '/promotion' },
+  { key: '/voucher', label: 'Voucher', path: '/voucher' }
 ]
 
 const createMenuItem = ({ key, label, path }) => ({
