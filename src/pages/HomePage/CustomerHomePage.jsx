@@ -16,7 +16,7 @@ function CustomerHomePage() {
 
   return (
     <>
-      <div className="flex gap-5 py-5 px-5 xl:px-20">
+      <div className="flex gap-5 py-12 px-5 xl:px-20">
         <div className="hidden lg:block lg:w-1/4">
           <div className="flex items-center justify-between h-16 bg-[#D19C97] w-full p-8">
             <h6 className="font-bold">Categories</h6>
@@ -34,10 +34,10 @@ function CustomerHomePage() {
             </div>
           </div>
         </div>
-        <div className="lg:w-3/4 overflow-hidden">
+        <div className="lg:w-3/4 overflow-hidden rounded">
           <img
-            className="w-full h-[400px] hover:scale-105 duration-500 ease-in-out"
-            src="https://themewagon.github.io/eshopper/img/carousel-2.jpg"
+            className="w-full aspect-[16/9] hover:scale-105 duration-500 ease-in-out"
+            src="https://cdn.tgdd.vn/Files/2018/11/27/1134121/bannerlaptopthang12_800x450.png"
             alt="banner"
           />
         </div>

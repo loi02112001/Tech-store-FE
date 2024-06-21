@@ -107,12 +107,12 @@ const CustomerFooter = () => {
             </div>
           </div>
         </div>
-        <div className="container py-6 bg-[#EDF1FF] border-t-[2px] border-white dark:bg-gray-700 md:flex md:items-center md:justify-between">
+        <div className="container py-6 dark:bg-gray-700 md:flex md:items-center md:justify-between">
           <span className="text-sm text-gray-500 dark:text-gray-300 sm:text-center">
             <a href="https://flowbite.com/" className="text-black font-semibold">
-              TechStore
+              TechStore.
             </a>
-            . All Rights Reserved.
+            All Rights Reserved.
           </span>
           <div className="flex mt-4 sm:justify-center md:mt-0 space-x-5 rtl:space-x-reverse">
             <a href="#" className="text-gray-400 hover:text-gray-900 dark:hover:text-white">
