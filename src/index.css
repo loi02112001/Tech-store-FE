@@ -15,11 +15,20 @@
 }
 
 /* Font */
-@font-face {
+/* @font-face {
   font-family: Poppins;
   src: url('assets/fonts/Poppins-Regular.ttf');
   font-weight: 400;
+} */
+
+@font-face{
+  font-family:"helvetica";
+  font-weight: 400;
+  src:url("https://candyfonts.com/wp-data/2018/10/26/11538/HELR45W.ttf") format("woff"),
+  url("https://candyfonts.com/wp-data/2018/10/26/11538/HELR45W.ttf") format("opentype"),
+  url("https://candyfonts.com/wp-data/2018/10/26/11538/HELR45W.ttf") format("truetype");
 }
+
 
 /* Input Styles */
 

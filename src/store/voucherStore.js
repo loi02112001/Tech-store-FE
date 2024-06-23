@@ -43,10 +43,10 @@ const useVoucherStore = create((set, get) => ({
       set({ isLoading: false })
     }
   },
-  getVoucherByCode: async () => {
+  getVoucherByCode: async (data) => {
     set({ isLoading: true })
     try {
-      const res = await voucherService.getVoucherByCode()
+      const res = await voucherService.getVoucherByCode(data)
       set({ voucher: res.data })
     } catch (error) {
       handleNotification(constants.NOTIFICATION_ERROR, error)

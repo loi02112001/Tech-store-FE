@@ -1,8 +1,8 @@
+import { useNavigate } from 'react-router-dom'
+
 import useEmployeeStore from '@/store/employeeStore'
 
 import { Col, Form, Input, Radio, Row } from 'antd'
-import { useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
 
 function AddEditEmployee() {
   const { createEmployee } = useEmployeeStore()

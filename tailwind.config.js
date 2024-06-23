@@ -6,18 +6,28 @@ module.exports = {
       colors: {
         primary: '#D19C97',
         black: {
-          DEFAULT: '#212529'
+          DEFAULT: '#212529',
+          500: '#212121',
+          600: '#000000cc',
+          700: '#0000008a'
         },
-        white: '#FFFFFF',
         indigo: {
           500: '#6f6f6f'
         },
         secondary: '#EDF1FF',
         blue: {
           DEFAULT: '#3874ff',
-          hover: '#004DFF'
+          hover: '#004DFF',
+          100: '#05a'
+        },
+        white: {
+          DEFAULT: '#ffffff',
+          500: '#f5f5f5'
         }
       }
+    },
+    fontFamily: {
+      sans: ['helvetica', 'sans-serif']
     },
     container: {
       center: true,

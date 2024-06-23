@@ -33,12 +33,18 @@ export const routes = {
     edit: '/employee/edit/:id',
     list: '/employee'
   },
-  cart: '/cart',
+  cart: {
+    list: '/cart',
+    checkout: '/cart/checkout'
+  },
   allProducts: '/all-products',
   promotion: {
     list: '/promotion'
   },
   voucher: {
     list: '/voucher'
+  },
+  purchase: {
+    list: '/purchase'
   }
 }

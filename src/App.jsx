@@ -5,7 +5,6 @@ import ScrollToTop from './components/ScrollToTop/Index'
 import { routes } from './configs/routes'
 import AdminLayout from './layouts/AdminLayout/Index'
 import CustomerLayout from './layouts/CustomerLayout/Index'
-import AddEmployee from './pages/Employee/AddEditEmployee'
 // import PageNotFound from './pages/PageNotFound/PageNotFound'
 import ProtectedRoute from './routes/ProtectedRoute'
 import { isCustomer, isManage } from './utils'
@@ -24,11 +23,13 @@ const ListPromotion = React.lazy(() => import('./pages/Promotion/ListPromotion')
 const ListVoucher = React.lazy(() => import('./pages/Voucher/ListVoucher'))
 const AddEditEmployee = React.lazy(() => import('./pages/Employee/AddEditEmployee'))
 const ListEmployee = React.lazy(() => import('./pages/Employee/ListEmployee'))
+const CartCheckout = React.lazy(() => import('./pages/Cart/CartCheckout'))
+const Purchase = React.lazy(() => import('./pages/Purchase/Purchase'))
 
 // customer
 const AllProductsPage = React.lazy(() => import('./pages/AllProductsPage/AllProductsPage'))
 const CustomerHomePage = React.lazy(() => import('./pages/HomePage/CustomerHomePage'))
-const CartPage = React.lazy(() => import('./pages/Cart/Index'))
+const CartPage = React.lazy(() => import('./pages/Cart/CartPage'))
 const ProductDetail = React.lazy(() => import('./pages/Product/ProductDetail'))
 
 export default function App() {
@@ -63,9 +64,11 @@ export default function App() {
             {isCustomer() && (
               <Route element={<CustomerLayout />}>
                 <Route path={routes.auth.home} element={<CustomerHomePage />} />
-                <Route path={routes.cart} element={<CartPage />} />
+                <Route path={routes.cart.list} element={<CartPage />} />
+                <Route path={routes.cart.checkout} element={<CartCheckout />} />
                 <Route path={routes.allProducts} element={<AllProductsPage />} />
                 <Route path={routes.product.detail} element={<ProductDetail />} />
+                <Route path={routes.purchase.list} element={<Purchase />} />
               </Route>
             )}
             {/* <Route path="*" element={<PageNotFound />} /> */}

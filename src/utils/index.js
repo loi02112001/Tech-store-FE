@@ -35,16 +35,10 @@ export const handleNotification = (type, res) => {
 
 export const formatMoneyVND = (amount = 0) => {
   let amountStr = amount.toString().replace(/[^0-9.-]+/g, '')
-  let [whole, decimal] = amountStr.split('.')
-  whole = whole.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  let [whole] = amountStr.split('.')
+  whole = whole.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
 
-  if (!decimal) {
-    decimal = '00'
-  } else if (decimal.length === 1) {
-    decimal = decimal + '0'
-  }
-
-  return `${whole}.${decimal} đ`
+  return `${whole} đ`
 }
 
 export const isEmptyUsingKeys = (obj) => Object.keys(obj).length === 0

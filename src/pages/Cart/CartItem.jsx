@@ -1,13 +1,15 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import useCartStore from '@/store/cartStore'
 import { formatMoneyVND } from '@/utils'
 
 import { DeleteOutlined } from '@ant-design/icons'
+import { Checkbox } from 'antd'
 
-function CartItem({ cart }) {
+function CartItem({ cart, checked, handleItemCheck }) {
   const [quantity, setQuantity] = useState(cart.quantity)
+  const [check, setCheck] = useState(checked)
   const { updateCart } = useCartStore()
 
   const updateQuantity = (value) => {
@@ -34,8 +36,19 @@ function CartItem({ cart }) {
     }
   }
 
+  useEffect(() => {
+    setCheck(checked)
+  }, [checked])
+
   return (
     <div key={cart.id} className="flex gap-10 py-8 border-t first:border-t-0 first:pt-0 last:pb-0">
+      <Checkbox
+        checked={check}
+        onChange={() => {
+          setCheck(!check)
+          handleItemCheck(cart.id)
+        }}
+      />
       <Link to={`/product/detail/${cart.productId}`}>
         <img
           src={`${cart.productImage ? cart.productImage : 'https://via.placeholder.com/100'}`}
@@ -62,9 +75,9 @@ function CartItem({ cart }) {
             </button>
             <input
               className="w-10 text-center bg-gray-100 border-x"
-              type="number"
-              min="1"
+              type="text"
               value={quantity}
+              pattern="[0-9]*"
               onChange={handleInputChange}
             />
             <button

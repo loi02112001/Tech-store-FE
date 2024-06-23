@@ -1,0 +1,7 @@
+.ant-tabs-nav-wrap {
+    @apply bg-white;
+
+    & .ant-tabs-nav-list{
+        @apply justify-between mx-10;
+    }
+}

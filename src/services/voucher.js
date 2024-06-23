@@ -13,7 +13,7 @@ const getAllVoucher = () => {
 }
 
 const getVoucherByCode = (data) => {
-  return httpGet('/voucher/getByCode', data)
+  return httpGet(`/voucher/getByCode?code=${data}`)
 }
 
 export const voucherService = { createVoucher, getVoucherValid, getAllVoucher, getVoucherByCode }

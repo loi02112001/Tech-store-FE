@@ -1,33 +1,33 @@
 import { constants } from '@/constants'
-import { cartService } from '@/services/cart'
+import { orderService } from '@/services/order'
 import { handleNotification } from '@/utils'
 
 import { create } from 'zustand'
 
-const useCartStore = create((set, get) => ({
-  carts: [],
+const useOrderStore = create((set, get) => ({
+  orders: [],
   isLoading: false,
 
-  getCarts: async () => {
+  getAllOrders: async () => {
     set({ isLoading: true })
     try {
-      const res = await cartService.getCarts()
-      set({ carts: res.data.map((item) => ({ ...item, checked: false })) })
+      const res = await orderService.getAllOrders()
+      set({ orders: res.data })
     } catch (error) {
       handleNotification(constants.NOTIFICATION_ERROR, error)
     } finally {
       set({ isLoading: false })
     }
   },
-  setCartItems: (data) => {
-    set({ carts: data })
+  setOrderItems: (data) => {
+    set({ orders: data })
   },
 
-  addToCart: async (data, onSuccess = () => {}) => {
+  addToOrder: async (data, onSuccess = () => {}) => {
     set({ isLoading: true })
     try {
-      await cartService.addToCart(data)
-      await get().getCarts()
+      await orderService.addToOrder(data)
+      await get().getOrders()
       onSuccess()
     } catch (error) {
       handleNotification(constants.NOTIFICATION_ERROR, error)
@@ -36,11 +36,11 @@ const useCartStore = create((set, get) => ({
     }
   },
 
-  updateCart: async (data, onSuccess = () => {}) => {
+  updateOrder: async (data, onSuccess = () => {}) => {
     set({ isLoading: true })
     try {
-      await cartService.updateCart(data)
-      await get().getCarts()
+      await orderService.updateOrder(data)
+      await get().getOrders()
       onSuccess()
     } catch (error) {
       handleNotification(constants.NOTIFICATION_ERROR, error)
@@ -50,4 +50,4 @@ const useCartStore = create((set, get) => ({
   }
 }))
 
-export default useCartStore
+export default useOrderStore
