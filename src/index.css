@@ -1,6 +1,7 @@
 /* Typography */
 @import './assets/css/typography.css';
 @import './assets/css/button.css';
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
 /* Global Reset */
 @tailwind base;
@@ -21,14 +22,12 @@
   font-weight: 400;
 } */
 
-@font-face{
-  font-family:"helvetica";
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-optical-sizing: auto;
   font-weight: 400;
-  src:url("https://candyfonts.com/wp-data/2018/10/26/11538/HELR45W.ttf") format("woff"),
-  url("https://candyfonts.com/wp-data/2018/10/26/11538/HELR45W.ttf") format("opentype"),
-  url("https://candyfonts.com/wp-data/2018/10/26/11538/HELR45W.ttf") format("truetype");
+  font-style: normal;
 }
-
 
 /* Input Styles */
 

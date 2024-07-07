@@ -72,5 +72,11 @@ export const constants = {
 
   NOTIFICATION_SUCCESS: 'success',
   NOTIFICATION_ERROR: 'error',
-  NOTIFICATION_WARNING: 'warning'
+  NOTIFICATION_WARNING: 'warning',
+
+  ORDER_STATUS: {
+    PENDING: 'PENDING',
+    SUCCESS: 'SUCCESS',
+    CANCEL: 'CANCEL'
+  }
 }

@@ -206,37 +206,41 @@ const Register = () => {
   }
 
   return (
-    <Row className="w-full max-w-[70%] mx-auto p-5 rounded-[6px] mt-[20vh] flex shadow-2xl">
-      <Col span={9} className="max-w-[30%] h-auto mx-auto flex justify-center items-center">
-        <img src={LOGO} className="w-full h-[200px] object-cover" alt="logo" />
-      </Col>
-      {step === 2 && (
-        <Col span={12} className="mr-[30px]">
-          <div className="flex items-center justify-center mt-5">
-            <h1 className="h4 text-center">Xác thực tài khoản</h1>
-          </div>
-          <p className="font-medium text-center text-[15px] mb-8 mt-5">Vui lòng nhập mã otp đã gửi vào email của bạn</p>
-          <VerifyForm onSubmit={handleVerify} loading={loading} />
+    <div className="flex items-center justify-center w-full h-screen">
+      <Row className="w-full max-w-[70%] p-5 rounded-lg flex shadow-2xl">
+        <Col span={9} className="max-w-[30%] h-auto mx-auto flex justify-center items-center">
+          <img src={LOGO} className="w-full h-[200px] object-cover" alt="logo" />
         </Col>
-      )}
-      {step === 1 && (
-        <Col span={12} className="mr-[30px]">
-          <div className="flex items-center justify-center mt-5">
-            <h1 className="h4 text-center">Đăng ký</h1>
-          </div>
-          <p className="font-medium text-center text-[15px] mb-8 mt-5">
-            Xin chào, vui lòng nhập thông tin cá nhân của bạn
-          </p>
-          <RegisterForm onSubmit={handleRegister} loading={loading} />
-          <div className="text-center">
-            Bạn đã có tài khoản?
-            <Link className="link no-underline" to="/login">
-              Đăng nhập
-            </Link>
-          </div>
-        </Col>
-      )}
-    </Row>
+        {step === 2 && (
+          <Col span={12} className="mr-[30px]">
+            <div className="flex items-center justify-center mt-5">
+              <h1 className="text-center h4">Xác thực tài khoản</h1>
+            </div>
+            <p className="font-medium text-center text-[15px] mb-8 mt-5">
+              Vui lòng nhập mã otp đã gửi vào email của bạn
+            </p>
+            <VerifyForm onSubmit={handleVerify} loading={loading} />
+          </Col>
+        )}
+        {step === 1 && (
+          <Col span={12} className="mr-[30px]">
+            <div className="flex items-center justify-center mt-5">
+              <h1 className="text-center h4">Đăng ký</h1>
+            </div>
+            <p className="font-medium text-center text-[15px] mb-8 mt-5">
+              Xin chào, vui lòng nhập thông tin cá nhân của bạn
+            </p>
+            <RegisterForm onSubmit={handleRegister} loading={loading} />
+            <div className="text-center">
+              Bạn đã có tài khoản?
+              <Link className="no-underline link" to="/login">
+                Đăng nhập
+              </Link>
+            </div>
+          </Col>
+        )}
+      </Row>
+    </div>
   )
 }
 

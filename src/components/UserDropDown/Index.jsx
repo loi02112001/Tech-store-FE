@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import useAuthStore from '@/store/authStore'
 import { removeToken } from '@/utils'
 
-import { LogoutOutlined, UserOutlined } from '@ant-design/icons'
 import { Dropdown } from 'antd'
 
 export const UserDropdown = () => {
@@ -23,7 +22,15 @@ export const UserDropdown = () => {
         key: 'link-to-profile',
         label: (
           <Link to="/store-info" className="flex gap-2">
-            <UserOutlined /> Tài khoản
+            Tài khoản của tôi
+          </Link>
+        )
+      },
+      {
+        key: 'link-to-purchase',
+        label: (
+          <Link to="purchase" className="flex gap-2">
+            Đơn mua
           </Link>
         )
       },
@@ -31,7 +38,7 @@ export const UserDropdown = () => {
         key: 'Đăng xuất',
         label: (
           <button onClick={handleLogout} className="flex gap-2 cursor-pointer">
-            <LogoutOutlined /> Đăng xuất
+            Đăng xuất
           </button>
         )
       }

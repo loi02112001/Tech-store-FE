@@ -27,10 +27,16 @@ const useProductStore = create((set, get) => ({
     }
   },
 
-  getListProducts: async (params = {}) => {
+  getListProducts: async (data) => {
     set({ isLoading: true, error: null })
     try {
-      const res = await productService.getListProducts(params)
+      if (data === undefined || data === null) {
+        data = {
+          page: 1,
+          limit: 5
+        }
+      }
+      const res = await productService.getListProducts(data)
       const { list, pages, total } = res.data
       set({ products: list, pages, totalProducts: total })
     } catch (error) {

@@ -33,7 +33,7 @@ function ListSupplier() {
       title: 'Hành động',
       dataIndex: '',
       key: 'x',
-      render: (_, record) => <AddEditSupplier supplier={record} classButton="link no-underline" />
+      render: (_, record) => <AddEditSupplier supplier={record} classButton="text-gray-500 link no-underline" />
     }
   ]
 

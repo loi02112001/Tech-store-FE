@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import useAuthStore from '@/store/authStore'
 import useCartStore from '@/store/cartStore'
+import useOrderStore from '@/store/orderStore'
 import useVoucherStore from '@/store/voucherStore'
 import { formatMoneyVND, isEmptyUsingKeys } from '@/utils'
 
@@ -11,8 +12,11 @@ import { Input } from 'antd'
 function CartCheckout() {
   const { carts } = useCartStore()
   const { voucher, getVoucherByCode } = useVoucherStore()
-  const navigate = useNavigate()
   const { profile, getProfile } = useAuthStore()
+  const { createOrder } = useOrderStore()
+
+  const navigate = useNavigate()
+  const [voucherCode, setVoucherCode] = useState('')
 
   useEffect(() => {
     if (carts.length === 0) {
@@ -28,12 +32,22 @@ function CartCheckout() {
     [checkedCarts]
   )
 
+  const handleOrder = () => {
+    createOrder({
+      address: profile?.address,
+      phoneNumber: profile?.phoneNumber,
+      voucherCode,
+      listCartItemId: checkedCarts.map((item) => item.id)
+    })
+    navigate('/purchase')
+  }
+
   return (
     <div className="container py-10 bg-white-500">
       <AddressInfo profile={profile} />
       <ProductList checkedCarts={checkedCarts} />
-      <OrderVoucher getVoucherByCode={getVoucherByCode} />
-      <OrderSummary totalPrice={totalPrice} voucher={voucher} />
+      <OrderVoucher getVoucherByCode={getVoucherByCode} voucherCode={voucherCode} setVoucherCode={setVoucherCode} />
+      <OrderSummary totalPrice={totalPrice} voucher={voucher} handleOrder={handleOrder} />
     </div>
   )
 }
@@ -57,7 +71,7 @@ const ProductList = ({ checkedCarts }) => (
   </div>
 )
 
-const ProductHeader = () => (
+export const ProductHeader = () => (
   <div className="flex items-center pb-5 text-sm">
     <div className="flex-1">
       <h2>Sản phẩm</h2>
@@ -68,7 +82,7 @@ const ProductHeader = () => (
   </div>
 )
 
-const ProductItem = ({ cart }) => (
+export const ProductItem = ({ cart }) => (
   <div className="py-5 border-t last:pb-0">
     <div className="flex items-center text-sm">
       <div className="flex items-center flex-1 gap-4">
@@ -91,9 +105,8 @@ const ProductItem = ({ cart }) => (
 
 const OrderVoucher = (props) => {
   const { getVoucherByCode } = props
-  const [voucherCode, setVoucherCode] = useState('')
   const handleGetVoucher = () => {
-    getVoucherByCode(voucherCode)
+    getVoucherByCode(props.voucherCode)
   }
   return (
     <div className="flex flex-col gap-2 p-6 mt-5 bg-white rounded">
@@ -103,9 +116,9 @@ const OrderVoucher = (props) => {
           <Input
             placeholder="Nhập mã khuyến mại"
             className="w-[300px]"
-            onChange={(e) => setVoucherCode(e.target.value)}
+            onChange={(e) => props.setVoucherCode(e.target.value)}
           />
-          <button className="text-blue-100" onClick={handleGetVoucher} disabled={!voucherCode}>
+          <button className="text-blue-100" onClick={handleGetVoucher} disabled={!props.voucherCode}>
             Áp dụng
           </button>
         </div>
@@ -114,7 +127,7 @@ const OrderVoucher = (props) => {
   )
 }
 
-const OrderSummary = ({ totalPrice, voucher }) => {
+const OrderSummary = ({ totalPrice, voucher, handleOrder }) => {
   const finalPrice = useMemo(() => {
     const discountPrice = voucher?.discountPrice || 0
     return Math.max(0, totalPrice - discountPrice)
@@ -141,9 +154,9 @@ const OrderSummary = ({ totalPrice, voucher }) => {
           </tr>
           <tr>
             <td colSpan="2">
-              <Link to="/purchase" className="block w-full btn btn-primary">
+              <button onClick={handleOrder} className="block w-full btn btn-primary">
                 Đặt hàng
-              </Link>
+              </button>
             </td>
           </tr>
         </tbody>

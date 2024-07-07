@@ -8,7 +8,6 @@ import { UserDropdown } from '../UserDropDown/Index'
 function CustomerHeader() {
   const { getProfile } = useAuthStore()
   const { carts, getCarts } = useCartStore()
-  const isCartPage = window.location.href.includes('/cart')
 
   useEffect(() => {
     Promise.all([getProfile(), getCarts()])
@@ -21,7 +20,7 @@ function CustomerHeader() {
           <h1 className="m-0 text-5xl font-semibold">TechStore</h1>
         </a>
       </div>
-      <div className="w-1/2 lg:w-2/4 text-left">
+      <div className="w-1/2 text-left lg:w-2/4">
         <form action="">
           <div className="flex">
             <input
@@ -30,23 +29,23 @@ function CustomerHeader() {
               placeholder="Tìm kiếm sản phẩm"
             />
             <div className="flex items-center">
-              <span className="px-4 py-2 bg-transparent text-blue-500 border border-l-0 border-gray-300 rounded-r">
+              <span className="px-4 py-2 text-blue-500 bg-transparent border border-l-0 border-gray-300 rounded-r">
                 <i className="fa fa-search"></i>
               </span>
             </div>
           </div>
         </form>
       </div>
-      <div className="w-1/2 lg:w-1/4 flex gap-2 justify-end">
+      <div className="flex justify-end w-1/2 gap-2 lg:w-1/4">
         <a
           href="/cart"
-          className={`flex items-center gap-2 px-4 py-2 border border-gray-300 rounded hover:bg-gray-100 ${isCartPage && 'pointer-events-none'}`}>
+          className={`flex items-center gap-2 px-4 py-2 border border-gray-300 rounded hover:bg-gray-100`}>
           <i className="fas fa-shopping-cart text-primary"></i>
           <span className=" bg-gray-200 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
             {carts?.length}
           </span>
         </a>
-        <a href="###" className="flex items-center px-4 py-2  border border-gray-300 rounded hover:bg-gray-100">
+        <a href="###" className="flex items-center px-4 py-2 border border-gray-300 rounded hover:bg-gray-100">
           <UserDropdown />
         </a>
       </div>

@@ -18,15 +18,15 @@ const AdminLayout = () => {
   }
 
   return (
-    <Layout style={{ minHeight: '100vh', overflowX: 'hidden' }}>
+    <Layout style={{ minHeight: '100vh', overflow: 'hidden', background: '#fff4ea' }}>
       <Sidebar collapsed={collapsed} style={{ background: '#FFF' }} />
-      <Layout className="site-layout" style={{ marginLeft: 40 }}>
+      <Layout className="site-layout" style={{ marginLeft: 40, background: '#fff4ea' }}>
         <Header
           className="site-layout-background"
           style={{ padding: 0, background: '#001f3f' }}
           collapsed={collapsed}
           changeCollapsed={toggleSidebar}></Header>
-        <Content style={{ marginTop: '20px', marginRight: '20px' }}>
+        <Content style={{ marginTop: '40px', marginRight: '40px', background: '#fff4ea' }}>
           <Outlet />
         </Content>
       </Layout>

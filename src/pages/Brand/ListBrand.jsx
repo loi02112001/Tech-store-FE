@@ -10,7 +10,6 @@ function ListBrand() {
 
   const brandTables = [
     {
-      title: 'ID',
       dataIndex: 'id',
       key: 'id',
       align: 'center'
@@ -23,14 +22,13 @@ function ListBrand() {
     {
       title: 'Mô tả',
       dataIndex: 'description',
-      key: 'description',
-      align: 'center'
+      key: 'description'
     },
     {
       title: 'Hành động',
       dataIndex: '',
       key: 'x',
-      render: (_, record) => <AddEditBrand brand={record} classButton="link no-underline" />
+      render: (_, record) => <AddEditBrand brand={record} classButton="text-gray-500 link no-underline" />
     }
   ]
 

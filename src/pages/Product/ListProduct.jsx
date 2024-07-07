@@ -5,10 +5,16 @@ import DefaultImages from '@/assets/icons/DefaultImage'
 import SearchInput from '@/components/common/SearchInput'
 import useProductStore from '@/store/productStore'
 
-import { Button, Layout, Table } from 'antd'
+import { Button, Layout, Pagination, Table } from 'antd'
 
 const ListProduct = () => {
   const { loading, products: productList, totalProducts, getListProducts, deleteProduct } = useProductStore()
+  const [searchValue, setSearchValue] = useState('')
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 5,
+    total: 33
+  })
 
   const formatPrice = (price) => {
     return new Intl.NumberFormat('vi-VN', {
@@ -48,7 +54,7 @@ const ListProduct = () => {
       dataIndex: 'name',
       key: 'name',
       render: (name, product) => (
-        <p className="link no-underline">
+        <p className="text-gray-500 link no-underline">
           <Link to={`/product/edit/${product.id}`}>{name}</Link>
         </p>
       )
@@ -84,17 +90,29 @@ const ListProduct = () => {
           <Link to={`/product/edit/${record.id}`}>
             <i className="fa-regular fa-pen-to-square text-blue"></i>
           </Link>
-          <i className="fa-regular fa-trash-can text-blue cursor-pointer" onClick={() => deleteProduct(record.id)}></i>
+          <i
+            className="fa-regular fa-trash-can text-red-500 cursor-pointer"
+            onClick={() => deleteProduct(record.id)}></i>
         </div>
       )
     }
   ]
+  const fetchData = async (page = 1, limit = 5) => {
+    await getListProducts({ page, limit })
 
-  const [searchValue, setSearchValue] = useState('')
+    setPagination((prev) => ({
+      ...prev,
+      current: page,
+      pageSize: limit,
+      total: totalProducts
+    }))
+  }
 
   useEffect(() => {
-    getListProducts()
+    fetchData()
   }, [])
+
+  const handleTableChange = (page) => fetchData(page)
 
   const fetchDataTable = (value) => {
     console.log('🚀 ~ value:', value)
@@ -125,6 +143,14 @@ const ListProduct = () => {
         dataSource={totalProducts > 0 ? productList : []}
         loading={loading}
         rowKey={(product) => product.id}
+        pagination={false}
+      />
+      <Pagination
+        defaultCurrent={1}
+        current={pagination.current}
+        total={totalProducts}
+        pageSize={5}
+        onChange={handleTableChange}
       />
     </Layout.Content>
   )

@@ -9,10 +9,12 @@ function ListCategory() {
   const { loading, categories, getCategories } = useCategoryStore()
   const categoryTables = [
     {
-      title: 'ID',
       dataIndex: 'id',
       key: 'id',
-      align: 'center'
+      align: 'center',
+      render: (index) => {
+        return index
+      }
     },
     {
       title: 'Tên',
@@ -22,8 +24,7 @@ function ListCategory() {
     {
       title: 'Mô tả',
       dataIndex: 'description',
-      key: 'description',
-      align: 'center'
+      key: 'description'
     },
     {
       title: 'Hành động',
@@ -33,8 +34,8 @@ function ListCategory() {
       render: (_, record) => (
         <AddEditCategory
           category={record}
-          classButton="link no-underline"
-          textButton={<i className="fa-regular fa-pen-to-square text-blue cursor-pointer"></i>}
+          classButton="text-gray-500 link no-underline"
+          textButton={<i className="cursor-pointer fa-regular fa-pen-to-square text-blue"></i>}
         />
       )
     }

@@ -4,8 +4,8 @@ const addProduct = (data) => {
   return httpPost('/product/create', data)
 }
 
-const getListProducts = () => {
-  return httpGet('/product/getListProduct')
+const getListProducts = (data) => {
+  return httpGet(`/product/getListProduct?page=${data.page}&limit=${data.limit}`)
 }
 
 const updateProduct = (id, data) => {

@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 
+import PurchaseItem from '@/components/common/PurchaseItem'
 import useOrderStore from '@/store/orderStore'
 
 import { Tabs } from 'antd'
@@ -30,8 +31,10 @@ function Purchase() {
     }
   ]
   return (
-    <div className="container py-10 bg-white-500">
-      <Tabs defaultActiveKey="1" items={items} />
+    <div className="container py-4 bg-white-500">
+      <div className="sticky top-0">
+        <Tabs defaultActiveKey="1" items={items} />
+      </div>
     </div>
   )
 }
@@ -43,19 +46,10 @@ const AllOrder = () => {
     getAllOrders()
   }, [])
   return (
-    <div className="container bg-white rounded">
+    <div className="flex flex-col gap-4">
       {orders.map((order) => (
-        <OrderItem key={order._id} order={order} />
+        <PurchaseItem key={order.id} order={order} />
       ))}
-    </div>
-  )
-}
-
-const OrderItem = ({ order }) => {
-  return (
-    <div className="p-6 mt-5 bg-white rounded">
-      {/* <OrderHeader order={order} />
-      <OrderList order={order} /> */}
     </div>
   )
 }

@@ -6,6 +6,7 @@ import { create } from 'zustand'
 
 const useOrderStore = create((set, get) => ({
   orders: [],
+  orderStatus: [],
   isLoading: false,
 
   getAllOrders: async () => {
@@ -23,11 +24,12 @@ const useOrderStore = create((set, get) => ({
     set({ orders: data })
   },
 
-  addToOrder: async (data, onSuccess = () => {}) => {
+  createOrder: async (data, onSuccess = () => {}) => {
     set({ isLoading: true })
+
     try {
-      await orderService.addToOrder(data)
-      await get().getOrders()
+      await orderService.createOrder(data)
+      await get().getAllOrders()
       onSuccess()
     } catch (error) {
       handleNotification(constants.NOTIFICATION_ERROR, error)
@@ -42,6 +44,18 @@ const useOrderStore = create((set, get) => ({
       await orderService.updateOrder(data)
       await get().getOrders()
       onSuccess()
+    } catch (error) {
+      handleNotification(constants.NOTIFICATION_ERROR, error)
+    } finally {
+      set({ isLoading: false })
+    }
+  },
+
+  getStatisticOrder: async () => {
+    set({ isLoading: true })
+    try {
+      const res = await orderService.getStatisticOrder()
+      set({ orderStatus: res.data })
     } catch (error) {
       handleNotification(constants.NOTIFICATION_ERROR, error)
     } finally {

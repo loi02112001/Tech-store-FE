@@ -78,7 +78,11 @@ function ListPromotion() {
       dataIndex: '',
       key: 'x',
       render: (_, record) => (
-        <AddEditPromotion promotion={record} title="Cập nhật khuyến mãi" classButton="link no-underline" />
+        <AddEditPromotion
+          promotion={record}
+          title="Cập nhật khuyến mãi"
+          classButton="text-gray-500 link no-underline"
+        />
       )
     }
   ]

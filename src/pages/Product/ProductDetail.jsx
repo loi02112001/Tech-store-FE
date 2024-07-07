@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import useCartStore from '@/store/cartStore'
@@ -6,129 +6,189 @@ import useProductStore from '@/store/productStore'
 import { formatMoneyVND } from '@/utils'
 
 import { Flex, Modal, Rate } from 'antd'
+
+import './index.css'
+
 const desc = ['Tệ hại', 'Tồi tệ', 'Bình thường', 'Tốt', 'Tuyệt vời']
+
+const ProductImage = ({ src, alt }) => (
+  <div className="w-full overflow-hidden lg:w-2/5">
+    <img
+      alt={alt}
+      className="w-full transition duration-500 ease-in-out aspect-[3/2] hover:scale-105"
+      src={src || 'https://via.placeholder.com/144'}
+    />
+  </div>
+)
+
+const ProductInfo = ({ name, rating, totalRating, description, onRateClick }) => (
+  <div>
+    <h3 className="mb-2 text-2xl font-medium">{name}</h3>
+    <div className="flex gap-4 mb-3">
+      <div className="mr-2 cursor-pointer text-primary" onClick={onRateClick}>
+        <Rate disabled allowHalf value={rating} />
+      </div>
+      <span className="text-medium">
+        <span className="text-blue">{totalRating}</span> đánh giá
+      </span>
+    </div>
+    <p className="text-gray-500">{description}</p>
+  </div>
+)
+
+const PriceDisplay = ({ price, priceAfterDiscount }) => {
+  const isProductSale = priceAfterDiscount < price
+  return (
+    <div className="flex items-end gap-4 p-4 bg-gray-50">
+      {isProductSale && <span className="text-2xl font-bold text-red-700">{formatMoneyVND(priceAfterDiscount)}</span>}
+      <span className={`${isProductSale ? 'text-base line-through' : 'text-2xl font-bold'}`}>
+        {formatMoneyVND(price)}
+      </span>
+      {isProductSale && (
+        <span className="text-sm text-red-700 font-medium">
+          Tiết kiệm: {formatMoneyVND(price - priceAfterDiscount)}
+        </span>
+      )}
+    </div>
+  )
+}
+
+const QuantitySelector = ({ quantity, onIncrement, onDecrement, onChange, max }) => (
+  <div className="flex items-center gap-2">
+    <p className="text-sm font-semibold">Số lượng: </p>
+    <div className="flex items-center">
+      <button
+        className="w-8 h-8 flex items-center justify-center border border-gray-300 transition-colors duration-200"
+        onClick={onDecrement}
+        disabled={quantity <= 1}>
+        <i className="fa fa-minus text-gray-500"></i>
+      </button>
+      <input
+        type="text"
+        className="w-10 h-8 text-center text-gray-500 border-y border-gray-300 focus:outline-none"
+        value={quantity}
+        onChange={onChange}
+      />
+      <button
+        className="w-8 h-8 flex items-center justify-center border border-gray-300 transition-colors duration-200"
+        onClick={onIncrement}
+        disabled={quantity >= max}>
+        <i className="fa fa-plus text-gray-500"></i>
+      </button>
+    </div>
+    {max === 0 ? (
+      <p className="ml-3 font-semibold text-red-500">Hết hàng</p>
+    ) : (
+      <p className="ml-3 font-semibold text-gray-500">{max} sản phẩm có sẵn</p>
+    )}
+  </div>
+)
 
 function ProductDetail() {
   const { id } = useParams()
   const { isLoading, product, getProductById, ratingProduct } = useProductStore()
   const { addToCart } = useCartStore()
+
   const [quantity, setQuantity] = useState(1)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [value, setValue] = useState(product?.userRating)
 
-  const handleAddToCart = () => {
-    addToCart({ quantity: quantity, idProduct: product.id })
-  }
+  const handleAddToCart = useCallback(() => {
+    addToCart({ quantity, idProduct: product.id })
+  }, [addToCart, quantity, product])
 
-  const handleIncrement = () => {
-    setQuantity(quantity + 1)
-  }
+  const handleIncrement = useCallback(() => {
+    setQuantity((prev) => Math.min(prev + 1, product?.quantity))
+  }, [product])
 
-  const handleDecrement = () => {
-    setQuantity(quantity - 1)
-  }
+  const handleDecrement = useCallback(() => {
+    setQuantity((prev) => Math.max(prev - 1, 1))
+  }, [])
 
-  const handleInputChange = (event) => {
-    const value = parseInt(event.target.value)
-    if (!isNaN(value)) {
-      setQuantity(value)
-    }
-  }
+  const handleInputChange = useCallback(
+    (e) => {
+      const value = e.target.value
+      const numValue = value === '' ? 0 : parseInt(value, 10)
+      if (!isNaN(numValue) && numValue >= 0 && numValue <= product?.quantity) {
+        setQuantity(numValue)
+      }
+    },
+    [product]
+  )
 
-  const showModal = () => {
-    setIsModalOpen(true)
-  }
-  const handleCancel = () => {
-    setIsModalOpen(false)
-  }
+  const showModal = useCallback(() => setIsModalOpen(true), [])
+  const handleCancel = useCallback(() => setIsModalOpen(false), [])
 
-  const handleOk = () => {
+  const handleOk = useCallback(() => {
     ratingProduct({ productId: product.id, rating: value })
     setIsModalOpen(false)
-  }
-  useEffect(() => {
-    getProductById(id)
-  }, [])
-  return (
-    !isLoading && (
-      <div className="container py-12 mx-auto">
-        <div className="flex justify-between gap-8 px-4 xl:px-0">
-          <div className="w-full overflow-hidden lg:w-2/5">
-            <img
-              alt={product?.name}
-              className="w-full transition duration-500 ease-in-out aspect-square hover:scale-105"
-              src={`${product?.productImage ? product?.productImage : 'https://via.placeholder.com/144'} `}
-            />
-          </div>
+  }, [ratingProduct, product, value])
 
-          <div className="w-full pb-5 lg:flex-1">
-            <h3 className="mb-2 text-3xl font-semibold">{product?.name}</h3>
-            <div className="flex gap-4 mb-3">
-              <div className="mr-2 cursor-pointer text-primary" onClick={showModal}>
-                <Rate disabled allowHalf value={product?.productRating} />
-              </div>
-              <small className="text-sm">{product?.totalUserRating} đánh giá</small>
-            </div>
-            <Modal title="Đánh giá của bạn" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-              <Flex gap="middle" vertical className="mt-5">
-                <Rate tooltips={desc} onChange={setValue} value={value || product?.userRating} />
-                {value ? <span>{desc[value - 1]}</span> : null}
-              </Flex>
-            </Modal>
-            <span
-              className={`text-2xl font-semibold mb-4 ${product?.priceAfterDiscount < product?.price ? 'line-through' : ''}`}>
-              {formatMoneyVND(product?.price)}
-            </span>
-            {product?.priceAfterDiscount < product?.price && (
-              <span className="pl-5 text-2xl font-semibold text-[#D19C97]">
-                {formatMoneyVND(product?.priceAfterDiscount)}
-              </span>
-            )}
-            <p className="mb-4 text-indigo-500">{product?.description}</p>
-            <div className="flex items-center gap-5 pt-2 mb-4">
-              <div className="flex items-center w-48">
-                <div className="input-group-prepend">
-                  <button className="btn btn-primary btn-minus" onClick={handleDecrement} disabled={quantity === 1}>
-                    <i className="fa fa-minus"></i>
-                  </button>
-                </div>
-                <input
-                  type="text"
-                  className="form-control !bg-secondary text-center"
-                  value={quantity}
-                  onChange={handleInputChange}
-                />
-                <div className="input-group-append">
-                  <button className="btn btn-primary btn-plus" onClick={handleIncrement}>
-                    <i className="fa fa-plus"></i>
-                  </button>
-                </div>
-              </div>
-              <button className="px-3 btn btn-primary" onClick={handleAddToCart}>
-                <i className="mr-1 fa fa-shopping-cart"></i> Add To Cart
-              </button>
-            </div>
-            <div className="flex pt-2">
-              <p className="mb-0 mr-2 font-medium text-dark">Share on:</p>
-              <div className="flex">
-                <a className="px-2 text-dark" href="">
-                  <i className="fab fa-facebook-f"></i>
-                </a>
-                <a className="px-2 text-dark" href="">
-                  <i className="fab fa-twitter"></i>
-                </a>
-                <a className="px-2 text-dark" href="">
-                  <i className="fab fa-linkedin-in"></i>
-                </a>
-                <a className="px-2 text-dark" href="">
-                  <i className="fab fa-pinterest"></i>
-                </a>
-              </div>
+  useEffect(() => {
+    if (id) {
+      getProductById(id)
+    }
+  }, [id, getProductById])
+
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
+  return (
+    <div className="container py-12 mx-auto">
+      <div className="flex justify-between gap-8 px-4 xl:px-0">
+        <ProductImage src={product?.productImage} alt={product?.name} />
+
+        <div className="flex flex-col gap-5 w-full pb-5 lg:flex-1">
+          <ProductInfo
+            name={product?.name}
+            rating={product?.productRating}
+            totalRating={product?.totalUserRating}
+            description={product?.description}
+            onRateClick={showModal}
+          />
+
+          <Modal title="Đánh giá của bạn" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+            <Flex gap="middle" vertical className="mt-5">
+              <Rate tooltips={desc} onChange={setValue} value={value || product?.userRating} />
+              {value ? <span>{desc[value - 1]}</span> : null}
+            </Flex>
+          </Modal>
+
+          <PriceDisplay price={product?.price} priceAfterDiscount={product?.priceAfterDiscount} />
+
+          <QuantitySelector
+            quantity={quantity}
+            onIncrement={handleIncrement}
+            onDecrement={handleDecrement}
+            onChange={handleInputChange}
+            max={product?.quantity}
+          />
+
+          <button className="btn btn-primary w-fit" onClick={handleAddToCart}>
+            Thêm vào giỏ hàng
+          </button>
+
+          <div className="flex pt-2">
+            <p className="mb-0 mr-2 font-medium text-dark">Share on:</p>
+            <div className="flex">
+              <a className="px-2 text-dark" href="#">
+                <i className="fab fa-facebook-f"></i>
+              </a>
+              <a className="px-2 text-dark" href="#">
+                <i className="fab fa-twitter"></i>
+              </a>
+              <a className="px-2 text-dark" href="#">
+                <i className="fab fa-linkedin-in"></i>
+              </a>
+              <a className="px-2 text-dark" href="#">
+                <i className="fab fa-pinterest"></i>
+              </a>
             </div>
           </div>
         </div>
       </div>
-    )
+    </div>
   )
 }
 

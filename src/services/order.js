@@ -15,4 +15,12 @@ const updateOrder = (id, data) => {
   return httpPut(`/order/update/${id}`, data)
 }
 
-export const orderService = { getOrders, getAllOrders, createOrder, updateOrder }
+const getStatisticOrder = () => httpGet('/order/statistic/order')
+
+export const orderService = {
+  getOrders,
+  getAllOrders,
+  createOrder,
+  updateOrder,
+  getStatisticOrder
+}

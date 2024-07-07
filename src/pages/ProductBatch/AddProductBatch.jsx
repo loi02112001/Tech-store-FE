@@ -254,7 +254,7 @@ const SupplierModal = ({ open, onOk, onCancel, onSelect }) => {
   ]
 
   return (
-    <Modal title="Chọn sản phẩm" open={open} onOk={handleOk} onCancel={onCancel} width={700}>
+    <Modal title="Chọn nhà cung cấp" open={open} onOk={handleOk} onCancel={onCancel} width={700}>
       <Table
         columns={productColumns}
         size="middle"

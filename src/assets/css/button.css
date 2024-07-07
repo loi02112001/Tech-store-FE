@@ -1,11 +1,19 @@
 .btn {
-  @apply text-center font-medium border text-sm px-6 py-2.5 rounded border-transparent transition-all duration-150 ease-in-out;
-
-  &:hover {
-    @apply bg-blue-hover;
-  }
+  @apply px-5 py-2 text-sm min-h-10 text-center transition-all duration-150 ease-in-out border rounded;
 }
 
 .btn-primary {
-  @apply text-white bg-blue;
+  @apply text-white border-transparent bg-red;
+
+  &:hover {
+    @apply text-white bg-primary-hover;
+  }
+}
+
+.btn-outline {
+  @apply text-red border-red;
+
+  &:hover {
+    @apply text-white bg-red;
+  }
 }
