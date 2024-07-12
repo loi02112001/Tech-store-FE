@@ -1,7 +1,11 @@
-.ant-tabs-nav-wrap {
-    @apply bg-white;
+.ant-tabs-nav {
+  @apply pb-4 mb-0  border-b;
 
-    & .ant-tabs-nav-list{
-        @apply justify-between mx-10;
+  & .ant-tabs-nav-wrap {
+    @apply bg-white-100;
+
+    & .ant-tabs-nav-list {
+      @apply justify-between mx-10;
     }
+  }
 }

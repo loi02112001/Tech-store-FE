@@ -49,7 +49,7 @@ function ListCategory() {
     <Skeleton />
   ) : (
     <>
-      <AddEditCategory textButton="Thêm danh mục" classButton="mb-4 btn btn-primary" />
+      <AddEditCategory textButton="Thêm danh mục" classButton="mb-4 btn btn-blue" />
       <Table
         rowClassName="editable-row"
         columns={categoryTables}

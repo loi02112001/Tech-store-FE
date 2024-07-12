@@ -1,15 +1,14 @@
 import { Link, Navigate } from 'react-router-dom'
 
-import useAuthStore from '@/store/authStore'
+import useUserStore from '@/store/userStore'
 import { getToken } from '@/utils'
 
-import LOGO from '../../assets/images/logo.jpg'
 import { Button, Col, Form, Input, Row } from 'antd'
 
 const LoginPage = () => {
   const token = getToken()
   const [form] = Form.useForm()
-  const { loading, login } = useAuthStore()
+  const { loading, login } = useUserStore()
 
   const handleLogin = (data) => {
     login(data)
@@ -20,20 +19,22 @@ const LoginPage = () => {
   }
 
   return (
-    <div className="flex items-center justify-center w-full h-screen">
-      <Row className="w-full max-w-[70%] p-5 rounded-[6px] flex shadow-2xl">
-        <Col span={9} className="max-w-[30%] h-auto mx-auto flex justify-center items-center">
-          <img src={LOGO} className="w-full h-[200px] object-cover" alt="logo" />
+    <div
+      className="flex items-center justify-center w-full h-screen bg-cover bg-center"
+      style={{ backgroundImage: "url('https://source.unsplash.com/random/1920x1080')" }}>
+      <Row className="w-full max-w-5xl p-5 rounded-lg flex shadow-2xl bg-white bg-opacity-80">
+        <Col span={10} className="flex justify-center items-center">
+          <img src="https://hacom.vn/template/2024/images/bg-pop-login-phone.png" className="object-cover" alt="logo" />
         </Col>
-        <Col span={12} className="mr-[30px]">
+        <Col span={14} className="p-5">
           <Form
             form={form}
-            className="w-full"
+            className="flex flex-col gap-2 w-full"
             labelCol={{
               span: 6
             }}
             wrapperCol={{
-              span: 20
+              span: 18
             }}
             onFinish={handleLogin}
             autoComplete="off">
@@ -71,7 +72,7 @@ const LoginPage = () => {
               <Input.Password style={{ height: 40 }} placeholder="Mật khẩu" type="password" />
             </Form.Item>
 
-            <div className="text-end mt-[20px] mb-[15px]">
+            <div className="text-end mb-2">
               <Link className="no-underline link" to="/forgot_password">
                 Quên mật khẩu
               </Link>

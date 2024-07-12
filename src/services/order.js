@@ -8,8 +8,8 @@ const createOrder = (data) => {
   return httpPost('/order/create', data)
 }
 
-const getAllOrders = () => {
-  return httpGet('/order/getAll')
+const getAllOrders = (data) => {
+  return httpGet(`/order/getAll?status=${data}`)
 }
 const updateOrder = (id, data) => {
   return httpPut(`/order/update/${id}`, data)

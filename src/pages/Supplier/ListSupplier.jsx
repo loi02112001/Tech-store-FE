@@ -9,7 +9,7 @@ function ListSupplier() {
   const { loading, suppliers, getSuppliers } = useSupplierStore()
   const supplierTables = [
     {
-      title: 'ID',
+      title: '',
       dataIndex: 'id',
       key: 'id',
       align: 'center'
@@ -33,7 +33,14 @@ function ListSupplier() {
       title: 'Hành động',
       dataIndex: '',
       key: 'x',
-      render: (_, record) => <AddEditSupplier supplier={record} classButton="text-gray-500 link no-underline" />
+      align: 'center',
+      render: (_, record) => (
+        <AddEditSupplier
+          supplier={record}
+          classButton="text-gray-500 link no-underline"
+          textButton={<i className="cursor-pointer fa-regular fa-pen-to-square text-blue"></i>}
+        />
+      )
     }
   ]
 
@@ -45,8 +52,7 @@ function ListSupplier() {
     <Skeleton />
   ) : (
     <div className="relative">
-      <h1 className="mb-10 text-3xl font-semibold">Nhà cung cấp</h1>
-      <AddEditSupplier textButton="Thêm nhà cung cấp" classButton="absolute right-0 top-5 btn btn-primary" />
+      <AddEditSupplier textButton="Thêm nhà cung cấp" classButton="btn btn-blue mb-5" />
       <Table
         rowClassName="editable-row"
         columns={supplierTables}

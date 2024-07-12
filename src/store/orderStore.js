@@ -9,10 +9,10 @@ const useOrderStore = create((set, get) => ({
   orderStatus: [],
   isLoading: false,
 
-  getAllOrders: async () => {
+  getAllOrders: async (data) => {
     set({ isLoading: true })
     try {
-      const res = await orderService.getAllOrders()
+      const res = await orderService.getAllOrders(data)
       set({ orders: res.data })
     } catch (error) {
       handleNotification(constants.NOTIFICATION_ERROR, error)

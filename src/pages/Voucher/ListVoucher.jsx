@@ -88,7 +88,7 @@ function ListVoucher() {
     <Skeleton />
   ) : (
     <>
-      <AddEditVoucher textButton="Tạo voucher" classButton="mb-4 btn btn-primary" />
+      <AddEditVoucher textButton="Tạo voucher" classButton="mb-4 btn btn-blue" />
       <Table
         rowClassName="editable-row"
         columns={voucherTables}

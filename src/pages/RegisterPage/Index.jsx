@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-import useAuthStore from '@/store/authStore'
+import useUserStore from '@/store/userStore'
 import { getToken } from '@/utils'
 
-import LOGO from '../../assets/images/logo.jpg'
 import { Button, Col, Form, Input, Radio, Row } from 'antd'
 
 const VerifyForm = ({ onSubmit, loading }) => {
@@ -18,7 +17,7 @@ const VerifyForm = ({ onSubmit, loading }) => {
   return (
     <Form
       form={form}
-      className="w-full"
+      className="flex flex-col gap-2 w-full"
       name="basic"
       labelCol={{
         span: 6
@@ -129,33 +128,28 @@ const RegisterForm = ({ onSubmit, loading }) => {
         <Input style={{ height: 40 }} placeholder="Địa chỉ" type="text" />
       </Form.Item>
 
-      <Row gutter={32}>
-        <Col span={12}>
-          <Form.Item
-            label="Ngày sinh"
-            name="dob"
-            labelAlign="left"
-            rules={[{ required: true, message: 'Vui lòng nhập ngày sinh!' }]}
-            sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
-            <Input style={{ height: 40 }} placeholder="Ngày sinh" type="date" />
-          </Form.Item>
-        </Col>
-        <Col span={12}>
-          <Form.Item
-            label="Giới tính"
-            name="gender"
-            labelAlign="left"
-            rules={[{ required: true, message: 'Vui lòng chọn giới tính!' }]}
-            sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
-            <Radio.Group className="flex gap-10">
-              <Radio value={1}>Nam</Radio>
-              <Radio value={0}>Nữ</Radio>
-            </Radio.Group>
-          </Form.Item>
-        </Col>
-      </Row>
+      <Form.Item
+        label="Ngày sinh"
+        name="dob"
+        labelAlign="left"
+        rules={[{ required: true, message: 'Vui lòng nhập ngày sinh!' }]}
+        sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
+        <Input placeholder="Ngày sinh" type="date" />
+      </Form.Item>
 
-      <Button className="btn btn-primary mt-4 mb-5 h-[40px]" block type="primary" htmlType="submit" loading={loading}>
+      <Form.Item
+        label="Giới tính"
+        name="gender"
+        labelAlign="left"
+        rules={[{ required: true, message: 'Vui lòng chọn giới tính!' }]}
+        sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
+        <Radio.Group className="flex gap-5">
+          <Radio value={1}>Nam</Radio>
+          <Radio value={0}>Nữ</Radio>
+        </Radio.Group>
+      </Form.Item>
+
+      <Button className="btn btn-primary mb-5" block type="primary" htmlType="submit" loading={loading}>
         Đăng ký
       </Button>
     </Form>
@@ -185,7 +179,7 @@ const Register = () => {
     dob: 0,
     gender: ''
   })
-  const { loading, register, verify } = useAuthStore()
+  const { loading, register, verify } = useUserStore()
 
   useRedirectIfLoggedIn()
 
@@ -206,13 +200,15 @@ const Register = () => {
   }
 
   return (
-    <div className="flex items-center justify-center w-full h-screen">
-      <Row className="w-full max-w-[70%] p-5 rounded-lg flex shadow-2xl">
-        <Col span={9} className="max-w-[30%] h-auto mx-auto flex justify-center items-center">
-          <img src={LOGO} className="w-full h-[200px] object-cover" alt="logo" />
+    <div
+      className="flex items-center justify-center w-full h-screen bg-cover bg-center"
+      style={{ backgroundImage: "url('https://source.unsplash.com/random/1920x1080')" }}>
+      <Row className="flex w-full max-w-5xl p-5 rounded-lg shadow-2xl bg-white bg-opacity-80">
+        <Col span={10} className="flex justify-center items-center">
+          <img src="https://hacom.vn/template/2024/images/bg-pop-login-phone.png" className="object-cover" alt="logo" />
         </Col>
         {step === 2 && (
-          <Col span={12} className="mr-[30px]">
+          <Col span={14}>
             <div className="flex items-center justify-center mt-5">
               <h1 className="text-center h4">Xác thực tài khoản</h1>
             </div>
@@ -223,7 +219,7 @@ const Register = () => {
           </Col>
         )}
         {step === 1 && (
-          <Col span={12} className="mr-[30px]">
+          <Col span={14}>
             <div className="flex items-center justify-center mt-5">
               <h1 className="text-center h4">Đăng ký</h1>
             </div>

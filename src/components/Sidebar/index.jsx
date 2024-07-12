@@ -1,53 +1,97 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
-import { Menu } from 'antd'
-import Sider from 'antd/es/layout/Sider'
+import {
+  AppstoreOutlined,
+  BankOutlined,
+  ContainerOutlined,
+  DashboardOutlined,
+  GiftOutlined,
+  ShopOutlined,
+  TagOutlined,
+  TeamOutlined,
+  UnorderedListOutlined
+} from '@ant-design/icons'
+import { Layout, Menu } from 'antd'
+
+const { Sider } = Layout
 
 const menuData = [
-  { key: '/', label: 'Tổng quan', path: '' },
-  { key: '/product', label: 'Sản phẩm', path: '/product' },
-  { key: '/category', label: 'Danh mục', path: '/category' },
-  { key: '/brand', label: 'Thương hiệu', path: '/brand' },
-  { key: '/supplier', label: 'Nhà cung cấp', path: '/supplier' },
-  { key: '/product-batch', label: 'Lô hàng', path: '/product-batch' },
-  { key: '/employee', label: 'Nhân viên', path: '/employee' },
-  { key: '/promotion', label: 'Khuyến mãi', path: '/promotion' },
-  { key: '/voucher', label: 'Voucher', path: '/voucher' }
+  {
+    key: '/',
+    icon: <DashboardOutlined />,
+    label: <Link to="/">Tổng quan</Link>
+  },
+  {
+    key: 'product',
+    icon: <AppstoreOutlined />,
+    label: 'Sản phẩm',
+    children: [
+      { key: 'product-list', icon: <UnorderedListOutlined />, label: <Link to="/product">Danh sách sản phẩm</Link> },
+      { key: 'category', icon: <ContainerOutlined />, label: <Link to="/category">Danh mục sản phẩm</Link> },
+      { key: 'brand', icon: <ShopOutlined />, label: <Link to="/brand">Thương hiệu</Link> },
+      { key: 'supplier', icon: <BankOutlined />, label: <Link to="/supplier">Nhà cung cấp</Link> },
+      { key: '/product-batch', icon: <ShopOutlined />, label: <Link to="/product-batch">Lô hàng</Link> }
+    ]
+  },
+  {
+    key: 'staff',
+    icon: <TeamOutlined />,
+    label: <Link to="/staff">Nhân viên</Link>
+  },
+  {
+    key: 'promotion',
+    icon: <GiftOutlined />,
+    label: <Link to="/promotion">Khuyến mãi</Link>
+  },
+  {
+    key: 'voucher',
+    icon: <TagOutlined />,
+    label: <Link to="/voucher">Voucher</Link>
+  }
 ]
 
-const createMenuItem = ({ key, label, path }) => ({
-  key,
-  label: (
-    <Link className="flex justify-between" to={path}>
-      {label}
-    </Link>
-  )
-})
+const AdminSidebar = () => {
+  const location = useLocation()
 
-const menuSidebar = menuData.map(createMenuItem)
+  const getOpenKeys = () => {
+    const path = location.pathname.split('/').filter((i) => i)
+    return path.length > 1 ? [path[0]] : []
+  }
 
-const Sidebar = ({ collapsed }) => {
-  const [activePath, setActivePath] = useState(window.location.pathname)
+  const getSelectedKeys = () => {
+    const path = location.pathname.split('/').filter((i) => i)
+    return path.length > 1 ? [path.join('-')] : [path[0]]
+  }
+
+  const generateMenuItems = (data) => {
+    return data.map((item) => {
+      if (item.children) {
+        return {
+          key: item.key,
+          icon: item.icon,
+          label: item.label,
+          children: generateMenuItems(item.children)
+        }
+      }
+      return {
+        key: item.key,
+        icon: item.icon,
+        label: item.label
+      }
+    })
+  }
 
   return (
-    <Sider trigger={null} collapsible collapsed={collapsed} width={300} style={{ backgroundColor: '#001f3f' }}>
-      <a href="/" className="no-underline">
-        <h1 className="my-4 text-center text-5xl font-semibold">TechStore</h1>
-      </a>
+    <Sider width={250}>
       <Menu
-        items={menuSidebar}
-        theme="light"
         mode="inline"
-        defaultSelectedKeys={[activePath]}
-        selectedKeys={[activePath]}
-        onClick={({ key }) => setActivePath(key)}
-        style={{
-          margin: '16px 0'
-        }}
+        selectedKeys={getSelectedKeys()}
+        defaultOpenKeys={getOpenKeys()}
+        style={{ height: '100%', borderRight: 0 }}
+        items={generateMenuItems(menuData)}
       />
     </Sider>
   )
 }
 
-export default Sidebar
+export default AdminSidebar

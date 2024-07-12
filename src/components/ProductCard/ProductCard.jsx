@@ -30,16 +30,16 @@ function ProductCard({ product }) {
             {formatMoneyVND(product.price)}
           </span>
           {product.priceAfterDiscount < product.price && (
-            <span className="text-[#D19C97]">{formatMoneyVND(product.priceAfterDiscount)}</span>
+            <span className="text-red">{formatMoneyVND(product.priceAfterDiscount)}</span>
           )}
         </div>
       </div>
       <div className="flex justify-between px-5 py-3 mt-auto border-t">
         <a href={`/product/detail/${product.id}`} className="text-sm">
-          <i className="fas fa-eye text-[#D19C97] mr-1"></i>View Detail
+          <i className="fas fa-eye text-red mr-1"></i>View Detail
         </a>
         <button className="text-sm" onClick={handleAddToCart}>
-          <i className="fas fa-shopping-cart text-[#D19C97] mr-1"></i>Add To Cart
+          <i className="fas fa-shopping-cart text-red mr-1"></i>Add To Cart
         </button>
       </div>
     </div>

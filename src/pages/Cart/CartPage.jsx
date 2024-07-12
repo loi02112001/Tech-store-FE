@@ -42,6 +42,7 @@ function CartPage() {
   const handleCheckout = () => {
     if (items.some((item) => item.checked)) {
       navigate('/cart/checkout')
+      sessionStorage.setItem('checkoutItems', JSON.stringify(items.filter((item) => item.checked)))
     } else {
       handleNotification(constants.NOTIFICATION_WARNING, 'Bạn chưa chọn sản phầm nào để mua')
     }
@@ -56,9 +57,9 @@ function CartPage() {
   }, [carts])
 
   return (
-    <div className="container w-full min-h-screen py-20">
+    <div className="container py-10 flex-1">
       <h1 className="text-2xl font-semibold capitalize mb-7">Giỏ hàng</h1>
-      <div className="flex items-center gap-8 px-8 pb-8 ">
+      <div className="flex items-center gap-8 px-8 pb-4">
         <Checkbox checked={allChecked} onChange={handleAllCheck} />
         <span>Chọn tất cả</span>
       </div>

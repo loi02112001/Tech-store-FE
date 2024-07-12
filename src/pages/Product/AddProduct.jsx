@@ -8,18 +8,21 @@ import useCategoryStore from '@/store/categoryStore'
 import useProductStore from '@/store/productStore'
 import { handleNotification } from '@/utils'
 
-import { Col, Form, Input, Row, Select } from 'antd'
+import ProductAttributeForm from './ProductAttributeForm'
+import { Button, Card, Col, Form, Input, Row, Select } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
 
 const AddProduct = () => {
-  const { id } = useParams()
-  const navigate = useNavigate()
   const { product: productInfo, addProduct, getProductById, updateProduct } = useProductStore()
   const { categories, getCategories } = useCategoryStore()
   const { brands, getBrands } = useBrandStore()
+
+  const { id } = useParams()
+  const navigate = useNavigate()
   const [form] = Form.useForm()
   const [previewImg, setPreviewImg] = useState()
   const [img, setImg] = useState(null)
+  const [attributes, setAttributes] = useState([])
 
   useEffect(() => {
     getCategories()
@@ -52,11 +55,13 @@ const AddProduct = () => {
   }))
 
   const handleAddProduct = (values) => {
-    if (values.name.trim() == '' || values.price == '' || values.description.trim() == '') {
+    if (values.name.trim() === '' || values.price === '' || values.description.trim() === '') {
       return
     }
     const formData = new FormData()
-    img?.length > 0 && formData.append('image', img[0])
+    if (img?.length > 0) {
+      formData.append('image', img[0])
+    }
     formData.append('name', values.name)
     formData.append('brandId', values.brandId)
     formData.append('categoryIds', values.category.join(','))
@@ -96,38 +101,26 @@ const AddProduct = () => {
   }
 
   return (
-    <div className="h-full bg-[#f4f4f4]">
-      <Form className="flex flex-col gap-5 pb-5" onFinish={handleAddProduct} form={form}>
-        <span className="text-xl font-semibold flex gap-3 items-center bg-[#f5f5f5]">
-          {id ? 'Cập nhật sản phẩm' : 'Thêm sản phẩm'}
-        </span>
+    <div className="min-h-screen">
+      <Card title={id ? 'Cập nhật sản phẩm' : 'Thêm sản phẩm'} className="max-w-4xl mx-auto">
+        <Form className="flex flex-col" onFinish={handleAddProduct} form={form} layout="vertical">
+          <Form.Item className="flex items-center" label="Hình ảnh sản phẩm">
+            <input
+              className="absolute opacity-0 w-full h-full"
+              type="file"
+              onChange={(e) => handlePreview(e.target.files)}
+              accept="image/*"
+            />
+            {previewImg ? (
+              <img src={previewImg} alt="img preview" className="w-full h-full object-cover border rounded" />
+            ) : (
+              <DefaultImage width={200} height={140} />
+            )}
+          </Form.Item>
 
-        <div className="bg-white rounded-sm p-6">
-          <p className="mb-3 text-xl font-bold">Thông tin cơ bản</p>
-          <Col span={12} className="relative w-1/4 h-full mb-6">
-            <Form.Item className="flex items-center w-full" label="Hình ảnh sản phẩm">
-              <input
-                className="absolute opacity-0 w-full h-full"
-                type="file"
-                onChange={(e) => handlePreview(e.target.files)}
-                accept="image/*"
-              />
-              {previewImg ? (
-                <img
-                  src={previewImg}
-                  alt="img preview"
-                  className="w-full h-full aspect-video object-cover border rounded w-1/4"
-                  loading="lazy"
-                />
-              ) : (
-                <DefaultImage width={200} height={200} />
-              )}
-            </Form.Item>
-          </Col>
-          <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+          <Row gutter={16}>
             <Col span={12}>
               <Form.Item
-                className="flex items-center w-full"
                 name="name"
                 label="Tên sản phẩm"
                 rules={[
@@ -139,64 +132,60 @@ const AddProduct = () => {
                     }
                   })
                 ]}>
-                <Input placeholder="Nhập tên sản phẩm" name="name" />
+                <Input placeholder="Nhập tên sản phẩm" />
               </Form.Item>
             </Col>
             <Col span={12}>
               <Form.Item
-                className="flex items-center w-full"
                 name="category"
                 label="Danh mục sản phẩm"
                 rules={[{ required: true, message: ruleFormItem.required }]}>
-                <Select
-                  className="w-full"
-                  mode="multiple"
-                  allowClear
-                  placeholder="Chọn danh mục sản phẩm"
-                  options={categoryOptions}
-                />
+                <Select mode="multiple" allowClear placeholder="Chọn danh mục sản phẩm" options={categoryOptions} />
               </Form.Item>
             </Col>
           </Row>
-          <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item name="price" label="Giá bán" rules={[{ required: true, message: ruleFormItem.required }]}>
+                <Input type="number" placeholder="Nhập giá bán" min={0} />
+              </Form.Item>
+            </Col>
+
             <Col span={12}>
               <Form.Item
-                className="flex items-center w-full"
-                name="price"
-                label="Giá bán"
-                rules={[{ required: true, message: ruleFormItem.required }]}>
-                <Input className="py-1 outline-0" type="number" placeholder="Nhập giá bán" name="price" />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-            <Col span={24}>
-              <Form.Item
-                className="flex items-center w-full"
-                name="description"
-                label={'Mô tả sản phẩm'}
-                rules={[{ required: true, message: ruleFormItem.required }]}>
-                <TextArea className="py-1 outline-0" placeholder="Nhập mô tả sản phẩm" name="description" />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-            <Col span={12}>
-              <Form.Item
-                className="flex items-center w-full"
                 name="brandId"
                 label="Thương hiệu"
                 rules={[{ required: true, message: ruleFormItem.required }]}>
-                <Select className="w-full" allowClear placeholder="Chọn thương hiệu" options={brandOptions} />
+                <Select allowClear placeholder="Chọn thương hiệu" options={brandOptions} />
               </Form.Item>
             </Col>
           </Row>
-          <button type="submit" className="w-fit py-1 px-4 rounded bg-[#1677ff] text-white">
-            {id ? 'Cập nhật sản phẩm' : 'Thêm sản phẩm'}
-          </button>
-        </div>
-      </Form>
+
+          <Row gutter={16}>
+            <Col span={24}>
+              <Form.Item
+                name="description"
+                label="Mô tả sản phẩm"
+                rules={[{ required: true, message: ruleFormItem.required }]}>
+                <TextArea rows={4} placeholder="Nhập mô tả sản phẩm" />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Row>
+            <Form.Item label="Thông số sản phẩm" className="w-full">
+              <ProductAttributeForm attributes={attributes} setAttributes={setAttributes} />
+            </Form.Item>
+          </Row>
+
+          <Button type="primary" htmlType="submit">
+            {id ? 'Cập nhật sản phẩm' : 'Thêm sản phẩm'}
+          </Button>
+        </Form>
+      </Card>
     </div>
   )
 }
+
 export default AddProduct

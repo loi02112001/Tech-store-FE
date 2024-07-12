@@ -28,7 +28,14 @@ function ListBrand() {
       title: 'Hành động',
       dataIndex: '',
       key: 'x',
-      render: (_, record) => <AddEditBrand brand={record} classButton="text-gray-500 link no-underline" />
+      align: 'center',
+      render: (_, record) => (
+        <AddEditBrand
+          brand={record}
+          classButton="text-gray-500 link no-underline"
+          textButton={<i className="cursor-pointer fa-regular fa-pen-to-square text-blue"></i>}
+        />
+      )
     }
   ]
 
@@ -40,7 +47,7 @@ function ListBrand() {
     <Skeleton />
   ) : (
     <>
-      <AddEditBrand textButton="Thêm thương hiệu" classButton="mb-4 btn btn-primary" />
+      <AddEditBrand textButton="Thêm thương hiệu" classButton="mb-4 btn btn-blue" />
       <Table
         rowClassName="editable-row"
         columns={brandTables}

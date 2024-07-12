@@ -40,6 +40,6 @@ body,
 }
 
 .container {
-  @apply !max-w-none;
+  @apply !max-w-xxl;
 }
 

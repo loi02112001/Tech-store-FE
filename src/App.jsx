@@ -31,6 +31,7 @@ const AllProductsPage = React.lazy(() => import('./pages/AllProductsPage/AllProd
 const CustomerHomePage = React.lazy(() => import('./pages/HomePage/CustomerHomePage'))
 const CartPage = React.lazy(() => import('./pages/Cart/CartPage'))
 const ProductDetail = React.lazy(() => import('./pages/Product/ProductDetail'))
+const UserProfile = React.lazy(() => import('./pages/Profile/Profile'))
 
 export default function App() {
   return (
@@ -69,6 +70,7 @@ export default function App() {
                 <Route path={routes.allProducts} element={<AllProductsPage />} />
                 <Route path={routes.product.detail} element={<ProductDetail />} />
                 <Route path={routes.purchase.list} element={<Purchase />} />
+                <Route path={routes.user.profile} element={<UserProfile />} />
               </Route>
             )}
             {/* <Route path="*" element={<PageNotFound />} /> */}

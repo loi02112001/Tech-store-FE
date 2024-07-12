@@ -23,14 +23,12 @@ const ProductImage = ({ src, alt }) => (
 
 const ProductInfo = ({ name, rating, totalRating, description, onRateClick }) => (
   <div>
-    <h3 className="mb-2 text-2xl font-medium">{name}</h3>
+    <h1 className="mb-2 text-2xl font-medium">{name}</h1>
     <div className="flex gap-4 mb-3">
       <div className="mr-2 cursor-pointer text-primary" onClick={onRateClick}>
         <Rate disabled allowHalf value={rating} />
       </div>
-      <span className="text-medium">
-        <span className="text-blue">{totalRating}</span> đánh giá
-      </span>
+      <span className="text-base text-gray-600">({totalRating} đánh giá)</span>
     </div>
     <p className="text-gray-500">{description}</p>
   </div>
@@ -41,7 +39,7 @@ const PriceDisplay = ({ price, priceAfterDiscount }) => {
   return (
     <div className="flex items-end gap-4 p-4 bg-gray-50">
       {isProductSale && <span className="text-2xl font-bold text-red-700">{formatMoneyVND(priceAfterDiscount)}</span>}
-      <span className={`${isProductSale ? 'text-base line-through' : 'text-2xl font-bold'}`}>
+      <span className={`${isProductSale ? 'text-lg line-through' : 'text-2xl font-bold'}`}>
         {formatMoneyVND(price)}
       </span>
       {isProductSale && (
@@ -77,9 +75,9 @@ const QuantitySelector = ({ quantity, onIncrement, onDecrement, onChange, max })
       </button>
     </div>
     {max === 0 ? (
-      <p className="ml-3 font-semibold text-red-500">Hết hàng</p>
+      <p className="ml-3 font-medium text-red-500">Hết hàng</p>
     ) : (
-      <p className="ml-3 font-semibold text-gray-500">{max} sản phẩm có sẵn</p>
+      <p className="ml-3 font-medium text-gray-500">{max} sản phẩm có sẵn</p>
     )}
   </div>
 )

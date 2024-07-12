@@ -16,9 +16,9 @@ function CustomerHomePage() {
 
   return (
     <>
-      <div className="flex gap-5 py-12 px-5 xl:px-20">
+      <div className="container flex gap-5 py-12">
         <div className="hidden lg:block lg:w-1/4">
-          <div className="flex items-center justify-between h-16 bg-[#D19C97] w-full p-8">
+          <div className="flex items-center justify-between h-16 bg-customBackground w-full p-8">
             <h6 className="font-bold">Categories</h6>
           </div>
           <div className="flex flex-col w-full overflow-hidden">

@@ -46,5 +46,8 @@ export const routes = {
   },
   purchase: {
     list: '/purchase'
+  },
+  user: {
+    profile: '/user/profile'
   }
 }

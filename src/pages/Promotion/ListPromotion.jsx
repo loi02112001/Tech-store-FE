@@ -13,7 +13,7 @@ function ListPromotion() {
 
   const promotionTables = [
     {
-      title: 'ID',
+      title: '',
       dataIndex: 'id',
       key: 'id',
       align: 'center'
@@ -82,6 +82,7 @@ function ListPromotion() {
           promotion={record}
           title="Cập nhật khuyến mãi"
           classButton="text-gray-500 link no-underline"
+          textButton={<i className="cursor-pointer fa-regular fa-pen-to-square text-blue"></i>}
         />
       )
     }
@@ -95,7 +96,7 @@ function ListPromotion() {
     <Skeleton />
   ) : (
     <>
-      <AddEditPromotion title="Tạo khuyến mãi" textButton="Tạo khuyến mãi" classButton="mb-4 btn btn-primary" />
+      <AddEditPromotion title="Tạo khuyến mãi" textButton="Tạo khuyến mãi" classButton="mb-4 btn btn-blue" />
       <Table
         rowClassName="editable-row"
         columns={promotionTables}

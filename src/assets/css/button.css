@@ -17,3 +17,7 @@
     @apply text-white bg-red;
   }
 }
+
+.btn-blue {
+  @apply text-white border-transparent bg-[#1677ff];
+}

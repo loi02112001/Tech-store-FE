@@ -1,15 +1,15 @@
 import { useCallback, useMemo } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-import useAuthStore from '@/store/authStore'
+import useUserStore from '@/store/userStore'
 import { removeToken } from '@/utils'
 
 import { Dropdown } from 'antd'
 
 export const UserDropdown = () => {
   const navigate = useNavigate()
-  const { profile } = useAuthStore()
-  const { name } = profile || {}
+  const { user } = useUserStore()
+  const { name } = user || {}
 
   const handleLogout = useCallback(() => {
     removeToken('token')
@@ -21,7 +21,7 @@ export const UserDropdown = () => {
       {
         key: 'link-to-profile',
         label: (
-          <Link to="/store-info" className="flex gap-2">
+          <Link to="/user/profile" className="flex gap-2">
             Tài khoản của tôi
           </Link>
         )

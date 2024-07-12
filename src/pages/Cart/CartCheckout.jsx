@@ -1,31 +1,26 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import useAuthStore from '@/store/authStore'
-import useCartStore from '@/store/cartStore'
 import useOrderStore from '@/store/orderStore'
+import useUserStore from '@/store/userStore'
 import useVoucherStore from '@/store/voucherStore'
 import { formatMoneyVND, isEmptyUsingKeys } from '@/utils'
 
 import { Input } from 'antd'
 
 function CartCheckout() {
-  const { carts } = useCartStore()
   const { voucher, getVoucherByCode } = useVoucherStore()
-  const { profile, getProfile } = useAuthStore()
+  const { user, getProfile } = useUserStore()
   const { createOrder } = useOrderStore()
 
   const navigate = useNavigate()
   const [voucherCode, setVoucherCode] = useState('')
 
   useEffect(() => {
-    if (carts.length === 0) {
-      navigate('/cart')
-    }
     getProfile()
-  }, [carts.length, navigate, getProfile])
+  }, [])
 
-  const checkedCarts = useMemo(() => carts.filter((cart) => cart?.checked), [carts])
+  const checkedCarts = JSON.parse(sessionStorage.getItem('checkoutItems'))
 
   const totalPrice = useMemo(
     () => checkedCarts.reduce((acc, item) => acc + item.productPriceAfterDiscount * item.quantity, 0),
@@ -34,8 +29,8 @@ function CartCheckout() {
 
   const handleOrder = () => {
     createOrder({
-      address: profile?.address,
-      phoneNumber: profile?.phoneNumber,
+      address: user?.address,
+      phoneNumber: user?.phoneNumber,
       voucherCode,
       listCartItemId: checkedCarts.map((item) => item.id)
     })
@@ -44,7 +39,7 @@ function CartCheckout() {
 
   return (
     <div className="container py-10 bg-white-500">
-      <AddressInfo profile={profile} />
+      <AddressInfo user={user} />
       <ProductList checkedCarts={checkedCarts} />
       <OrderVoucher getVoucherByCode={getVoucherByCode} voucherCode={voucherCode} setVoucherCode={setVoucherCode} />
       <OrderSummary totalPrice={totalPrice} voucher={voucher} handleOrder={handleOrder} />
@@ -52,13 +47,13 @@ function CartCheckout() {
   )
 }
 
-const AddressInfo = ({ profile }) => (
+const AddressInfo = ({ user }) => (
   <div className="flex items-end gap-4 p-6 capitalize bg-white rounded">
     <span className="text-lg text-[#ee4d2d]">Địa chỉ nhận hàng:</span>
     <span className="font-bold">
-      {profile?.name} {profile?.phoneNumber}
+      {user?.name} {user?.phoneNumber}
     </span>
-    <span>{profile?.address}</span>
+    <span>{user?.address}</span>
   </div>
 )
 
@@ -95,7 +90,7 @@ export const ProductItem = ({ cart }) => (
       </div>
       <div className="flex flex-col gap-1 w-[15%]">
         <span className="line-through">{formatMoneyVND(cart?.productPrice)}</span>
-        <span className="text-red-300">{formatMoneyVND(cart?.productPriceAfterDiscount)}</span>
+        <span className="text-red text-lg font-medium">{formatMoneyVND(cart?.productPriceAfterDiscount)}</span>
       </div>
       <div className="w-[15%] text-center">{cart?.quantity}</div>
       <div className="w-[15%] text-right">{formatMoneyVND(cart?.productPriceAfterDiscount * cart?.quantity)}</div>
@@ -111,14 +106,14 @@ const OrderVoucher = (props) => {
   return (
     <div className="flex flex-col gap-2 p-6 mt-5 bg-white rounded">
       <div className="flex items-center justify-between">
-        <span className=" text-black-600">Khuyến mại:</span>
-        <div className="flex items-center gap-4">
+        <span className="text-black-600">Khuyến mại:</span>
+        <div className="flex items-center gap-4 min-w-64 w-1/4">
           <Input
             placeholder="Nhập mã khuyến mại"
             className="w-[300px]"
             onChange={(e) => props.setVoucherCode(e.target.value)}
           />
-          <button className="text-blue-100" onClick={handleGetVoucher} disabled={!props.voucherCode}>
+          <button className="text-blue-500" onClick={handleGetVoucher} disabled={!props.voucherCode}>
             Áp dụng
           </button>
         </div>
@@ -136,7 +131,7 @@ const OrderSummary = ({ totalPrice, voucher, handleOrder }) => {
   return (
     <div className="flex flex-col gap-2 p-6 mt-5 text-sm bg-white rounded">
       <h3 className="pb-3 mb-3 text-base border-b">Thanh toán</h3>
-      <table className="w-64 ml-auto border-separate border-spacing-3">
+      <table className="w-1/4 min-w-64 ml-auto border-separate border-spacing-3">
         <tbody>
           <tr className="mb-3">
             <td className="text-black-700">Tổng tiền hàng:</td>

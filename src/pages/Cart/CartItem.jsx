@@ -41,7 +41,7 @@ function CartItem({ cart, checked, handleItemCheck }) {
   }, [checked])
 
   return (
-    <div key={cart.id} className="flex gap-10 py-8 border-t first:border-t-0 first:pt-0 last:pb-0">
+    <div key={cart.id} className="flex gap-2 py-6 border-t first:border-t-0 first:pt-0 last:pb-0">
       <Checkbox
         checked={check}
         onChange={() => {
@@ -56,9 +56,9 @@ function CartItem({ cart, checked, handleItemCheck }) {
           className="w-[100px] object-cover aspect-square"
         />
       </Link>
-      <div className="flex flex-col justify-between w-full">
-        <div className="flex justify-between w-full">
-          <Link to={`/product/detail/${cart.productId}`}>
+      <div className="flex flex-col justify-between gap-4 w-full">
+        <div className="flex justify-between gap-10 w-full">
+          <Link to={`/product/detail/${cart.productId}`} className="flex flex-1">
             <h3 className="text-lg font-medium capitalize">{cart.productName}</h3>
           </Link>
           <span className="font-bold text-gray-900">{formatMoneyVND(cart?.productPrice)}</span>
@@ -66,27 +66,27 @@ function CartItem({ cart, checked, handleItemCheck }) {
         <div className="flex items-center justify-between gap-5">
           <div className="flex items-center">
             <span className="mr-2 font-medium">Số lượng:</span>
-            <button
-              type="button"
-              className="px-2 bg-gray-100 rounded-l-md"
-              onClick={handleDecrement}
-              disabled={quantity === 0}>
-              -
-            </button>
-            <input
-              className="w-10 text-center bg-gray-100 border-x"
-              type="text"
-              value={quantity}
-              pattern="[0-9]*"
-              onChange={handleInputChange}
-            />
-            <button
-              type="button"
-              className="px-2 bg-gray-100 rounded-r-md"
-              onClick={handleIncrement}
-              disabled={quantity === 0}>
-              +
-            </button>
+
+            <div className="flex items-center">
+              <button
+                className="w-8 h-8 flex items-center justify-center border border-gray-300 transition-colors duration-200"
+                onClick={handleDecrement}
+                disabled={quantity <= 1}>
+                <i className="fa fa-minus text-gray-500"></i>
+              </button>
+              <input
+                type="text"
+                className="w-10 h-8 text-center text-gray-500 border-y border-gray-300 focus:outline-none"
+                value={quantity}
+                pattern="[0-9]*"
+                onChange={handleInputChange}
+              />
+              <button
+                className="w-8 h-8 flex items-center justify-center border border-gray-300 transition-colors duration-200"
+                onClick={handleIncrement}>
+                <i className="fa fa-plus text-gray-500"></i>
+              </button>
+            </div>
           </div>
           <button className="flex items-center gap-2 text-gray-700 link" onClick={handleDeleteCart}>
             <DeleteOutlined />

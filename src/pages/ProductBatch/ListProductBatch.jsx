@@ -6,12 +6,13 @@ import useProductBatchStore from '@/store/productBatchStore'
 import AddProductBatch from './AddProductBatch'
 import { Skeleton, Table } from 'antd'
 import dayjs from 'dayjs'
+import { formatMoneyVND } from '@/utils'
 
 function ListProductBatch() {
   const { loading, productBatches, getProductBatches } = useProductBatchStore()
   const supplierTables = [
     {
-      title: 'ID',
+      title: '',
       dataIndex: 'id',
       key: 'id',
       align: 'center'
@@ -50,7 +51,8 @@ function ListProductBatch() {
     {
       title: 'Giá nhập',
       dataIndex: 'importPrice',
-      key: 'importPrice'
+      key: 'importPrice',
+      render: (price) => formatMoneyVND(price)
     },
     {
       title: 'Ngày tạo',
@@ -70,8 +72,7 @@ function ListProductBatch() {
     <Skeleton />
   ) : (
     <div className="relative">
-      <h1 className="mb-10 text-3xl font-semibold">Lô Hàng</h1>
-      <AddProductBatch textButton="Thêm lô hàng" classButton="absolute right-0 top-5 btn btn-primary" />
+      <AddProductBatch textButton="Thêm lô hàng" classButton="btn btn-blue mb-5" />
       <Table
         columns={supplierTables}
         size="middle"

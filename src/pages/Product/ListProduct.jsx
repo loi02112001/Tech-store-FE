@@ -6,14 +6,15 @@ import SearchInput from '@/components/common/SearchInput'
 import useProductStore from '@/store/productStore'
 
 import { Button, Layout, Pagination, Table } from 'antd'
+import CustomPagination from '@/components/CustomPagination/CustomPagination'
 
 const ListProduct = () => {
   const { loading, products: productList, totalProducts, getListProducts, deleteProduct } = useProductStore()
   const [searchValue, setSearchValue] = useState('')
   const [pagination, setPagination] = useState({
     current: 1,
-    pageSize: 5,
-    total: 33
+    pageSize: 10,
+    total: 0
   })
 
   const formatPrice = (price) => {
@@ -29,7 +30,7 @@ const ListProduct = () => {
       key: 'id',
       align: 'center',
       render: (_, record, index) => {
-        return index + 1
+        return index + 1 + (pagination.current - 1) * pagination.pageSize
       }
     },
     {
@@ -97,7 +98,7 @@ const ListProduct = () => {
       )
     }
   ]
-  const fetchData = async (page = 1, limit = 5) => {
+  const fetchData = async (page = 1, limit = 10) => {
     await getListProducts({ page, limit })
 
     setPagination((prev) => ({
@@ -120,7 +121,7 @@ const ListProduct = () => {
 
   return (
     <Layout.Content>
-      <div className="flex justify-between my-6">
+      <div className="flex justify-between mb-6">
         <div className="flex items-center gap-4">
           <SearchInput
             loading={loading}
@@ -145,13 +146,8 @@ const ListProduct = () => {
         rowKey={(product) => product.id}
         pagination={false}
       />
-      <Pagination
-        defaultCurrent={1}
-        current={pagination.current}
-        total={totalProducts}
-        pageSize={5}
-        onChange={handleTableChange}
-      />
+
+      <CustomPagination current={pagination.current} total={totalProducts} onChange={handleTableChange} />
     </Layout.Content>
   )
 }

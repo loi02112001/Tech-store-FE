@@ -1,4 +1,4 @@
-import { httpGet, httpPost } from '../configs/api'
+import { httpGet, httpPost, httpPut } from '../configs/api'
 
 const register = (data) => {
   return httpPost('/register', data)
@@ -16,8 +16,12 @@ const getProfile = () => {
   return httpGet('/user/getProfile')
 }
 
+const updateProfile = (data) => {
+  return httpPut('/user/update', data)
+}
+
 const verify = (data) => {
   return httpPost('/verifyUserAccount', data)
 }
 
-export const authService = { register, login, refreshToken, getProfile, verify }
+export const userService = { register, login, refreshToken, getProfile, verify, updateProfile }

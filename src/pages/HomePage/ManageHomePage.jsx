@@ -34,7 +34,6 @@ function ManageHomePage() {
   }, [revenues])
 
   const fetchData = () => {
-    console.log('fetchData')
     if (timeFrame === 'week') {
       const weekStart = selectedDate.startOf('week').format('YYYY-MM-DD')
       const weekEnd = selectedDate.endOf('week').format('YYYY-MM-DD')
@@ -71,7 +70,6 @@ function ManageHomePage() {
         const monthData = revenues.find((item) => item.month == month)
         return monthData ? monthData.revenue : 0
       })
-      console.log('data, ', data)
     }
 
     chartInstance.current = new Chart(ctx, {
