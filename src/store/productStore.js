@@ -7,7 +7,7 @@ import { create } from 'zustand'
 const useProductStore = create((set, get) => ({
   products: [],
   productsTopView: [],
-  productTopSold: [],
+  productsTopSold: [],
   product: null,
   page: 1,
   pages: 0,
@@ -27,15 +27,9 @@ const useProductStore = create((set, get) => ({
     }
   },
 
-  getListProducts: async (data) => {
+  getListProducts: async (data = {}) => {
     set({ isLoading: true, error: null })
     try {
-      if (data === undefined || data === null) {
-        data = {
-          page: 1,
-          limit: 5
-        }
-      }
       const res = await productService.getListProducts(data)
       const { list, pages, total } = res.data
       set({ products: list, pages, totalProducts: total })
@@ -70,11 +64,11 @@ const useProductStore = create((set, get) => ({
     }
   },
 
-  getProductTopSold: async () => {
+  getProductsTopSold: async () => {
     set({ isLoading: true })
     try {
-      const res = await productService.getProductTopSold()
-      set({ productTopSold: res.data.list })
+      const res = await productService.getProductsTopSold()
+      set({ productsTopSold: res.data.list })
     } catch (error) {
       handleNotification(constants.NOTIFICATION_ERROR, error)
     } finally {
@@ -110,7 +104,8 @@ const useProductStore = create((set, get) => ({
   deleteProduct: async (id) => {
     set({ isLoading: true })
     try {
-      await productService.deleteProduct(id)
+      const res = await productService.deleteProduct(id)
+      handleNotification(constants.NOTIFICATION_SUCCESS, res)
       get().getListProducts()
     } catch (error) {
       handleNotification(constants.NOTIFICATION_ERROR, error)

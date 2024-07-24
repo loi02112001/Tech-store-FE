@@ -12,10 +12,10 @@ import './index.css'
 const desc = ['Tệ hại', 'Tồi tệ', 'Bình thường', 'Tốt', 'Tuyệt vời']
 
 const ProductImage = ({ src, alt }) => (
-  <div className="w-full overflow-hidden lg:w-2/5">
+  <div className="w-full overflow-hidden shadow lg:w-2/5">
     <img
       alt={alt}
-      className="w-full transition duration-500 ease-in-out aspect-[3/2] hover:scale-105"
+      className="w-full transition duration-500 ease-in-out aspect-square hover:scale-105"
       src={src || 'https://via.placeholder.com/144'}
     />
   </div>
@@ -134,7 +134,7 @@ function ProductDetail() {
 
   return (
     <div className="container py-12 mx-auto">
-      <div className="flex justify-between gap-8 px-4 xl:px-0">
+      <div className="flex justify-between gap-10">
         <ProductImage src={product?.productImage} alt={product?.name} />
 
         <div className="flex flex-col gap-5 w-full pb-5 lg:flex-1">

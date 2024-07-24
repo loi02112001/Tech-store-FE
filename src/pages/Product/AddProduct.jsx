@@ -69,11 +69,11 @@ const AddProduct = () => {
     formData.append('price', values.price)
     if (id) {
       updateProduct(id, formData, () => {
-        navigate('/product')
+        navigate('/admin/product')
       })
     } else {
       addProduct(formData, () => {
-        navigate('/product')
+        navigate('/admin/product')
       })
     }
   }
@@ -112,9 +112,13 @@ const AddProduct = () => {
               accept="image/*"
             />
             {previewImg ? (
-              <img src={previewImg} alt="img preview" className="w-full h-full object-cover border rounded" />
+              <img
+                src={previewImg}
+                alt="img preview"
+                className="avatar-upload w-[200px] aspect-[200/133] border border-gray-300 rounded overflow-hidden"
+              />
             ) : (
-              <DefaultImage width={200} height={140} />
+              <DefaultImage width={200} height={133} />
             )}
           </Form.Item>
 

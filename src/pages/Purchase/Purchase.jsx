@@ -1,4 +1,5 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import PurchaseItem from '@/components/common/PurchaseItem'
 import useOrderStore from '@/store/orderStore'
@@ -19,16 +20,28 @@ const AllOrder = ({ orders, status = '' }) => {
 
 function Purchase() {
   const { orders, getAllOrders } = useOrderStore()
+  const [searchParams] = useSearchParams()
+  const navigate = useNavigate()
+  const [activeKey, setActiveKey] = useState('')
 
   useEffect(() => {
-    getAllOrders('')
-  }, [getAllOrders])
+    const type = searchParams.get('type') || ''
+    setActiveKey(type.toUpperCase())
+  }, [searchParams])
+
+  useEffect(() => {
+    getAllOrders(activeKey)
+  }, [activeKey, getAllOrders])
+
+  const handleTabChange = (key) => {
+    navigate(`?type=${key.toUpperCase()}`)
+  }
 
   const items = useMemo(
     () =>
       [
         { label: 'Tất cả', key: '' },
-        { label: 'Chờ gian hàng', key: 'PENDING' },
+        { label: 'Chờ thanh toán', key: 'PENDING' },
         { label: 'Hoàn thành', key: 'SUCCESS' },
         { label: 'Đã hủy', key: 'CANCEL' }
       ].map((item) => ({
@@ -41,7 +54,7 @@ function Purchase() {
   return (
     <div className="container py-10 flex-1">
       <div className="sticky top-0 flex flex-col h-full bg-white-100 border rounded shadow-2xl overflow-hidden">
-        <Tabs defaultActiveKey="" items={items} onChange={getAllOrders} />
+        <Tabs activeKey={activeKey} items={items} onChange={handleTabChange} />
       </div>
     </div>
   )

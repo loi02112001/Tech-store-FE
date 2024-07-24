@@ -5,7 +5,9 @@ const addProduct = (data) => {
 }
 
 const getListProducts = (data) => {
-  return httpGet(`/product/getListProduct?page=${data.page}&limit=${data.limit}`)
+  return httpGet(
+    `/product/getListProduct${data?.page ? `?page=${data.page}` : ''}${data?.limit ? `&limit=${data.limit}` : ''}${data?.name ? '&name=' + data.name : ''}${data?.categoryIds ? '&categoryIds=' + data.categoryIds : ''}${data?.brandId ? '&brandId=' + data.brandId : ''}`
+  )
 }
 
 const updateProduct = (id, data) => {
@@ -28,7 +30,7 @@ const getProductTopView = () => {
   return httpGet(`/product/top-view`)
 }
 
-const getProductTopSold = () => {
+const getProductsTopSold = () => {
   return httpGet(`/product/top-sold`)
 }
 
@@ -48,7 +50,7 @@ export const productService = {
   updateProduct,
   changeProductStatus,
   getProductTopView,
-  getProductTopSold,
+  getProductsTopSold,
   deleteProduct,
   ratingProduct
 }

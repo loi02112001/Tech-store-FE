@@ -23,8 +23,9 @@ const useCategoryStore = create((set, get) => ({
   createCategory: async (data, onSuccess = () => {}) => {
     set({ isLoading: true })
     try {
-      await categoryService.createCategory(data)
+      const res = await categoryService.createCategory(data)
       await get().getCategories()
+      handleNotification(constants.NOTIFICATION_SUCCESS, res)
       onSuccess()
     } catch (error) {
       handleNotification(constants.NOTIFICATION_ERROR, error)
@@ -36,7 +37,8 @@ const useCategoryStore = create((set, get) => ({
   updateCategory: async (id, data, onSuccess = () => {}) => {
     set({ isLoading: true })
     try {
-      await categoryService.updateCategory(id, data)
+      const res = await categoryService.updateCategory(id, data)
+      handleNotification(constants.NOTIFICATION_SUCCESS, res)
       await get().getCategories()
       onSuccess()
     } catch (error) {

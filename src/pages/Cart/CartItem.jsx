@@ -61,7 +61,15 @@ function CartItem({ cart, checked, handleItemCheck }) {
           <Link to={`/product/detail/${cart.productId}`} className="flex flex-1">
             <h3 className="text-lg font-medium capitalize">{cart.productName}</h3>
           </Link>
-          <span className="font-bold text-gray-900">{formatMoneyVND(cart?.productPrice)}</span>
+          <div className="flex flex-col">
+            <span
+              className={` ${cart.productPriceAfterDiscount < cart.productPrice ? 'text-sm line-through' : 'text-lg font-semibold'}`}>
+              {formatMoneyVND(cart.productPrice)}
+            </span>
+            {cart?.productPriceAfterDiscount < cart.productPrice && (
+              <span className="text-lg font-semibold text-red">{formatMoneyVND(cart.productPriceAfterDiscount)}</span>
+            )}
+          </div>
         </div>
         <div className="flex items-center justify-between gap-5">
           <div className="flex items-center">

@@ -23,7 +23,8 @@ const useBrandStore = create((set, get) => ({
   createBrand: async (data, onSuccess = () => {}) => {
     set({ isLoading: true })
     try {
-      await brandService.createBrand(data)
+      const res = await brandService.createBrand(data)
+      handleNotification(constants.NOTIFICATION_SUCCESS, res)
       await get().getBrands()
       onSuccess()
     } catch (error) {
@@ -36,7 +37,8 @@ const useBrandStore = create((set, get) => ({
   updateBrand: async (id, data, onSuccess = () => {}) => {
     set({ isLoading: true })
     try {
-      await brandService.updateBrand(id, data)
+      const res = await brandService.updateBrand(id, data)
+      handleNotification(constants.NOTIFICATION_SUCCESS, res)
       await get().getBrands()
       onSuccess()
     } catch (error) {

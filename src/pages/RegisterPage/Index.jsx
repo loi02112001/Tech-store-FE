@@ -4,46 +4,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import useUserStore from '@/store/userStore'
 import { getToken } from '@/utils'
 
-import { Button, Col, Form, Input, Radio, Row } from 'antd'
+import { Col, Form, Input, Radio, Row } from 'antd'
 
-const VerifyForm = ({ onSubmit, loading }) => {
-  const [form] = Form.useForm()
-
-  const handleSubmit = (values) => {
-    onSubmit(values)
-    form.resetFields()
-  }
-
-  return (
-    <Form
-      form={form}
-      className="flex flex-col gap-2 w-full"
-      name="basic"
-      labelCol={{
-        span: 6
-      }}
-      wrapperCol={{
-        span: 20
-      }}
-      onFinish={handleSubmit}
-      autoComplete="off">
-      <Form.Item
-        label="Mã xác thực"
-        name="otp"
-        labelAlign="left"
-        rules={[{ required: true, message: 'Vui lòng nhập mã otp!' }]}
-        sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
-        <Input style={{ height: 40 }} placeholder="Nhập mã otp" type="text" />
-      </Form.Item>
-
-      <Button className="mt-4 mb-5 h-[40px]" block type="primary" htmlType="submit" loading={loading}>
-        Xác thực
-      </Button>
-    </Form>
-  )
-}
-
-const RegisterForm = ({ onSubmit, loading }) => {
+const RegisterForm = ({ onSubmit }) => {
   const [form] = Form.useForm()
 
   const handleSubmit = (values) => {
@@ -64,7 +27,6 @@ const RegisterForm = ({ onSubmit, loading }) => {
       }}
       onFinish={handleSubmit}
       autoComplete="off">
-      {/* Các trường thông tin mới */}
       <Form.Item
         label="Họ và tên"
         name="name"
@@ -144,14 +106,14 @@ const RegisterForm = ({ onSubmit, loading }) => {
         rules={[{ required: true, message: 'Vui lòng chọn giới tính!' }]}
         sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
         <Radio.Group className="flex gap-5">
-          <Radio value={1}>Nam</Radio>
-          <Radio value={0}>Nữ</Radio>
+          <Radio value="MALE">Nam</Radio>
+          <Radio value="FEMALE">Nữ</Radio>
         </Radio.Group>
       </Form.Item>
 
-      <Button className="btn btn-primary mb-5" block type="primary" htmlType="submit" loading={loading}>
+      <button className="w-full btn btn-primary mb-5" type="primary">
         Đăng ký
-      </Button>
+      </button>
     </Form>
   )
 }
@@ -169,8 +131,7 @@ const useRedirectIfLoggedIn = () => {
 
 const Register = () => {
   const navigate = useNavigate()
-  const [step, setStep] = useState(1)
-  const [registerInfo, setRegisterInfo] = useState({
+  const [, setRegisterInfo] = useState({
     name: '',
     email: '',
     password: '',
@@ -179,24 +140,17 @@ const Register = () => {
     dob: 0,
     gender: ''
   })
-  const { loading, register, verify } = useUserStore()
+  const { loading, register } = useUserStore()
 
   useRedirectIfLoggedIn()
 
   const handleRegister = (values) => {
     const registerData = { ...values }
     const onRegisterSuccess = () => {
-      setStep(2)
+      navigate('/login')
     }
     setRegisterInfo(registerData)
     register(registerData, onRegisterSuccess)
-  }
-
-  const handleVerify = (values) => {
-    const onVerifySuccess = () => {
-      navigate('/login')
-    }
-    verify({ ...registerInfo, ...values }, onVerifySuccess)
   }
 
   return (
@@ -207,34 +161,21 @@ const Register = () => {
         <Col span={10} className="flex justify-center items-center">
           <img src="https://hacom.vn/template/2024/images/bg-pop-login-phone.png" className="object-cover" alt="logo" />
         </Col>
-        {step === 2 && (
-          <Col span={14}>
-            <div className="flex items-center justify-center mt-5">
-              <h1 className="text-center h4">Xác thực tài khoản</h1>
-            </div>
-            <p className="font-medium text-center text-[15px] mb-8 mt-5">
-              Vui lòng nhập mã otp đã gửi vào email của bạn
-            </p>
-            <VerifyForm onSubmit={handleVerify} loading={loading} />
-          </Col>
-        )}
-        {step === 1 && (
-          <Col span={14}>
-            <div className="flex items-center justify-center mt-5">
-              <h1 className="text-center h4">Đăng ký</h1>
-            </div>
-            <p className="font-medium text-center text-[15px] mb-8 mt-5">
-              Xin chào, vui lòng nhập thông tin cá nhân của bạn
-            </p>
-            <RegisterForm onSubmit={handleRegister} loading={loading} />
-            <div className="text-center">
-              Bạn đã có tài khoản?
-              <Link className="no-underline link" to="/login">
-                Đăng nhập
-              </Link>
-            </div>
-          </Col>
-        )}
+        <Col span={14}>
+          <div className="flex items-center justify-center mt-5">
+            <h1 className="text-center h4">Đăng ký</h1>
+          </div>
+          <p className="font-medium text-center text-[15px] mb-8 mt-5">
+            Xin chào, vui lòng nhập thông tin cá nhân của bạn
+          </p>
+          <RegisterForm onSubmit={handleRegister} loading={loading} />
+          <div className="text-center">
+            Bạn đã có tài khoản?{' '}
+            <Link className="no-underline link" to="/login">
+              Đăng nhập
+            </Link>
+          </div>
+        </Col>
       </Row>
     </div>
   )

@@ -12,7 +12,8 @@ function ListBrand() {
     {
       dataIndex: 'id',
       key: 'id',
-      align: 'center'
+      align: 'center',
+      render: () => ''
     },
     {
       title: 'Tên',

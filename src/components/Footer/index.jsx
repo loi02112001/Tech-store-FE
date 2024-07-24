@@ -44,7 +44,7 @@ const FooterLinkColumn = ({ title, links }) => (
   <div className="flex">
     <div>
       <h2 className="pb-1 mb-4 text-sm font-semibold text-gray-900 uppercase border-b-2 border-red">{title}</h2>
-      <ul className="text-gray-500 dark:text-gray-400 font-medium">
+      <ul className="text-gray-500 font-medium">
         {links.map((link, index) => (
           <li key={index} className="mb-2 text-sm">
             <a href="#" className="hover:underline">
@@ -58,7 +58,7 @@ const FooterLinkColumn = ({ title, links }) => (
 )
 
 const SocialIcon = ({ name, svg }) => (
-  <a href="#" className="text-gray-400 hover:text-gray-900 dark:hover:text-white">
+  <a href="#" className="text-gray-400 hover:text-gray-900">
     <svg
       className="w-4 h-4"
       aria-hidden="true"
@@ -80,8 +80,8 @@ const CustomerFooter = () => {
             <FooterLinkColumn key={index} title={column.title} links={column.links} />
           ))}
         </div>
-        <div className="py-6 dark:bg-gray-700 md:flex md:items-center md:justify-between">
-          <span className="text-sm text-gray-500 dark:text-gray-300 sm:text-center">
+        <div className="py-6 md:flex md:items-center md:justify-between">
+          <span className="text-sm text-gray-500 sm:text-center">
             <a href="https://flowbite.com/" className="text-black font-semibold">
               TechStore.
             </a>

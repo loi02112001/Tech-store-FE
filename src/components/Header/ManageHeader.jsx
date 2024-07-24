@@ -47,7 +47,11 @@ const ManageHeaderComponent = () => {
         <Dropdown menu={{ items }} placement="bottom" arrow>
           <div className="flex items-center justify-between gap-3 cursor-pointer">
             <span className="text-gray-800 text-base font-medium px-2.5 py-0.5 capitalize">{name}</span>
-            <i className="fas fa-user text-primary"></i>
+            {user?.avatar ? (
+              <img src={user?.avatar} alt="avatar" className="w-10 h-10 rounded-full object-cover" />
+            ) : (
+              <i className="fas fa-user text-primary"></i>
+            )}
           </div>
         </Dropdown>
       </div>

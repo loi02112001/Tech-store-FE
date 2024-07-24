@@ -10,10 +10,10 @@ const useProductBatchStore = create((set, get) => ({
   totalItems: 0,
   isLoading: false,
 
-  getProductBatches: async () => {
+  getProductBatches: async (data) => {
     set({ isLoading: true })
     try {
-      const res = await productBatchService.getProductBatches()
+      const res = await productBatchService.getProductBatches(data)
       const { list, pages, total } = res.data
       set({ productBatches: list, pages, totalItems: total })
     } catch (error) {

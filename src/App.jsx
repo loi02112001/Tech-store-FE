@@ -1,3 +1,4 @@
+// src/App.js
 import React, { Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
@@ -5,78 +6,75 @@ import ScrollToTop from './components/ScrollToTop/Index'
 import { routes } from './configs/routes'
 import AdminLayout from './layouts/AdminLayout/Index'
 import CustomerLayout from './layouts/CustomerLayout/Index'
-// import PageNotFound from './pages/PageNotFound/PageNotFound'
 import ProtectedRoute from './routes/ProtectedRoute'
-import { isCustomer, isManage } from './utils'
+import { LoadingOutlined } from '@ant-design/icons'
+import { Spin } from 'antd'
 
 const LoginPage = React.lazy(() => import('./pages/LoginPage/Index'))
 const RegisterPage = React.lazy(() => import('./pages/RegisterPage/Index'))
-// admin
-const ManageHomePage = React.lazy(() => import('./pages/HomePage/ManageHomePage'))
-const ListProduct = React.lazy(() => import('./pages/Product/ListProduct'))
-const AddProduct = React.lazy(() => import('./pages/Product/AddProduct'))
-const ListBrand = React.lazy(() => import('./pages/Brand/ListBrand'))
-const ListCategory = React.lazy(() => import('./pages/Category/ListCategory'))
-const ListSupplier = React.lazy(() => import('./pages/Supplier/ListSupplier'))
-const ListProductBatch = React.lazy(() => import('./pages/ProductBatch/ListProductBatch'))
-const ListPromotion = React.lazy(() => import('./pages/Promotion/ListPromotion'))
-const ListVoucher = React.lazy(() => import('./pages/Voucher/ListVoucher'))
-const AddEditEmployee = React.lazy(() => import('./pages/Employee/AddEditEmployee'))
-const ListEmployee = React.lazy(() => import('./pages/Employee/ListEmployee'))
-const CartCheckout = React.lazy(() => import('./pages/Cart/CartCheckout'))
-const Purchase = React.lazy(() => import('./pages/Purchase/Purchase'))
-
-// customer
-const AllProductsPage = React.lazy(() => import('./pages/AllProductsPage/AllProductsPage'))
 const CustomerHomePage = React.lazy(() => import('./pages/HomePage/CustomerHomePage'))
-const CartPage = React.lazy(() => import('./pages/Cart/CartPage'))
-const ProductDetail = React.lazy(() => import('./pages/Product/ProductDetail'))
-const UserProfile = React.lazy(() => import('./pages/Profile/Profile'))
+const CustomerProductDetailPage = React.lazy(() => import('./pages/Product/ProductDetail'))
+const CustomerProductListPage = React.lazy(() => import('./pages/AllProductsPage/AllProductsPage'))
+const PageNotFound = React.lazy(() => import('./pages/PageNotFound/PageNotFound'))
 
-export default function App() {
+// Trang Admin
+const adminRoutes = [
+  { path: routes.auth.homeAdmin, element: React.lazy(() => import('./pages/HomePage/ManageHomePage')) },
+  { path: routes.product.add, element: React.lazy(() => import('./pages/Product/AddProduct')) },
+  { path: routes.product.list, element: React.lazy(() => import('./pages/Product/ListProduct')) },
+  { path: routes.product.edit, element: React.lazy(() => import('./pages/Product/AddProduct')) },
+  { path: routes.category.list, element: React.lazy(() => import('./pages/Category/ListCategory')) },
+  { path: routes.brand.list, element: React.lazy(() => import('./pages/Brand/ListBrand')) },
+  { path: routes.supplier.list, element: React.lazy(() => import('./pages/Supplier/ListSupplier')) },
+  { path: routes.productBatch.list, element: React.lazy(() => import('./pages/ProductBatch/ListProductBatch')) },
+  { path: routes.promotion.list, element: React.lazy(() => import('./pages/Promotion/ListPromotion')) },
+  { path: routes.voucher.list, element: React.lazy(() => import('./pages/Voucher/ListVoucher')) },
+  { path: routes.employee.list, element: React.lazy(() => import('./pages/Employee/ListEmployee')) },
+  { path: routes.employee.add, element: React.lazy(() => import('./pages/Employee/AddEditEmployee')) },
+  { path: routes.employee.edit, element: React.lazy(() => import('./pages/Employee/AddEditEmployee')) },
+  { path: routes.employee.profile, element: React.lazy(() => import('./pages/Profile/Profile')) }
+]
+
+// Trang Customer
+const customerRoutes = [
+  { path: routes.cart.list, element: React.lazy(() => import('./pages/Cart/CartPage')) },
+  { path: routes.cart.checkout, element: React.lazy(() => import('./pages/Cart/CartCheckout')) },
+  { path: routes.purchase.list, element: React.lazy(() => import('./pages/Purchase/Purchase')) },
+  { path: routes.user.profile, element: React.lazy(() => import('./pages/Profile/Profile')) }
+]
+
+const loadingIndicator = <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} fullscreen />
+
+function App() {
   return (
     <React.Fragment>
       <ScrollToTop />
-      <Suspense fallback={<></>}>
+      <Suspense fallback={loadingIndicator}>
         <Routes>
           <Route path={routes.auth.login} element={<LoginPage />} />
           <Route path={routes.auth.register} element={<RegisterPage />} />
-          <Route element={<ProtectedRoute />}>
-            {isManage() && (
-              <Route element={<AdminLayout />}>
-                <>
-                  <Route path={routes.auth.home} element={<ManageHomePage />} />
-                  <Route path={routes.product.add} element={<AddProduct />} />
-                  <Route path={routes.product.list} element={<ListProduct />} />
-                  <Route path={routes.product.edit} element={<AddProduct />} />
-                  <Route path={routes.category.list} element={<ListCategory />} />
-                  <Route path={routes.brand.list} element={<ListBrand />} />
-                  <Route path={routes.supplier.list} element={<ListSupplier />} />
-                  <Route path={routes.productBatch.list} element={<ListProductBatch />} />
-                  <Route path={routes.promotion.list} element={<ListPromotion />} />
-                  <Route path={routes.voucher.list} element={<ListVoucher />} />
-                  <Route path={routes.employee.list} element={<ListEmployee />} />
-                  <Route path={routes.employee.add} element={<AddEditEmployee />} />
-                  <Route path={routes.employee.edit} element={<AddEditEmployee />} />
-                </>
-              </Route>
-            )}
-
-            {isCustomer() && (
-              <Route element={<CustomerLayout />}>
-                <Route path={routes.auth.home} element={<CustomerHomePage />} />
-                <Route path={routes.cart.list} element={<CartPage />} />
-                <Route path={routes.cart.checkout} element={<CartCheckout />} />
-                <Route path={routes.allProducts} element={<AllProductsPage />} />
-                <Route path={routes.product.detail} element={<ProductDetail />} />
-                <Route path={routes.purchase.list} element={<Purchase />} />
-                <Route path={routes.user.profile} element={<UserProfile />} />
-              </Route>
-            )}
-            {/* <Route path="*" element={<PageNotFound />} /> */}
+          <Route element={<CustomerLayout />}>
+            <Route path={routes.auth.home} element={<CustomerHomePage />} />
+            <Route path={routes.product.detail} element={<CustomerProductDetailPage />} />
+            <Route path={routes.product.all} element={<CustomerProductListPage />} />
           </Route>
+          <Route element={<ProtectedRoute />}>
+            <Route element={<AdminLayout />}>
+              {adminRoutes.map((route, index) => (
+                <Route key={index} path={route.path} element={<route.element />} />
+              ))}
+            </Route>
+            <Route element={<CustomerLayout />}>
+              {customerRoutes.map((route, index) => (
+                <Route key={index} path={route.path} element={<route.element />} />
+              ))}
+            </Route>
+          </Route>
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Suspense>
     </React.Fragment>
   )
 }
+
+export default App

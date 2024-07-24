@@ -61,6 +61,18 @@ const useOrderStore = create((set, get) => ({
     } finally {
       set({ isLoading: false })
     }
+  },
+
+  cancelOrder: async (id) => {
+    set({ isLoading: true })
+    try {
+      await orderService.cancelOrder(id)
+      await get().getAllOrders()
+    } catch (error) {
+      handleNotification(constants.NOTIFICATION_ERROR, error)
+    } finally {
+      set({ isLoading: false })
+    }
   }
 }))
 

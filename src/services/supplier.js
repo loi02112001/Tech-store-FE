@@ -1,7 +1,7 @@
-import { httpGet, httpPost, httpPut } from '../configs/api'
+import { httpDelete, httpGet, httpPost, httpPut } from '../configs/api'
 
-const getSuppliers = () => {
-  return httpGet('/supplier/get')
+const getSuppliers = (data) => {
+  return httpGet(`/supplier/get${data?.page ? `?page=${data.page}` : ''}${data?.limit ? `&limit=${data.limit}` : ''}`)
 }
 
 const createSupplier = (data) => {
@@ -12,4 +12,8 @@ const updateSupplier = (id, data) => {
   return httpPut(`/supplier/update/${id}`, data)
 }
 
-export const supplierService = { getSuppliers, createSupplier, updateSupplier }
+const deleteSupplier = (id) => {
+  return httpDelete(`/supplier/delete/${id}`)
+}
+
+export const supplierService = { getSuppliers, createSupplier, updateSupplier, deleteSupplier }

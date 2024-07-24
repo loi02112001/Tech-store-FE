@@ -32,7 +32,7 @@ body {
 /* Input Styles */
 
 .ant-form-item-label {
-  @apply w-full font-semibold text-left;
+  @apply font-semibold text-left;
 }
 
 .ant-input,
@@ -43,13 +43,6 @@ body {
 
 .ant-checkbox-inner {
   @apply !border;
-}
-
-.form-control {
-  @apply block w-full h-[calc(1.5em_+_0.75rem_+_2px)] text-base font-normal leading-normal text-[#495057] bg-white bg-clip-padding border px-3 py-1.5 rounded-none border-solid border-[#EDF1FF];
-  transition:
-    border-color 0.15s ease-in-out,
-    box-shadow 0.15s ease-in-out;
 }
 
 i {

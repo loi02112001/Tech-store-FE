@@ -1,8 +1,7 @@
 import { httpGet, httpPost, httpPut } from '../configs/api'
 
-const getPromotions = () => {
-  return httpGet('/promotion/get')
-}
+const getPromotions = (data) =>
+  httpGet(`/promotion/get${data?.page ? `?page=${data.page}` : ''}${data?.limit ? `&limit=${data.limit}` : ''}`)
 
 const createPromotion = (data) => {
   return httpPost('/promotion/create', data)

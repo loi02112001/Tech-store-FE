@@ -43,10 +43,10 @@ function AddEditBrand({ brand = {}, classButton = '', textButton = 'Sửa' }) {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}>
-        <Form form={form} onFinish={handleSubmit}>
+        <Form form={form} onFinish={handleSubmit} layout="vertical">
           <Row>
             <Form.Item
-              className="flex w-full"
+              className="w-full"
               name="name"
               label="Tên thương hiệu"
               rules={[{ required: true, message: ruleFormItem.required }]}>
@@ -55,7 +55,7 @@ function AddEditBrand({ brand = {}, classButton = '', textButton = 'Sửa' }) {
           </Row>
           <Row>
             <Form.Item
-              className="flex w-full"
+              className="w-full"
               name="description"
               label="Mô tả"
               rules={[{ required: true, message: ruleFormItem.required }]}>

@@ -6,7 +6,7 @@
   @apply text-white border-transparent bg-red;
 
   &:hover {
-    @apply text-white bg-primary-hover;
+    @apply text-white opacity-70;
   }
 }
 

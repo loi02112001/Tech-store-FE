@@ -14,7 +14,7 @@ function CartCheckout() {
   const { createOrder } = useOrderStore()
 
   const navigate = useNavigate()
-  const [voucherCode, setVoucherCode] = useState('')
+  const [voucherCode, setVoucherCode] = useState(null)
 
   useEffect(() => {
     getProfile()
@@ -34,7 +34,7 @@ function CartCheckout() {
       voucherCode,
       listCartItemId: checkedCarts.map((item) => item.id)
     })
-    navigate('/purchase')
+    navigate('/purchase?type=PENDING')
   }
 
   return (
@@ -89,8 +89,13 @@ export const ProductItem = ({ cart }) => (
         <span>{cart?.productName}</span>
       </div>
       <div className="flex flex-col gap-1 w-[15%]">
-        <span className="line-through">{formatMoneyVND(cart?.productPrice)}</span>
-        <span className="text-red text-lg font-medium">{formatMoneyVND(cart?.productPriceAfterDiscount)}</span>
+        <span
+          className={` ${cart.productPriceAfterDiscount < cart.productPrice ? 'text-sm line-through' : 'text-lg font-semibold'}`}>
+          {formatMoneyVND(cart.productPrice)}
+        </span>
+        {cart?.productPriceAfterDiscount < cart.productPrice && (
+          <span className="text-lg font-semibold text-red">{formatMoneyVND(cart.productPriceAfterDiscount)}</span>
+        )}
       </div>
       <div className="w-[15%] text-center">{cart?.quantity}</div>
       <div className="w-[15%] text-right">{formatMoneyVND(cart?.productPriceAfterDiscount * cart?.quantity)}</div>

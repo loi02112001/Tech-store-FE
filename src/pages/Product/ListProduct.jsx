@@ -3,17 +3,19 @@ import { Link } from 'react-router-dom'
 
 import DefaultImages from '@/assets/icons/DefaultImage'
 import SearchInput from '@/components/common/SearchInput'
+import CustomPagination from '@/components/CustomPagination/CustomPagination'
 import useProductStore from '@/store/productStore'
 
-import { Button, Layout, Pagination, Table } from 'antd'
-import CustomPagination from '@/components/CustomPagination/CustomPagination'
+import { Button, Layout, Modal, Table } from 'antd'
 
 const ListProduct = () => {
   const { loading, products: productList, totalProducts, getListProducts, deleteProduct } = useProductStore()
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [productIdToDelete, setProductIdToDelete] = useState('')
   const [searchValue, setSearchValue] = useState('')
   const [pagination, setPagination] = useState({
     current: 1,
-    pageSize: 10,
+    pageSize: 20,
     total: 0
   })
 
@@ -29,9 +31,7 @@ const ListProduct = () => {
       dataIndex: 'id',
       key: 'id',
       align: 'center',
-      render: (_, record, index) => {
-        return index + 1 + (pagination.current - 1) * pagination.pageSize
-      }
+      render: (_, record, index) => index + 1 + (pagination.current - 1) * pagination.pageSize
     },
     {
       title: 'Hình ảnh',
@@ -88,24 +88,26 @@ const ListProduct = () => {
       align: 'center',
       render: (_, record) => (
         <div className="flex items-center justify-center gap-10">
-          <Link to={`/product/edit/${record.id}`}>
+          <Link to={`/admin/product/edit/${record.id}`}>
             <i className="fa-regular fa-pen-to-square text-blue"></i>
           </Link>
+
           <i
             className="fa-regular fa-trash-can text-red-500 cursor-pointer"
-            onClick={() => deleteProduct(record.id)}></i>
+            onClick={() => {
+              setIsModalOpen(true)
+              setProductIdToDelete(record.id)
+            }}></i>
         </div>
       )
     }
   ]
-  const fetchData = async (page = 1, limit = 10) => {
+  const fetchData = async (page = 1, limit) => {
     await getListProducts({ page, limit })
 
     setPagination((prev) => ({
       ...prev,
-      current: page,
-      pageSize: limit,
-      total: totalProducts
+      current: page
     }))
   }
 
@@ -132,7 +134,7 @@ const ListProduct = () => {
           />
           {!loading && <p className="text-[#CF5763] font-medium">{totalProducts} sản phẩm</p>}
         </div>
-        <Link to="/product/create">
+        <Link to="/admin/product/create">
           <Button type="primary">Thêm sản phẩm</Button>
         </Link>
       </div>
@@ -148,6 +150,20 @@ const ListProduct = () => {
       />
 
       <CustomPagination current={pagination.current} total={totalProducts} onChange={handleTableChange} />
+
+      <Modal
+        title="Xoá sản phẩm"
+        okText="Đồng ý"
+        cancelText="Hủy"
+        open={isModalOpen}
+        centered
+        onOk={() => {
+          deleteProduct(productIdToDelete)
+          setIsModalOpen(false)
+        }}
+        onCancel={() => setIsModalOpen(false)}>
+        <p>Bạn có chắc muốn xoá sản phẩm này</p>
+      </Modal>
     </Layout.Content>
   )
 }

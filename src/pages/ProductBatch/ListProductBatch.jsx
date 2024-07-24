@@ -1,21 +1,29 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import DefaultImage from '@/assets/icons/DefaultImage'
+import CustomPagination from '@/components/CustomPagination/CustomPagination'
 import useProductBatchStore from '@/store/productBatchStore'
+import { formatMoneyVND } from '@/utils'
 
 import AddProductBatch from './AddProductBatch'
 import { Skeleton, Table } from 'antd'
 import dayjs from 'dayjs'
-import { formatMoneyVND } from '@/utils'
 
 function ListProductBatch() {
-  const { loading, productBatches, getProductBatches } = useProductBatchStore()
+  const { loading, totalItems, productBatches, getProductBatches } = useProductBatchStore()
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 20,
+    total: 0
+  })
+
   const supplierTables = [
     {
       title: '',
       dataIndex: 'id',
       key: 'id',
-      align: 'center'
+      align: 'center',
+      render: (_, record, index) => index + 1 + (pagination.current - 1) * pagination.pageSize
     },
     {
       title: 'Hình ảnh',
@@ -64,9 +72,20 @@ function ListProductBatch() {
     }
   ]
 
+  const fetchData = async (page = 1, limit) => {
+    await getProductBatches({ page, limit })
+
+    setPagination((prev) => ({
+      ...prev,
+      current: page
+    }))
+  }
+
   useEffect(() => {
-    getProductBatches()
+    fetchData()
   }, [])
+
+  const handleTableChange = (page) => fetchData(page)
 
   return loading ? (
     <Skeleton />
@@ -79,7 +98,9 @@ function ListProductBatch() {
         dataSource={productBatches?.length > 0 ? productBatches : []}
         loading={loading}
         rowKey={(supplier) => supplier.id}
+        pagination={false}
       />
+      <CustomPagination current={pagination.current} total={totalItems} onChange={handleTableChange} />
     </div>
   )
 }

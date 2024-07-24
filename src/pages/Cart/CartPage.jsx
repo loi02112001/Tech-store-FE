@@ -17,8 +17,8 @@ function CartPage() {
 
   const total = useMemo(() => {
     return carts.reduce((acc, item) => {
-      const { productPrice, quantity } = item
-      return acc + productPrice * quantity
+      const { productPriceAfterDiscount, quantity } = item
+      return acc + productPriceAfterDiscount * quantity
     }, 0)
   }, [carts])
 
@@ -59,10 +59,12 @@ function CartPage() {
   return (
     <div className="container py-10 flex-1">
       <h1 className="text-2xl font-semibold capitalize mb-7">Giỏ hàng</h1>
-      <div className="flex items-center gap-8 px-8 pb-4">
-        <Checkbox checked={allChecked} onChange={handleAllCheck} />
-        <span>Chọn tất cả</span>
-      </div>
+      {carts.length > 0 && (
+        <div className="flex items-center gap-8 px-8 pb-4">
+          <Checkbox checked={allChecked} onChange={handleAllCheck} />
+          <span>Chọn tất cả</span>
+        </div>
+      )}
       {carts.length > 0 ? (
         <div className="flex gap-8">
           <div className="flex flex-col w-full p-8 overflow-hidden bg-white border rounded-md h-fit">
@@ -92,7 +94,7 @@ function CartPage() {
         <div className="flex flex-col items-center justify-center h-full gap-4">
           <ShoppingCartOutlined style={{ fontSize: '50px' }} />
           <h3 className="text-xl text-center w-fit">Không có sản phẩm nào trong giỏ hàng</h3>
-          <a href="/" className="btn btn-primary w-fit">
+          <a href="/products" className="btn btn-primary w-fit">
             Mua ngay
           </a>
         </div>

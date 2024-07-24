@@ -47,6 +47,9 @@ module.exports = {
           DEFAULT: '#f4f4f4'
         }
       },
+      boxShadow: {
+        DEFAULT: '0 1px 2px 0 rgba(60, 64, 67, 0.1), 0 2px 6px 2px rgba(60, 64, 67, 0.15)'
+      },
       fontSize: {
         medium: ['13px', { lineHeight: '21px' }]
       },
@@ -58,6 +61,17 @@ module.exports = {
       },
       borderColor: {
         DEFAULT: '#dadada'
+      },
+      zIndex: {
+        1: '1',
+        2: '2',
+        3: '3',
+        4: '4',
+        5: '5',
+        6: '6',
+        7: '7',
+        8: '8',
+        9: '9'
       }
     },
     fontFamily: {

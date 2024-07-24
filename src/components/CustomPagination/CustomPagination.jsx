@@ -1,6 +1,6 @@
 import { Pagination } from 'antd'
 
-const CustomPagination = ({ current, total, onChange, pageSize = 10 }) => {
+const CustomPagination = ({ current, total, onChange, pageSize = 20 }) => {
   return (
     <Pagination
       className="flex justify-end pt-5"

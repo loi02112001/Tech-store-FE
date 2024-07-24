@@ -11,10 +11,10 @@ const useSupplierStore = create((set, get) => ({
   totalItems: 0,
   isLoading: false,
 
-  getSuppliers: async () => {
+  getSuppliers: async (data) => {
     set({ isLoading: true })
     try {
-      const res = await supplierService.getSuppliers()
+      const res = await supplierService.getSuppliers(data)
       const { list, pages, total } = res.data
       set({ suppliers: list, pages, totalItems: total })
     } catch (error) {
@@ -40,9 +40,24 @@ const useSupplierStore = create((set, get) => ({
   updateSupplier: async (id, data, onSuccess = () => {}) => {
     set({ isLoading: true })
     try {
-      await supplierService.updateSupplier(id, data)
+      const res = await supplierService.updateSupplier(id, data)
+      handleNotification(constants.NOTIFICATION_SUCCESS, res)
       await get().getSuppliers()
       onSuccess()
+    } catch (error) {
+      handleNotification(constants.NOTIFICATION_ERROR, error)
+    } finally {
+      set({ isLoading: false })
+    }
+  },
+
+  deleteSupplier: async (id, onSuccess = () => {}) => {
+    set({ isLoading: true })
+    try {
+      const res = await supplierService.deleteSupplier(id)
+      onSuccess()
+      handleNotification(constants.NOTIFICATION_SUCCESS, res)
+      await get().getSuppliers()
     } catch (error) {
       handleNotification(constants.NOTIFICATION_ERROR, error)
     } finally {

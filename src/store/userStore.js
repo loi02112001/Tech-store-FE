@@ -1,3 +1,4 @@
+import { decodeToken } from 'react-jwt'
 import { toast } from 'react-toastify'
 
 import { constants } from '@/constants'
@@ -36,12 +37,16 @@ const useUserStore = create((set, get) => ({
     }
   },
 
-  login: async (payload) => {
+  login: async (payload, onSuccess) => {
     set({ isLoading: true })
     try {
       const res = await userService.login(payload)
       setToken(res.data.accessToken)
-      window.location.href = '/'
+      const dataFromToken = decodeToken(res.data.accessToken)
+      console.log('🚀 ~ login: ~ dataFromToken:', dataFromToken)
+
+      onSuccess(dataFromToken?.roles || [])
+      handleNotification(constants.NOTIFICATION_SUCCESS, res)
     } catch (error) {
       handleNotification(constants.NOTIFICATION_ERROR, error)
     } finally {
@@ -55,7 +60,7 @@ const useUserStore = create((set, get) => ({
       const res = await userService.getProfile()
       set({ user: res.data })
     } catch (error) {
-      handleNotification(constants.NOTIFICATION_ERROR, error)
+      console.error(error.message)
     } finally {
       set({ isLoading: false })
     }
@@ -64,7 +69,8 @@ const useUserStore = create((set, get) => ({
   updateProfile: async (data) => {
     set({ isLoading: true })
     try {
-      await userService.updateProfile(data)
+      const res = await userService.updateProfile(data)
+      handleNotification(constants.NOTIFICATION_SUCCESS, res)
       await get().getProfile()
     } catch (error) {
       handleNotification(constants.NOTIFICATION_ERROR, error)

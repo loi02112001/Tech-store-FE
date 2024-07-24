@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 
 import DefaultImages from '@/assets/icons/DefaultImage'
+import CustomPagination from '@/components/CustomPagination/CustomPagination'
 import useProductStore from '@/store/productStore'
 import usePromotionStore from '@/store/promotionStore'
 import { isEmptyUsingKeys } from '@/utils'
 
-import { Col, DatePicker, Form, Input, Modal, Row, Table } from 'antd'
+import { DatePicker, Form, Input, Modal, Table } from 'antd'
 import dayjs from 'dayjs'
 const { RangePicker } = DatePicker
 
@@ -25,6 +26,7 @@ const AddEditPromotion = ({ promotion = {}, classButton = '', textButton = 'Sử
   const closeModal = () => {
     setIsModalOpen(false)
     form.resetFields()
+    setTime([])
   }
   const openProductModal = () => {
     setProductModalOpen(true)
@@ -91,30 +93,27 @@ const AddEditPromotion = ({ promotion = {}, classButton = '', textButton = 'Sử
             )}
           </div>
         </div>
-        <RangePicker
-          className="w-full mb-5"
-          name="time"
-          format="YYYY-MM-DD"
-          onChange={(value, dateString) => {
-            setTime(dateString)
-          }}
-          defaultValue={
-            promotion?.startTime && promotion?.endTime ? [dayjs(promotion?.startTime), dayjs(promotion?.endTime)] : time
-          }
-          onOk={onOk}
-        />
+
         <Form form={form} onFinish={handleSubmit} layout="vertical">
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                className=" w-full"
-                name="discountPrice"
-                label="Giảm giá"
-                rules={[{ required: true, message: 'Vui lòng nhập giá!' }]}>
-                <Input type="text" placeholder="Giảm giá" name="discountPrice" />
-              </Form.Item>
-            </Col>
-          </Row>
+          <Form.Item label="Thời gian bắt đầu" rules={[{ required: true, message: 'Vui lòng chọn th��i gian!' }]}>
+            <RangePicker
+              className="w-full"
+              name="time"
+              format="YYYY-MM-DD"
+              onChange={(value, dateString) => {
+                setTime(dateString)
+              }}
+              defaultValue={
+                promotion?.startTime && promotion?.endTime
+                  ? [dayjs(promotion?.startTime), dayjs(promotion?.endTime)]
+                  : time
+              }
+              onOk={onOk}
+            />
+          </Form.Item>
+          <Form.Item name="discountPrice" label="Giảm giá" rules={[{ required: true, message: 'Vui lòng nhập giá!' }]}>
+            <Input type="text" placeholder="Giảm giá" name="discountPrice" className="w-full" />
+          </Form.Item>
         </Form>
       </Modal>
 
@@ -129,23 +128,27 @@ const AddEditPromotion = ({ promotion = {}, classButton = '', textButton = 'Sử
 }
 
 const ProductsModal = ({ open, onOk, onCancel, onSelect }) => {
-  const { products, getListProducts } = useProductStore()
+  const { products, totalProducts, getListProducts } = useProductStore()
+
   const [selectedProduct, setSelectedProduct] = useState({})
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10,
+    total: 0
+  })
 
   const handleOk = () => {
     onSelect(selectedProduct)
     onOk()
   }
 
-  useEffect(() => {
-    getListProducts()
-  }, [])
   const productColumns = [
     {
-      title: 'ID',
+      title: '',
       dataIndex: 'id',
       key: 'id',
-      align: 'center'
+      align: 'center',
+      render: (_, record, index) => index + 1 + (pagination.current - 1) * pagination.pageSize
     },
     {
       title: 'Hình ảnh',
@@ -177,6 +180,25 @@ const ProductsModal = ({ open, onOk, onCancel, onSelect }) => {
     }
   ]
 
+  const fetchData = async (page = 1, limit) => {
+    await getListProducts({ page, limit })
+    setPagination((prev) => ({
+      ...prev,
+      current: page
+    }))
+  }
+
+  const handleTableChange = (page) => {
+    setPagination((prev) => ({
+      ...prev,
+      current: page
+    }))
+  }
+
+  useEffect(() => {
+    fetchData(pagination.current, pagination.pageSize)
+  }, [pagination.current])
+
   return (
     <Modal title="Chọn sản phẩm" open={open} onOk={handleOk} onCancel={onCancel} width={700}>
       <Table
@@ -188,6 +210,13 @@ const ProductsModal = ({ open, onOk, onCancel, onSelect }) => {
           type: 'radio',
           onChange: (selectedRowKeys, selectedRows) => setSelectedProduct(selectedRows[0])
         }}
+        pagination={false}
+      />
+      <CustomPagination
+        current={pagination.current}
+        total={totalProducts}
+        pageSize={pagination.pageSize}
+        onChange={handleTableChange}
       />
     </Modal>
   )

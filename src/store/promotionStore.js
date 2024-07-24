@@ -10,10 +10,10 @@ const usePromotionStore = create((set, get) => ({
   totalItems: 0,
   isLoading: false,
 
-  getPromotions: async () => {
+  getPromotions: async (data) => {
     set({ isLoading: true })
     try {
-      const res = await promotionService.getPromotions()
+      const res = await promotionService.getPromotions(data)
       const { list, pages, total } = res.data
       set({ promotions: list, pages, totalItems: total })
     } catch (error) {
@@ -39,7 +39,8 @@ const usePromotionStore = create((set, get) => ({
   updatePromotion: async (id, data, onSuccess = () => {}) => {
     set({ isLoading: true })
     try {
-      await promotionService.updatePromotion(id, data)
+      const res = await promotionService.updatePromotion(id, data)
+      handleNotification(constants.NOTIFICATION_SUCCESS, res)
       await get().getPromotions()
       onSuccess()
     } catch (error) {

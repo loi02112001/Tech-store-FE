@@ -12,9 +12,7 @@ function ListCategory() {
       dataIndex: 'id',
       key: 'id',
       align: 'center',
-      render: (index) => {
-        return index
-      }
+      render: () => ''
     },
     {
       title: 'Tên',

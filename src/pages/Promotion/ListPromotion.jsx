@@ -1,6 +1,7 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import DefaultImage from '@/assets/icons/DefaultImage'
+import CustomPagination from '@/components/CustomPagination/CustomPagination'
 import usePromotionStore from '@/store/promotionStore'
 import { formatMoneyVND } from '@/utils'
 
@@ -9,14 +10,21 @@ import { Skeleton, Switch, Table } from 'antd'
 import dayjs from 'dayjs'
 
 function ListPromotion() {
-  const { loading, promotions, getPromotions, updatePromotionStatus } = usePromotionStore()
+  const { loading, promotions, totalItems, getPromotions, updatePromotionStatus } = usePromotionStore()
+
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 20,
+    total: 0
+  })
 
   const promotionTables = [
     {
       title: '',
       dataIndex: 'id',
       key: 'id',
-      align: 'center'
+      align: 'center',
+      render: (_, record, index) => index + 1 + (pagination.current - 1) * pagination.pageSize
     },
     {
       title: 'Hình ảnh',
@@ -77,6 +85,7 @@ function ListPromotion() {
       title: 'Hành động',
       dataIndex: '',
       key: 'x',
+      align: 'center',
       render: (_, record) => (
         <AddEditPromotion
           promotion={record}
@@ -88,9 +97,24 @@ function ListPromotion() {
     }
   ]
 
+  const fetchData = async (page = 1, limit) => {
+    await getPromotions({ page, limit })
+    setPagination((prev) => ({
+      ...prev,
+      current: page
+    }))
+  }
+
   useEffect(() => {
-    getPromotions()
-  }, [])
+    fetchData(pagination.current, pagination.pageSize)
+  }, [pagination.current])
+
+  const handleTableChange = (page) => {
+    setPagination((prev) => ({
+      ...prev,
+      current: page
+    }))
+  }
 
   return loading ? (
     <Skeleton />
@@ -104,6 +128,14 @@ function ListPromotion() {
         dataSource={promotions?.length > 0 ? promotions : []}
         loading={loading}
         rowKey={(promotion) => promotion.id}
+        pagination={false}
+      />
+
+      <CustomPagination
+        current={pagination.current}
+        total={totalItems}
+        pageSize={pagination.pageSize}
+        onChange={handleTableChange}
       />
     </>
   )

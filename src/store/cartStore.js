@@ -14,7 +14,7 @@ const useCartStore = create((set, get) => ({
       const res = await cartService.getCarts()
       set({ carts: res.data.map((item) => ({ ...item, checked: false })) })
     } catch (error) {
-      handleNotification(constants.NOTIFICATION_ERROR, error)
+      console.error(error.message)
     } finally {
       set({ isLoading: false })
     }
@@ -26,7 +26,8 @@ const useCartStore = create((set, get) => ({
   addToCart: async (data, onSuccess = () => {}) => {
     set({ isLoading: true })
     try {
-      await cartService.addToCart(data)
+      const res = await cartService.addToCart(data)
+      handleNotification(constants.NOTIFICATION_SUCCESS, res)
       await get().getCarts()
       onSuccess()
     } catch (error) {

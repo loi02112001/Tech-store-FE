@@ -9,11 +9,13 @@ const createOrder = (data) => {
 }
 
 const getAllOrders = (data) => {
-  return httpGet(`/order/getAll?status=${data}`)
+  return httpGet(`/order/getAll${data ? '?status=' + data : ''}`)
 }
 const updateOrder = (id, data) => {
   return httpPut(`/order/update/${id}`, data)
 }
+
+const cancelOrder = (id) => httpPut(`/order/cancel/${id}`)
 
 const getStatisticOrder = () => httpGet('/order/statistic/order')
 
@@ -22,5 +24,6 @@ export const orderService = {
   getAllOrders,
   createOrder,
   updateOrder,
-  getStatisticOrder
+  getStatisticOrder,
+  cancelOrder
 }

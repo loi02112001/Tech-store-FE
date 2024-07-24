@@ -1,7 +1,9 @@
+import { decodeToken } from 'react-jwt'
 import { Link, useLocation } from 'react-router-dom'
 
+import { getToken } from '@/utils'
+
 import {
-  AppstoreOutlined,
   BankOutlined,
   ContainerOutlined,
   DashboardOutlined,
@@ -9,7 +11,8 @@ import {
   ShopOutlined,
   TagOutlined,
   TeamOutlined,
-  UnorderedListOutlined
+  UnorderedListOutlined,
+  UserOutlined
 } from '@ant-design/icons'
 import { Layout, Menu } from 'antd'
 
@@ -17,68 +20,87 @@ const { Sider } = Layout
 
 const menuData = [
   {
-    key: '/',
+    key: 'admin',
     icon: <DashboardOutlined />,
-    label: <Link to="/">Tổng quan</Link>
+    label: <Link to="/admin">Tổng quan</Link>,
+    roles: ['ADMIN']
   },
   {
-    key: 'product',
-    icon: <AppstoreOutlined />,
-    label: 'Sản phẩm',
-    children: [
-      { key: 'product-list', icon: <UnorderedListOutlined />, label: <Link to="/product">Danh sách sản phẩm</Link> },
-      { key: 'category', icon: <ContainerOutlined />, label: <Link to="/category">Danh mục sản phẩm</Link> },
-      { key: 'brand', icon: <ShopOutlined />, label: <Link to="/brand">Thương hiệu</Link> },
-      { key: 'supplier', icon: <BankOutlined />, label: <Link to="/supplier">Nhà cung cấp</Link> },
-      { key: '/product-batch', icon: <ShopOutlined />, label: <Link to="/product-batch">Lô hàng</Link> }
-    ]
+    key: 'admin-product',
+    icon: <UnorderedListOutlined />,
+    label: <Link to="/admin/product">Danh sách sản phẩm</Link>,
+    roles: ['ADMIN', 'EMPLOYEE']
   },
   {
-    key: 'staff',
+    key: 'admin-category',
+    icon: <ContainerOutlined />,
+    label: <Link to="/admin/category">Danh mục sản phẩm</Link>,
+    roles: ['ADMIN', 'EMPLOYEE']
+  },
+  {
+    key: 'admin-brand',
+    icon: <ShopOutlined />,
+    label: <Link to="/admin/brand">Thương hiệu</Link>,
+    roles: ['ADMIN', 'EMPLOYEE']
+  },
+  {
+    key: 'admin-supplier',
+    icon: <BankOutlined />,
+    label: <Link to="/admin/supplier">Nhà cung cấp</Link>,
+    roles: ['ADMIN']
+  },
+  {
+    key: 'admin-product-batch',
+    icon: <ShopOutlined />,
+    label: <Link to="/admin/product-batch">Lô hàng</Link>,
+    roles: ['ADMIN', 'EMPLOYEE']
+  },
+  {
+    key: 'admin-employee',
     icon: <TeamOutlined />,
-    label: <Link to="/staff">Nhân viên</Link>
+    label: <Link to="/admin/employee">Nhân viên</Link>,
+    roles: ['ADMIN']
   },
   {
-    key: 'promotion',
+    key: 'admin-promotion',
     icon: <GiftOutlined />,
-    label: <Link to="/promotion">Khuyến mãi</Link>
+    label: <Link to="/admin/promotion">Khuyến mãi</Link>,
+    roles: ['ADMIN', 'EMPLOYEE']
   },
   {
-    key: 'voucher',
+    key: 'admin-voucher',
     icon: <TagOutlined />,
-    label: <Link to="/voucher">Voucher</Link>
+    label: <Link to="/admin/voucher">Voucher</Link>,
+    roles: ['ADMIN', 'EMPLOYEE']
+  },
+  {
+    key: 'admin-employee-profile',
+    icon: <UserOutlined />,
+    label: <Link to="/admin/employee/profile">Thông tin cá nhân</Link>,
+    roles: ['EMPLOYEE']
   }
 ]
 
+const filterMenuByRole = (menuItems, userRoles) => {
+  return menuItems.filter((item) => item.roles.some((role) => userRoles.includes(role)))
+}
+
 const AdminSidebar = () => {
   const location = useLocation()
-
-  const getOpenKeys = () => {
-    const path = location.pathname.split('/').filter((i) => i)
-    return path.length > 1 ? [path[0]] : []
-  }
+  const token = getToken()
+  const dataFromToken = decodeToken(token)
 
   const getSelectedKeys = () => {
     const path = location.pathname.split('/').filter((i) => i)
-    return path.length > 1 ? [path.join('-')] : [path[0]]
+    return path.length > 0 ? [path.join('-')] : ['/']
   }
 
   const generateMenuItems = (data) => {
-    return data.map((item) => {
-      if (item.children) {
-        return {
-          key: item.key,
-          icon: item.icon,
-          label: item.label,
-          children: generateMenuItems(item.children)
-        }
-      }
-      return {
-        key: item.key,
-        icon: item.icon,
-        label: item.label
-      }
-    })
+    return filterMenuByRole(data, dataFromToken.roles).map((item) => ({
+      key: item.key,
+      icon: item.icon,
+      label: item.label
+    }))
   }
 
   return (
@@ -86,7 +108,6 @@ const AdminSidebar = () => {
       <Menu
         mode="inline"
         selectedKeys={getSelectedKeys()}
-        defaultOpenKeys={getOpenKeys()}
         style={{ height: '100%', borderRight: 0 }}
         items={generateMenuItems(menuData)}
       />

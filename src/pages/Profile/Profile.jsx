@@ -19,9 +19,11 @@ const UserProfileForm = () => {
   const handleSubmit = (values) => {
     const formData = new FormData()
     if (image?.length > 0) {
-      formData.append('avatar', image[0])
+      formData.append('image', image[0])
     }
-    Object.entries(values).forEach(([key, value]) => formData.append(key, value))
+    Object.entries(values).forEach(([key, value]) =>
+      formData.append(key, key === 'gender' ? (value === 'Nam' ? 'MALE' : 'FEMALE') : value)
+    )
 
     updateProfile(formData)
     setEditMode(false)
@@ -43,6 +45,7 @@ const UserProfileForm = () => {
         ...user,
         gender: user.gender === 'MALE' ? 'Nam' : 'Nữ'
       })
+      setAvatarUrl(user.avatar)
     }
   }, [user, form])
 
@@ -110,8 +113,8 @@ const UserProfileForm = () => {
                 <Select
                   disabled={!editMode}
                   options={[
-                    { value: 1, label: 'Nam' },
-                    { value: 0, label: 'Nữ' }
+                    { value: 'MALE', label: 'Nam' },
+                    { value: 'FEMALE', label: 'Nữ' }
                   ]}
                   className="w-full"></Select>
               </Form.Item>

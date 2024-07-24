@@ -9,7 +9,7 @@ import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-    <ToastContainer />
+    <ToastContainer autoClose={2000} hideProgressBar={true} />
     <App />
   </BrowserRouter>
 )

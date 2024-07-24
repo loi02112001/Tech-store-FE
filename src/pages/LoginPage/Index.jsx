@@ -1,21 +1,22 @@
-import { Link, Navigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import useUserStore from '@/store/userStore'
-import { getToken } from '@/utils'
 
-import { Button, Col, Form, Input, Row } from 'antd'
+import { Col, Form, Input, Row } from 'antd'
 
 const LoginPage = () => {
-  const token = getToken()
   const [form] = Form.useForm()
-  const { loading, login } = useUserStore()
+  const navigate = useNavigate()
+  const { login } = useUserStore()
 
   const handleLogin = (data) => {
-    login(data)
-  }
-
-  if (token) {
-    return <Navigate to="/" />
+    login(data, (role) => {
+      if (role.includes('ADMIN')) {
+        navigate('/admin')
+      } else if (role.includes('EMPLOYEE')) {
+        navigate('/admin/product')
+      } else navigate('/')
+    })
   }
 
   return (
@@ -69,7 +70,12 @@ const LoginPage = () => {
                 }
               ]}
               sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
-              <Input.Password style={{ height: 40 }} placeholder="Mật khẩu" type="password" />
+              <Input.Password
+                style={{ height: 40 }}
+                placeholder="Mật khẩu"
+                type="password"
+                className="flex items-center"
+              />
             </Form.Item>
 
             <div className="text-end mb-2">
@@ -78,9 +84,9 @@ const LoginPage = () => {
               </Link>
             </div>
 
-            <Button className="mb-5 h-[40px] btn btn-primary" block type="primary" htmlType="submit" loading={loading}>
+            <button className="mb-5 h-[40px] btn btn-primary w-full" type="primary">
               Đăng nhập
-            </Button>
+            </button>
           </Form>
 
           <div className="text-center">

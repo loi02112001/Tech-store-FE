@@ -38,13 +38,15 @@ function AddEditSupplier({ supplier = {}, classButton = '', textButton = 'Sửa'
       </button>
       <Modal
         title={supplier?.id ? 'Cập nhật nhà cung cấp' : 'Thêm nhà cung cấp'}
+        okText={supplier?.id ? 'Cập nhật nhà cung cấp' : 'Thêm nhà cung cấp'}
+        cancelText="Hủy"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}>
-        <Form form={form} onFinish={handleSubmit}>
+        <Form form={form} onFinish={handleSubmit} layout="vertical">
           <Row>
             <Form.Item
-              className="flex w-full"
+              className="w-full"
               name="name"
               label="Tên cung cấp"
               rules={[{ required: true, message: ruleFormItem.required }]}>
@@ -53,7 +55,7 @@ function AddEditSupplier({ supplier = {}, classButton = '', textButton = 'Sửa'
           </Row>
           <Row>
             <Form.Item
-              className="flex w-full"
+              className="w-full"
               label="Số điện thoại"
               name="phoneNumber"
               labelAlign="left"
@@ -70,7 +72,7 @@ function AddEditSupplier({ supplier = {}, classButton = '', textButton = 'Sửa'
           </Row>
           <Row>
             <Form.Item
-              className="flex w-full"
+              className="w-full"
               name="address"
               label="Mô tả"
               rules={[{ required: true, message: ruleFormItem.required }]}>
