@@ -27,7 +27,7 @@ const ManageHeaderComponent = () => {
     {
       key: 'Đăng xuất',
       label: (
-        <button onClick={handleLogout} className="flex gap-2 cursor-pointer">
+        <button onClick={handleLogout} className="flex gap-2 w-full cursor-pointer">
           Đăng xuất
         </button>
       )
@@ -46,7 +46,9 @@ const ManageHeaderComponent = () => {
       <div className="flex items-center w-fit">
         <Dropdown menu={{ items }} placement="bottom" arrow>
           <div className="flex items-center justify-between gap-3 cursor-pointer">
-            <span className="text-gray-800 text-base font-medium px-2.5 py-0.5 capitalize">{name}</span>
+            <span className="text-gray-800 text-base font-medium px-2.5 py-0.5 capitalize max-w-40 truncate">
+              {name}
+            </span>
             {user?.avatar ? (
               <img src={user?.avatar} alt="avatar" className="w-10 h-10 rounded-full object-cover" />
             ) : (

@@ -2,17 +2,16 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import DefaultImages from '@/assets/icons/DefaultImage'
-import SearchInput from '@/components/common/SearchInput'
 import CustomPagination from '@/components/CustomPagination/CustomPagination'
 import useProductStore from '@/store/productStore'
 
-import { Button, Layout, Modal, Table } from 'antd'
+import { Button, Input, Layout, Modal, Table } from 'antd'
+const { Search } = Input
 
 const ListProduct = () => {
   const { loading, products: productList, totalProducts, getListProducts, deleteProduct } = useProductStore()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [productIdToDelete, setProductIdToDelete] = useState('')
-  const [searchValue, setSearchValue] = useState('')
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 20,
@@ -118,21 +117,15 @@ const ListProduct = () => {
   const handleTableChange = (page) => fetchData(page)
 
   const fetchDataTable = (value) => {
-    console.log('🚀 ~ value:', value)
+    getListProducts({ page: 1, name: value })
   }
 
   return (
     <Layout.Content>
       <div className="flex justify-between mb-6">
-        <div className="flex items-center gap-4">
-          <SearchInput
-            loading={loading}
-            placeholder="Tìm kiếm..."
-            keyword={searchValue}
-            onChange={setSearchValue}
-            onSearch={fetchDataTable}
-          />
-          {!loading && <p className="text-[#CF5763] font-medium">{totalProducts} sản phẩm</p>}
+        <div className="flex items-center gap-4 w-1/3">
+          <Search placeholder="Tìm kiếm..." allowClear enterButton="Tìm kiếm" size="small" onSearch={fetchDataTable} />
+          {!loading && <p className="text-red shrink-0 font-medium">{totalProducts} sản phẩm</p>}
         </div>
         <Link to="/admin/product/create">
           <Button type="primary">Thêm sản phẩm</Button>

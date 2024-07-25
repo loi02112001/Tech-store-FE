@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
+import { constants } from '@/constants'
 import useCartStore from '@/store/cartStore'
 import useProductStore from '@/store/productStore'
-import { formatMoneyVND } from '@/utils'
+import { formatMoneyVND, getToken, handleNotification } from '@/utils'
 
 import { Flex, Modal, Rate } from 'antd'
 
@@ -92,6 +93,10 @@ function ProductDetail() {
   const [value, setValue] = useState(product?.userRating)
 
   const handleAddToCart = useCallback(() => {
+    if (!getToken()) {
+      handleNotification(constants.NOTIFICATION_WARNING, { message: 'Bạn cần đăng nhập để mua hàng' })
+      return
+    }
     addToCart({ quantity, idProduct: product.id })
   }, [addToCart, quantity, product])
 
@@ -118,6 +123,10 @@ function ProductDetail() {
   const handleCancel = useCallback(() => setIsModalOpen(false), [])
 
   const handleOk = useCallback(() => {
+    if (!getToken()) {
+      handleNotification(constants.NOTIFICATION_WARNING, { message: 'Bạn cần đăng nhập để đánh gias' })
+      return
+    }
     ratingProduct({ productId: product.id, rating: value })
     setIsModalOpen(false)
   }, [ratingProduct, product, value])
@@ -146,7 +155,13 @@ function ProductDetail() {
             onRateClick={showModal}
           />
 
-          <Modal title="Đánh giá của bạn" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+          <Modal
+            title="Đánh giá của bạn"
+            open={isModalOpen}
+            onOk={handleOk}
+            onCancel={handleCancel}
+            okText="Đánh giá"
+            cancelText="Huỷ">
             <Flex gap="middle" vertical className="mt-5">
               <Rate tooltips={desc} onChange={setValue} value={value || product?.userRating} />
               {value ? <span>{desc[value - 1]}</span> : null}
@@ -168,7 +183,7 @@ function ProductDetail() {
           </button>
 
           <div className="flex pt-2">
-            <p className="mb-0 mr-2 font-medium text-dark">Share on:</p>
+            <p className="mb-0 mr-2 font-medium text-dark">Chia sẻ:</p>
             <div className="flex">
               <a className="px-2 text-dark" href="#">
                 <i className="fab fa-facebook-f"></i>

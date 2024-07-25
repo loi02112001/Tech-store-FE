@@ -35,7 +35,7 @@ const AddEditEmployee = () => {
   const [form] = Form.useForm()
 
   const handleSubmit = (values) => {
-    createEmployee(values, () => navigate('/admin/employee'))
+    createEmployee({ ...values, gender: values.gender === 1 ? 'MALE' : 'FEMALE' }, () => navigate('/admin/employee'))
   }
 
   return (

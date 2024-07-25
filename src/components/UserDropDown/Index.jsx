@@ -48,7 +48,7 @@ export const UserDropdown = () => {
       <div className="flex items-center justify-between gap-3 cursor-pointer">
         <Link
           to={name ? '#' : '/login'}
-          className="text-gray-800 text-base font-medium px-2.5 py-0.5 capitalize w-40 truncate">
+          className="text-gray-800 text-base font-medium px-2.5 py-0.5 capitalize max-w-40 truncate">
           {name || 'Đăng nhập'}
         </Link>
         {renderAvatar()}
